@@ -22,7 +22,7 @@ import Login from "../navigation/Index";
             // console.log('Done some tasks for about 3 seconds')
             this.setState({currentScreen:'Login'})
 
-        }, 3000)
+        }, 7500)
 
 
     }
