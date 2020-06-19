@@ -31,11 +31,25 @@ export default styles = StyleSheet.create({
     },
     inerContainer1: {
         width: width * 1,
-        height: height * .52,
+        height: height * .51,
         padding: width * .01,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+        // backgroundColor:'blue'
+    },
+    notificationIcon:{
+        flexDirection:'row',
+        position:'absolute',
+        top: height * .04,
+        right: width * 0.055,
+    },
+    alarmText:{
+        alignSelf:'center',
+        fontSize: width * .013,
+        fontWeight: 'bold',
+        color: '#484149c5',
+
     },
     graphView: {
         width: width * .65,
@@ -52,29 +66,13 @@ export default styles = StyleSheet.create({
         elevation: 3,
 
     },
-    OxigenView: {
-        width: width * .32,
-        height: height * .32,
-        margin: width * .005,
-        top: height * .09,
-    },
-    Oxigen: {
-        flex: 1,
-        // borderWidth: 4,
-        // borderColor: "gray",
-        borderRadius: height * .05,
-        elevation: 3,
-        padding:height * .02,
-
-
-    },
     OxigenInerContainer:{
         flex: 1,
-
+        
     },
     weightView: {
         width: width * .32,
-        height: height * .32,
+        height: height * .3,
         margin: width * .005
     },
     weight: {
@@ -83,11 +81,11 @@ export default styles = StyleSheet.create({
         // borderColor: "gray",
         borderRadius: height * .05,
         elevation: 3,
-
+        padding:height * .022,
     },
     TemperatureView: {
         width: width * .32,
-        height: height * .32,
+        height: height * .3,
         margin: width * .005
     },
     Temperature: {
@@ -96,11 +94,13 @@ export default styles = StyleSheet.create({
         // borderColor: "gray",
         borderRadius: height * .05,
         elevation: 3,
+        padding:height * .022,
+
 
     },
     HumidityView: {
         width: width * .32,
-        height: height * .32,
+        height: height * .3,
         margin: width * .005
     },
     Humidity: {
@@ -109,13 +109,59 @@ export default styles = StyleSheet.create({
         // borderColor: "gray",
         borderRadius: height * .05,
         elevation: 3,
+        padding:height * .022,
+
+    },
+    inerContainer3: {
+        width: width * 1,
+        height: height * .04,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        // backgroundColor:'red',
+
+    },
+    oxygenHeading:{
+        fontSize:width * .018,
+        fontWeight: "bold",
+        color: '#484149c5',
+        // paddingHorizontal:width * .11,
+        marginTop:width * .009,
+
+        // marginRight:width * .06
+    },
+    weightHeading:{
+        fontSize:width * .018,
+        fontWeight: "bold",
+        color: '#484149c5',
+        // paddingHorizontal:width * .11,
+        marginTop:width * .009,
+        // marginRight:width * .06
+    },
+    tempHeading:{
+        fontSize:width * .018,
+        fontWeight: "bold",
+        color: '#484149c5',
+        paddingHorizontal:width * .2,
+        marginTop:width * .009,
+        // marginRight:width * .06
+    },
+    humHeading:{
+        fontSize:width * .018,
+        fontWeight: "bold",
+        color: '#484149c5',
+        paddingHorizontal:width * .03,
+        marginTop:width * .009,
+        // marginRight:width * .06
     },
     inerContainer2: {
         width: width * 1,
-        height: height * .37,
+        height: height * .34,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        // backgroundColor:'red'
+
     },
     OxigenIner:{
         flex:1,
@@ -135,7 +181,8 @@ export default styles = StyleSheet.create({
     boxLowerStyle:{
         flexDirection:'row',
         alignItems: 'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        // marginBottom: height * .02,  
     },
     likeInputMin:{
         width:width * .1,
