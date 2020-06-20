@@ -19,7 +19,7 @@ export default styles = StyleSheet.create({
 
     },
     activityIndi: {
-        flex: 1,
+        // flex: 1,
         marginTop: width * .1
         // alignSelf:'baseline'
     },

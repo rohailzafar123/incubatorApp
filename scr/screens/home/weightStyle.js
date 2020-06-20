@@ -52,4 +52,11 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent:'center'
     },
+    alarmText:{
+        // alignSelf:'center',
+        fontSize: width * .013,
+        fontWeight: 'bold',
+        color: '#484149c5',
+
+    },
 });

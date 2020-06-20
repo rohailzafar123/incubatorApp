@@ -17,10 +17,8 @@ export default styles = StyleSheet.create({
         // borderWidth: 4,
         // borderColor: "gray",
         borderRadius: height * .05,
-        elevation: 3,
+        elevation: width * .003,
         padding:height * .022,
-
-
     },
     OxigenInerContainer:{
         flex: 1,

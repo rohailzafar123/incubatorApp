@@ -40,7 +40,7 @@ export default class App extends Component {
                                 </View>
                                 <View style={{ flexDirection: 'row', flex: 1, }}>
                                     <View>
-                                        <Text style={{  fontSize: width * .018, fontWeight: "bold", color: '#FF420E', top: height * .006, marginVertical: width * .005 }}>
+                                        <Text style={{ fontSize: width * .018, fontWeight: "bold", color: '#FF420E', top: height * .006, marginVertical: width * .005 }}>
                                             Min.Per %
                                         </Text>
                                         <View style={style.boxLowerStyle}>
@@ -77,17 +77,26 @@ export default class App extends Component {
                         </View>
                     </View>
                 </TouchableOpacity>
-                <Modal isVisible={this.state.isModalVisible} onBackdropPress={()=>this.setState({isModalVisible: false})} onSwipeComplete={() => this.setState({isModalVisible: false})} swipeDirection="down" swipeDirection="left"
+                <Modal 
+                animationIn="slideInUp" 
+                animationOut="slideOutDown" 
+                onBackdropPress={() => this.toggleModal()} 
+                onSwipeComplete={() => this.toggleModal()} 
+                swipeDirection="right" 
+                isVisible={this.state.isModalVisible} 
                 style={{ 
                     backgroundColor: 'white',
-                     maxHeight:height * .7,
-                     maxWidth: width * .7,
-                     alignSelf:'center',
-                     position:'relative',
-                     top:width * .13
-                     }}>
-                    <View>
-
+                    maxHeight:height * .7,
+                    maxWidth:width * 1,
+                    top:width * .13,
+                    // left:width *.1,
+                    borderTopRightRadius:width * .05,
+                    borderTopLeftRadius:width * .05,
+                    maxHeight:height * .7,
+                    
+                    }}>
+                    <View style={{ flex: 1, justifyContent: 'center' }}>
+                        
                     </View>
                 </Modal>
             </View>
