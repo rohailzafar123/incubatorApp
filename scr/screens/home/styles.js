@@ -42,7 +42,7 @@ export default styles = StyleSheet.create({
         flexDirection:'row',
         position:'absolute',
         top: height * .04,
-        right: width * 0.055,
+        right: width * 0.049,
     },
     alarmText:{
         alignSelf:'center',
@@ -64,6 +64,8 @@ export default styles = StyleSheet.create({
         // borderColor: "#80808094",
         borderRadius: height * .05,
         elevation: 3,
+        justifyContent:'center',
+        alignItems:'center'
 
     },
     OxigenInerContainer:{

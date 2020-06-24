@@ -31,11 +31,13 @@ export default class Splash extends Component {
 
     Animated.timing(valueHi, {
       toValue:1,
-      duration: 3000
+      duration: 3000,
+      useNativeDriver: true,
     }).start();
     Animated.timing(valueWelcome, {
       toValue: 1,
-      duration: 7000
+      duration: 7000,
+      useNativeDriver: true,
     }).start();
     setTimeout(() => {
       this.setState({ textView: true })
@@ -51,35 +53,38 @@ export default class Splash extends Component {
         <StatusBar backgroundColor="black" barStyle="default" hidden={true} showHideTransition={'fade'}></StatusBar>
         <ImageBackground source={require('../../images/mainScreen.png')}
           style={style.image} >
-            {!this.state.textView == true ?
+            <View style={style.container}>
+
+            {this.state.textView == false ?
             (
-          <Animated.View
-            style={{
-              opacity: this.state.valueHi,
-              flex: 1,
-              alignSelf: 'center'
-            }}
-          >
+              <Animated.View
+              style={{
+                opacity: this.state.valueHi,
+                flex: 1,
+                alignSelf: 'center'
+              }}
+              >
             <Text style={style.animationTextStyle}>Hi</Text>
           </Animated.View>
             ):(
-          <Animated.View
-            style={{
-              opacity: this.state.valueWelcome,
-              flex: 1,
-              alignSelf: 'center'
-            }}
-          >
+              <Animated.View
+              style={{
+                opacity: this.state.valueWelcome,
+                flex: 1,
+                alignSelf: 'center'
+              }}
+              >
             <Text style={style.animationTextStyle}>Welcome</Text>
           </Animated.View>
             )}
-          {!this.state.loadingSpinner == true ?
+          {this.state.loadingSpinner == false ?
             (
               <Text></Text>
-            ) : (
-              <ActivityIndicator size="large" color="white" style={styles.activityIndi} />
-            )
-          }
+              ) : (
+                <ActivityIndicator size={width * .06  } color="white" style={styles.activityIndi} />
+                )
+              }
+              </View>
         </ImageBackground>
 
 

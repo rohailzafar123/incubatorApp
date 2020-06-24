@@ -77,7 +77,7 @@ export default class App extends Component {
                         </View>
                     </View>
                 </TouchableOpacity>
-                <Modal 
+                {/* <Modal 
                 animationIn="slideInUp" 
                 animationOut="slideOutDown" 
                 onBackdropPress={() => this.toggleModal()} 
@@ -98,7 +98,7 @@ export default class App extends Component {
                     <View style={{ flex: 1, justifyContent: 'center' }}>
                         
                     </View>
-                </Modal>
+                </Modal> */}
             </View>
 
         )

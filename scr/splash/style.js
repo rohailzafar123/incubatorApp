@@ -12,7 +12,6 @@ export default styles = StyleSheet.create({
 
         // alignItems:'center',        
     },
-
     image: {
         width: width * 1,
         height: height * 1,
@@ -20,7 +19,7 @@ export default styles = StyleSheet.create({
     },
     activityIndi: {
         // flex: 1,
-        marginTop: width * .1
+        bottom: width * .1
         // alignSelf:'baseline'
     },
     animationTextStyle: {

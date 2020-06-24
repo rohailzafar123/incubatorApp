@@ -7,10 +7,54 @@ import Notification from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
 import Oxygen from './oxygen';
 import Weight from './Weight';
-
+import {
+  LineChart,
+  BarChart,
+  PieChart,
+  ProgressChart,
+  ContributionGraph,
+  StackedBarChart
+} from "react-native-chart-kit";
+import {
+  accelerometer,
+  gyroscope,
+  setUpdateIntervalForType,
+  SensorTypes,
+  barometer
+} from "react-native-sensors";
+import { map, filter } from "rxjs/operators";
 const { height, width } = Dimensions.get('window');
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      valueX: null,
+      valuey: null,
+      valuez: null,
+
+    }
+    
+
+    // setTimeout(() => {
+    //   // If it's the last subscription to accelerometer it will stop polling in the native API
+    //   subscription.unsubscribe();
+    // }, 5000);
+    // console.log(subscription)
+
+  }
+  componentWillMount(){
+    setUpdateIntervalForType(SensorTypes.accelerometer, 1500); // defaults to 100ms
+
+    const subscription = accelerometer.subscribe(({ x, y, z }) => this.setState({valueX:Math.round(x),valuey:Math.round(y),valuez:Math.round(z)}), 
+        error => {
+            // console.log("The sensor is not available");
+          });
+  }
+  
   render() {
+    // console.log(this.state.valueX)
+    // const{x}=this.state.valueX;
+
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor="black" barStyle="default" hidden={true} showHideTransition={'fade'}></StatusBar>
@@ -23,24 +67,66 @@ export default class App extends Component {
         <View style={style.inerContainer1}>
           <View style={style.graphView}>
             <View style={style.graph}>
+              <View>
+
+                <LineChart
+                  data={{
+                    labels: ["January", "February", "March", "April", "May", "June"],
+                    datasets: [
+                      {
+                        data: [
+                          this.state.valueX,2,this.state.valuey,6,this.state.valuez
+                        ]
+                      }
+                    ]
+                  }}
+                  width={width * .6} // from react-native
+                  height={height * .45}
+                  yAxisLabel="S "
+                  // yAxisSuffix="k"
+                  yAxisInterval={1} // optional, defaults to 1
+                  chartConfig={{
+                    backgroundColor: "#e26a00",
+                    backgroundGradientFrom: "#fb8c00",
+                    backgroundGradientTo: "#ffa726",
+                    decimalPlaces: 2, // optional, defaults to 2dp
+                    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                    style: {
+                      borderRadius: 16
+                    },
+                    propsForDots: {
+                      r: "6",
+                      strokeWidth: "2",
+                      stroke: "#ffa726"
+                    }
+                  }}
+                  bezier
+                  style={{
+                    marginVertical: 8,
+                    borderRadius: 16
+                  }}
+                />
+              </View>
+
             </View>
           </View>
           <View style={style.notificationIcon}>
             <View>
-              <Notification name="notifications-active" size={width * .035} color="#f1c54c" style={{marginHorizontal:width * .01}}/>
+              <Notification name="notifications-active" size={width * .04} color="#f1c54c" style={{ marginHorizontal: width * .01 }} />
               <Text style={style.alarmText}>Oxygen</Text>
             </View>
 
             <View >
-              <Notification name="notifications-active" size={width * .035} color="#f1c54c" style={{marginHorizontal:width * .01}}/>
+              <Notification name="notifications-active" size={width * .04} color="#f1c54c" style={{ marginHorizontal: width * .01 }} />
               <Text style={style.alarmText}>Weight</Text>
             </View>
             <View >
-              <Notification name="notifications-active" size={width * .035} color="#f1c54c" style={{marginHorizontal:width * .01}}/>
+              <Notification name="notifications-active" size={width * .04} color="#f1c54c" style={{ marginHorizontal: width * .01 }} />
               <Text style={style.alarmText}>Temp</Text>
             </View>
             <View >
-              <Notification name="notifications-active" size={width * .035} color="#f1c54c" style={{marginHorizontal:width * .01}}/>
+              <Notification name="notifications-active" size={width * .04} color="#f1c54c" style={{ marginHorizontal: width * .01 }} />
               <Text style={style.alarmText}>Humidity</Text>
             </View>
           </View>
@@ -77,8 +163,12 @@ export default class App extends Component {
                     </Text>
                     <View style={style.boxUperStyle}>
                       <View style={style.likeInputOxygen}>
-                        <Text style={{ fontSize: width * .05, fontWeight: "bold", color: '#484149c5' }}>
-                          00.0
+                        <Text
+                          style={{
+                            position: 'absolute',
+                            fontSize: width * .05, fontWeight: "bold", color: '#484149c5'
+                          }} >
+                          {this.state.valueX}
                         </Text>
                       </View>
                       <Text style={{ fontSize: width * .018, fontWeight: "bold", color: '#484149c5', left: width * .003, }}>
@@ -100,7 +190,7 @@ export default class App extends Component {
                       <View style={style.boxLowerStyle}>
                         <View style={style.likeInputMin}>
                           <Text style={{ fontSize: width * .035, fontWeight: "bold", color: '#484149c5' }}>
-                            75.0
+                            {this.state.valuey}
                           </Text>
                         </View>
                         <Text style={{ fontSize: width * .018, fontWeight: "bold", color: '#484149c5', left: width * .001, bottom: height * .03 }}>
@@ -120,7 +210,7 @@ export default class App extends Component {
                         <View style={style.boxLowerStyle}>
                           <View style={style.likeInputMin}>
                             <Text style={{ fontSize: width * .035, fontWeight: "bold", color: '#484149c5' }}>
-                              99.0
+                              {this.state.valuez}
                           </Text>
                           </View>
                           <Text style={{ fontSize: width * .018, fontWeight: "bold", color: '#484149c5', left: width * .001, bottom: height * .03 }}>
