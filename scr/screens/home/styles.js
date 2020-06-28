@@ -15,7 +15,7 @@ export default styles = StyleSheet.create({
     },
     headerContainer: {
         width: width * 1,
-        height: height * .1,
+        height: height * .14,
         paddingHorizontal: width * .016,
         flexDirection: 'row',
         alignItems: 'center',
@@ -31,7 +31,7 @@ export default styles = StyleSheet.create({
     },
     inerContainer1: {
         width: width * 1,
-        height: height * .51,
+        height: height * .39,
         padding: width * .01,
         flexDirection: 'row',
         alignItems: 'center',
@@ -40,9 +40,9 @@ export default styles = StyleSheet.create({
     },
     notificationIcon:{
         flexDirection:'row',
-        position:'absolute',
-        top: height * .04,
-        right: width * 0.049,
+        // position:'absolute',
+        // top: height * .04,
+        // right: width * 0.049,
     },
     alarmText:{
         alignSelf:'center',
@@ -87,7 +87,7 @@ export default styles = StyleSheet.create({
     },
     TemperatureView: {
         width: width * .32,
-        height: height * .3,
+        height: height * .35,
         margin: width * .005
     },
     Temperature: {
@@ -102,7 +102,7 @@ export default styles = StyleSheet.create({
     },
     HumidityView: {
         width: width * .32,
-        height: height * .3,
+        height: height * .35,
         margin: width * .005
     },
     Humidity: {
@@ -158,11 +158,11 @@ export default styles = StyleSheet.create({
     },
     inerContainer2: {
         width: width * 1,
-        height: height * .34,
+        height: height * .39,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        // backgroundColor:'red'
+        // backgroundColor:'blue'
 
     },
     OxigenIner:{

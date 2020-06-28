@@ -8,7 +8,7 @@ const { height, width } = Dimensions.get('window');
 export default styles = StyleSheet.create({
     weightView: {
         width: width * .32,
-        height: height * .3,
+        height: height * .35,
         margin: width * .005
     },
     weight: {

@@ -7,6 +7,8 @@ import Notification from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
 import Oxygen from './oxygen';
 import Weight from './Weight';
+import Graph from './Graph/index';
+
 import {
   LineChart,
   BarChart,
@@ -42,14 +44,14 @@ export default class App extends Component {
     // console.log(subscription)
 
   }
-  componentWillMount(){
-    setUpdateIntervalForType(SensorTypes.accelerometer, 1500); // defaults to 100ms
+  // componentWillMount(){
+  //   setUpdateIntervalForType(SensorTypes.accelerometer, 1500); // defaults to 100ms
 
-    const subscription = accelerometer.subscribe(({ x, y, z }) => this.setState({valueX:Math.round(x),valuey:Math.round(y),valuez:Math.round(z)}), 
-        error => {
-            // console.log("The sensor is not available");
-          });
-  }
+  //   const subscription = accelerometer.subscribe(({ x, y, z }) => this.setState({valueX:Math.round(x),valuey:Math.round(y),valuez:Math.round(z)}), 
+  //       error => {
+  //           // console.log("The sensor is not available");
+  //         });
+  // }
   
   render() {
     // console.log(this.state.valueX)
@@ -59,16 +61,47 @@ export default class App extends Component {
       <View style={styles.container}>
         <StatusBar backgroundColor="black" barStyle="default" hidden={true} showHideTransition={'fade'}></StatusBar>
         <View style={style.headerContainer}>
-          <Text style={style.headerText}>My App Incuabator</Text>
+          {/* <Text style={style.headerText}>My App Incuabator</Text> */}
+          {/* <View style={style.notificationIcon}> */}
+          <Graph />
+            <View>
+              <Notification name="notifications-active" size={width * .04} color="#f1c54c" style={{ marginHorizontal: width * .01 }} />
+              <Text style={style.alarmText}>Oxygen</Text>
+            </View>
+            <View >
+              <Notification name="notifications-active" size={width * .04} color="#f1c54c" style={{ marginHorizontal: width * .01 }} />
+              <Text style={style.alarmText}>Weight</Text>
+            </View>
+            <View >
+              <Notification name="notifications-active" size={width * .04} color="#f1c54c" style={{ marginHorizontal: width * .01 }} />
+              <Text style={style.alarmText}>Temp</Text>
+            </View>
+            <View >
+              <Notification name="notifications-active" size={width * .04} color="#f1c54c" style={{ marginHorizontal: width * .01 }} />
+              <Text style={style.alarmText}>Humidity</Text>
+            </View>
+          {/* </View> */}
           <TouchableOpacity >
             <Menu name="menu-open" size={width * .05} color="black" />
           </TouchableOpacity>
         </View>
+        <View style={style.inerContainer3}>
+          <Text style={style.weightHeading}>
+            WEIGHT BALANCE
+          </Text>
+          <Text style={style.tempHeading}>
+            TEMPERATURE
+          </Text>
+          <Text style={style.humHeading}>
+            HUMIDITY
+          </Text>
+        </View>
         <View style={style.inerContainer1}>
-          <View style={style.graphView}>
+          {/* <View style={style.graphView}>
             <View style={style.graph}>
-              <View>
+              <View> */}
 
+            {/* 
                 <LineChart
                   data={{
                     labels: ["January", "February", "March", "April", "May", "June"],
@@ -106,36 +139,21 @@ export default class App extends Component {
                     marginVertical: 8,
                     borderRadius: 16
                   }}
-                />
-              </View>
+                /> */}
+              {/* </View>
 
             </View>
-          </View>
-          <View style={style.notificationIcon}>
-            <View>
-              <Notification name="notifications-active" size={width * .04} color="#f1c54c" style={{ marginHorizontal: width * .01 }} />
-              <Text style={style.alarmText}>Oxygen</Text>
-            </View>
-
-            <View >
-              <Notification name="notifications-active" size={width * .04} color="#f1c54c" style={{ marginHorizontal: width * .01 }} />
-              <Text style={style.alarmText}>Weight</Text>
-            </View>
-            <View >
-              <Notification name="notifications-active" size={width * .04} color="#f1c54c" style={{ marginHorizontal: width * .01 }} />
-              <Text style={style.alarmText}>Temp</Text>
-            </View>
-            <View >
-              <Notification name="notifications-active" size={width * .04} color="#f1c54c" style={{ marginHorizontal: width * .01 }} />
-              <Text style={style.alarmText}>Humidity</Text>
-            </View>
-          </View>
-          <View style={{ position: 'absolute', top: height * .14, right: width * .1 }}>
+          </View> */}
+          
+          {/* <View style={{ position: 'absolute', top: height * .14, right: width * .1 }}>
             <Text style={style.oxygenHeading}>
               OXYGEN LEVEL
             </Text>
-          </View>
+          </View> */}
           {/* Oxigen */}
+          <Oxygen />
+          <Oxygen />
+
           <Oxygen />
         </View>
         <View style={style.inerContainer3}>

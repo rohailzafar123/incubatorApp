@@ -8,9 +8,9 @@ const { height, width } = Dimensions.get('window');
 export default styles = StyleSheet.create({
     OxigenView: {
         width: width * .32,
-        height: height * .3,
+        height: height * .36,
         margin: width * .005,
-        top: height * .105,
+        // top: height * .105,
     },
     Oxigen: {
         flex: 1,
