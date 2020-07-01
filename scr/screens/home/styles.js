@@ -44,12 +44,14 @@ export default styles = StyleSheet.create({
         // top: height * .04,
         // right: width * 0.049,
     },
+
+    iconAndText:{
+        alignItems:'center'
+    },
     alarmText:{
-        alignSelf:'center',
         fontSize: width * .013,
         fontWeight: 'bold',
         color: '#484149c5',
-
     },
     graphView: {
         width: width * .65,

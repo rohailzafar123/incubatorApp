@@ -28,7 +28,7 @@ export default class App extends Component {
         this.setState({ isModalVisible: !this.state.isModalVisible });
     };
     render() {
-        console.log(this.state.toggle)
+        // console.log(this.state.toggle)
         return (
             <View>
                 <TouchableOpacity style={style.weightView} onPress={this.toggleModal}>

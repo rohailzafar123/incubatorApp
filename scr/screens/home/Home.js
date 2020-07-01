@@ -29,32 +29,39 @@ const { height, width } = Dimensions.get('window');
 export default class App extends Component {
   constructor(props) {
     super(props);
+    // this.onButtonStart = this.onButtonStart.bind(this);
+    // this.onButtonStop = this.onButtonStop.bind(this);
+    // this.onButtonClear = this.onButtonClear.bind(this);
+    // this.start = this.start.bind(this);
     this.state = {
       valueX: null,
       valuey: null,
       valuez: null,
-
+      alarmPower:0,
+      alarmSensor:0,
+      alarmFan:0,
+      alarmAir:0,
+      alarmAirOver:0,
+      alarmSystem:0,
+      time:null
     }
-    
 
+}
     // setTimeout(() => {
     //   // If it's the last subscription to accelerometer it will stop polling in the native API
     //   subscription.unsubscribe();
     // }, 5000);
     // console.log(subscription)
 
-  }
-  // componentWillMount(){
-  //   setUpdateIntervalForType(SensorTypes.accelerometer, 1500); // defaults to 100ms
-
-  //   const subscription = accelerometer.subscribe(({ x, y, z }) => this.setState({valueX:Math.round(x),valuey:Math.round(y),valuez:Math.round(z)}), 
-  //       error => {
-  //           // console.log("The sensor is not available");
-  //         });
-  // }
+    componentDidMount() {
+      this.interval = setInterval(() => this.setState({ alarmAir: this.state.alarmAir + 1 }), 1000);
+    }
+    componentWillUnmount() {
+      clearInterval(this.interval);
+    }
   
   render() {
-    // console.log(this.state.valueX)
+    // console.log(this.state.alarmAir)
     // const{x}=this.state.valueX;
 
     return (
@@ -64,24 +71,41 @@ export default class App extends Component {
           {/* <Text style={style.headerText}>My App Incuabator</Text> */}
           {/* <View style={style.notificationIcon}> */}
           <Graph />
-            <View>
-              <Notification name="notifications-active" size={width * .04} color="#f1c54c" style={{ marginHorizontal: width * .01 }} />
-              <Text style={style.alarmText}>Oxygen</Text>
+            <View style={style.iconAndText}>
+              <Notification name="notifications-active" size={width * .05} color="#0ae916" style={{ marginHorizontal: width * .01 }} />
+              <Text style={style.alarmText}>Power Failure</Text>
             </View>
-            <View >
-              <Notification name="notifications-active" size={width * .04} color="#f1c54c" style={{ marginHorizontal: width * .01 }} />
-              <Text style={style.alarmText}>Weight</Text>
+            <View style={style.iconAndText}>
+              <Notification name="notifications-active" size={width * .05} color="#0ae916" style={{ marginHorizontal: width * .01 }} />
+              <Text style={style.alarmText}>Sensor Failure</Text>
             </View>
-            <View >
-              <Notification name="notifications-active" size={width * .04} color="#f1c54c" style={{ marginHorizontal: width * .01 }} />
-              <Text style={style.alarmText}>Temp</Text>
+            <View style={style.iconAndText}>
+              <Notification  name="notifications-active" size={width * .05} color="#0ae916" style={{ marginHorizontal: width * .01 }} />
+              <Text style={style.alarmText}>Fan Failure</Text>
             </View>
-            <View >
-              <Notification name="notifications-active" size={width * .04} color="#f1c54c" style={{ marginHorizontal: width * .01 }} />
-              <Text style={style.alarmText}>Humidity</Text>
+            <View style={style.iconAndText}>
+              <Notification name="notifications-active" size={width * .05} color="#0ae916" style={{ marginHorizontal: width * .01 }} />
+              <Text style={style.alarmText}>Air Temperature</Text>
+            </View>
+            <View style={style.iconAndText}>
+              <Notification name="notifications-active" size={width * .05} color="#0ae916" style={{ marginHorizontal: width * .01 }} />
+              <Text style={{
+        fontSize: width * .01,
+        fontWeight: 'bold',
+        color: '#484149c5',
+    }}>Over Air </Text>
+              <Text style={{
+        fontSize: width * .01,
+        fontWeight: 'bold',
+        color: '#484149c5',
+    }}>Temperature</Text>
+            </View>
+            <View style={style.iconAndText}>
+              <Notification name="notifications-active" size={width * .05} color="#0ae916" style={{ marginHorizontal: width * .01 }} />
+              <Text style={style.alarmText}>System Failure</Text>
             </View>
           {/* </View> */}
-          <TouchableOpacity >
+          <TouchableOpacity onPress={() => this.onButtonStart()}>
             <Menu name="menu-open" size={width * .05} color="black" />
           </TouchableOpacity>
         </View>
@@ -97,60 +121,6 @@ export default class App extends Component {
           </Text>
         </View>
         <View style={style.inerContainer1}>
-          {/* <View style={style.graphView}>
-            <View style={style.graph}>
-              <View> */}
-
-            {/* 
-                <LineChart
-                  data={{
-                    labels: ["January", "February", "March", "April", "May", "June"],
-                    datasets: [
-                      {
-                        data: [
-                          this.state.valueX,2,this.state.valuey,6,this.state.valuez
-                        ]
-                      }
-                    ]
-                  }}
-                  width={width * .6} // from react-native
-                  height={height * .45}
-                  yAxisLabel="S "
-                  // yAxisSuffix="k"
-                  yAxisInterval={1} // optional, defaults to 1
-                  chartConfig={{
-                    backgroundColor: "#e26a00",
-                    backgroundGradientFrom: "#fb8c00",
-                    backgroundGradientTo: "#ffa726",
-                    decimalPlaces: 2, // optional, defaults to 2dp
-                    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                    style: {
-                      borderRadius: 16
-                    },
-                    propsForDots: {
-                      r: "6",
-                      strokeWidth: "2",
-                      stroke: "#ffa726"
-                    }
-                  }}
-                  bezier
-                  style={{
-                    marginVertical: 8,
-                    borderRadius: 16
-                  }}
-                /> */}
-              {/* </View>
-
-            </View>
-          </View> */}
-          
-          {/* <View style={{ position: 'absolute', top: height * .14, right: width * .1 }}>
-            <Text style={style.oxygenHeading}>
-              OXYGEN LEVEL
-            </Text>
-          </View> */}
-          {/* Oxigen */}
           <Oxygen />
           <Oxygen />
 

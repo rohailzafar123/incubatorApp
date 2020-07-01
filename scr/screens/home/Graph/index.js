@@ -27,7 +27,7 @@ export default class App extends Component {
         this.setState({ isModalVisibleGraph: !this.state.isModalVisibleGraph });
     };
     render() {
-        console.log(this.state.isModalVisibleGraph)
+        // console.log(this.state.isModalVisibleGraph)
         return (
             <View>
                 <TouchableOpacity onPress={this.toggleModal}
