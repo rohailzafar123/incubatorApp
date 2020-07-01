@@ -174,7 +174,7 @@ export default class App extends Component {
                                         Weight Summary
                                     </Text>
                                     <Image
-                                        source={require('../../../images/Graphs.jpg')}
+                                        source={require('../../../../images/Graphs.jpg')}
                                         style={style.graphImage} />
                                 </View>
                                 <View style={style.dataContainer}>

@@ -36,13 +36,10 @@ export default styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        // backgroundColor:'blue'
     },
     notificationIcon:{
         flexDirection:'row',
-        // position:'absolute',
-        // top: height * .04,
-        // right: width * 0.049,
+      
     },
 
     iconAndText:{
@@ -53,68 +50,15 @@ export default styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#484149c5',
     },
-    graphView: {
-        width: width * .65,
-        height: height * .51,
-        margin: width * .005,
-        // elevation: 6,
-
+    overRidTex:{
+        fontSize: width * .01,
+        fontWeight: 'bold',
+        color: '#484149c5',
     },
-    graph: {
-        flex: 1,
-        // borderWidth: 4,
-        // borderColor: "#80808094",
-        borderRadius: height * .05,
-        elevation: 3,
-        justifyContent:'center',
-        alignItems:'center'
-
-    },
-    OxigenInerContainer:{
-        flex: 1,
-        
-    },
-    weightView: {
-        width: width * .32,
-        height: height * .3,
-        margin: width * .005
-    },
-    weight: {
-        flex: 1,
-        // borderWidth: 4,
-        // borderColor: "gray",
-        borderRadius: height * .05,
-        elevation: 3,
-        padding:height * .022,
-    },
-    TemperatureView: {
-        width: width * .32,
-        height: height * .35,
-        margin: width * .005
-    },
-    Temperature: {
-        flex: 1,
-        // borderWidth: 4,
-        // borderColor: "gray",
-        borderRadius: height * .05,
-        elevation: 3,
-        padding:height * .022,
-
-
-    },
-    HumidityView: {
-        width: width * .32,
-        height: height * .35,
-        margin: width * .005
-    },
-    Humidity: {
-        flex: 1,
-        // borderWidth: 4,
-        // borderColor: "gray",
-        borderRadius: height * .05,
-        elevation: 3,
-        padding:height * .022,
-
+    overRidTex1:{
+        fontSize: width * .01,
+        fontWeight: 'bold',
+        color: '#484149c5',
     },
     inerContainer3: {
         width: width * 1,
@@ -122,40 +66,61 @@ export default styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        // backgroundColor:'red',
 
     },
-    oxygenHeading:{
-        fontSize:width * .018,
+    
+    airHeading:{
+        fontSize:width * .02,
         fontWeight: "bold",
         color: '#484149c5',
         // paddingHorizontal:width * .11,
         marginTop:width * .009,
-
         // marginRight:width * .06
     },
-    weightHeading:{
-        fontSize:width * .018,
+    weigHeading:{
+        fontSize:width * .02,
         fontWeight: "bold",
         color: '#484149c5',
         // paddingHorizontal:width * .11,
         marginTop:width * .009,
+        right:width * .02
         // marginRight:width * .06
     },
     tempHeading:{
-        fontSize:width * .018,
+        fontSize:width * .02,
         fontWeight: "bold",
         color: '#484149c5',
         paddingHorizontal:width * .2,
         marginTop:width * .009,
         // marginRight:width * .06
+        right:width * .02
+
     },
-    humHeading:{
-        fontSize:width * .018,
+    oxygenHeading:{
+        fontSize:width * .02,
         fontWeight: "bold",
         color: '#484149c5',
-        paddingHorizontal:width * .03,
+        paddingHorizontal:width * .05,
         marginTop:width * .009,
+        right:width * .01
+
+        // marginRight:width * .04
+    },
+    Spo2Heading:{
+        fontSize:width * .02,
+        fontWeight: "bold",
+        color: '#484149c5',
+        paddingHorizontal:width * .2,
+        marginTop:width * .009,
+        marginRight:width * .03,
+    },
+    humHeading:{
+        fontSize:width * .02,
+        fontWeight: "bold",
+        color: '#484149c5',
+        paddingHorizontal:width * .02,
+        marginTop:width * .009,
+        right:width * .01
         // marginRight:width * .06
     },
     inerContainer2: {
@@ -165,37 +130,8 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         // backgroundColor:'blue'
-
     },
-    OxigenIner:{
-        flex:1,
-        paddingHorizontal:height * .01,
-        // backgroundColor:'red'
-    },
-    likeInputOxygen:{
-        width:width * .23,
-        height:height* .1,
-        borderWidth:1,
-        flexDirection:"row-reverse",
-        alignItems: 'center',
-    },
-    boxUperStyle:{
-        flexDirection:'row'
-    },
-    boxLowerStyle:{
-        flexDirection:'row',
-        alignItems: 'center',
-        justifyContent:'center',
-        // marginBottom: height * .02,  
-    },
-    likeInputMin:{
-        width:width * .1,
-        height:height* .07,
-        borderWidth:1,
-        // flexDirection:"row-reverse",
-        alignItems: 'center',
-        justifyContent:'center'
-    },
-
+    
+   
 
 });

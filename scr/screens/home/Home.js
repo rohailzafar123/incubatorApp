@@ -5,9 +5,13 @@ import Menu from 'react-native-vector-icons/MaterialCommunityIcons';
 import NewOpen from 'react-native-vector-icons/MaterialCommunityIcons';
 import Notification from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
-import Oxygen from './oxygen';
-import Weight from './Weight';
+import Oxygen from './Oxygen/oxygen';
+import Weight from './BabyWeight/Weight';
 import Graph from './Graph/index';
+import Temp from './AirTemp/airTemp';
+import SPO2 from './Spo2/index';
+import Humidity from './Humidity/index';
+import LeftSlider from '../../component/leftSlideBar/index';
 
 import {
   LineChart,
@@ -37,13 +41,19 @@ export default class App extends Component {
       valueX: null,
       valuey: null,
       valuez: null,
-      alarmPower:0,
-      alarmSensor:0,
+      alarmPower:21,
+      alarmSensor:21,
       alarmFan:0,
-      alarmAir:0,
+      alarmAir:20,
       alarmAirOver:0,
       alarmSystem:0,
-      time:null
+      time:null,
+      airCondi:true,
+      senCondi:true,
+      fanCondi:true,
+      airOvCondi:true,
+      sysCondi:true,
+      powCondi:true,
     }
 
 }
@@ -54,15 +64,72 @@ export default class App extends Component {
     // console.log(subscription)
 
     componentDidMount() {
-      this.interval = setInterval(() => this.setState({ alarmAir: this.state.alarmAir + 1 }), 1000);
+      // this.interval = setInterval(() => this.setState({ alarmAir: this.state.alarmAir + 1 }), 1500);
+      this.alarmAirFn();
+      this.alarmPowFn();
+      this.alarmAirOvFn();
+      this.alarmFanFn();
+      this.alarmSenFn();
+      this.alarmSysFn();
     }
-    componentWillUnmount() {
-      clearInterval(this.interval);
-    }
-  
+    alarmAirFn = () => {
+      if ( this.state.alarmAir < 20){
+        this.setState({airCondi:false})
+      }else if(this.state.alarmAir > 37){
+        this.setState({airCondi:false})
+      }else{
+        this.setState({airCondi:true})
+      }
+    };
+    alarmPowFn = () => {
+      if ( this.state.alarmPower < 10){
+        this.setState({powCondi:false})
+      }else if(this.state.alarmPower > 20){
+        this.setState({powCondi:false})
+      }else{
+        this.setState({powCondi:true})
+      }
+    };
+    alarmSenFn = () => {
+      if ( this.state.alarmSensor < 10){
+        this.setState({senCondi:false})
+      }else if(this.state.alarmSensor > 20){
+        this.setState({senCondi:false})
+      }else{
+        this.setState({senCondi:true})
+      }
+    };
+    alarmFanFn = () => {
+      if ( this.state.alarmFan < 10){
+        this.setState({fanCondi:false})
+      }else if(this.state.alarmFan > 20){
+        this.setState({fanCondi:false})
+      }else{
+        this.setState({fanCondi:true})
+      }
+    };
+    alarmAirOvFn = () => {
+      if ( this.state.alarmAirOver < 10){
+        this.setState({airOvCondi:false})
+      }else if(this.state.alarmAirOver > 20){
+        this.setState({airOvCondi:false})
+      }else{
+        this.setState({airOvCondi:true})
+      }
+    };
+    alarmSysFn = () => {
+      if ( this.state.alarmSystem < 10){
+        this.setState({sysCondi:false})
+      }else if(this.state.alarmSystem > 20){
+        this.setState({sysCondi:false})
+      }else{
+        this.setState({sysCondi:true})
+      }
+    };
   render() {
-    // console.log(this.state.alarmAir)
-    // const{x}=this.state.valueX;
+    // console.log(this.state.alarmAir);
+    // console.log(this.state.airCondi)
+
 
     return (
       <View style={styles.container}>
@@ -72,66 +139,54 @@ export default class App extends Component {
           {/* <View style={style.notificationIcon}> */}
           <Graph />
             <View style={style.iconAndText}>
-              <Notification name="notifications-active" size={width * .05} color="#0ae916" style={{ marginHorizontal: width * .01 }} />
+              <Notification name="notifications-active" size={width * .05} color={this.state.powCondi ? '#0ae916' : 'red' } style={{ marginHorizontal: width * .01 }} />
               <Text style={style.alarmText}>Power Failure</Text>
             </View>
             <View style={style.iconAndText}>
-              <Notification name="notifications-active" size={width * .05} color="#0ae916" style={{ marginHorizontal: width * .01 }} />
+              <Notification name="notifications-active" size={width * .05} color={this.state.senCondi ? '#0ae916' : 'red' } style={{ marginHorizontal: width * .01 }} />
               <Text style={style.alarmText}>Sensor Failure</Text>
             </View>
             <View style={style.iconAndText}>
-              <Notification  name="notifications-active" size={width * .05} color="#0ae916" style={{ marginHorizontal: width * .01 }} />
+              <Notification  name="notifications-active" size={width * .05} color={this.state.fanCondi ? '#0ae916' : 'red' } style={{ marginHorizontal: width * .01 }} />
               <Text style={style.alarmText}>Fan Failure</Text>
             </View>
             <View style={style.iconAndText}>
-              <Notification name="notifications-active" size={width * .05} color="#0ae916" style={{ marginHorizontal: width * .01 }} />
+              <Notification name="notifications-active" size={width * .05} color={this.state.airCondi ? '#0ae916' : 'red' } style={{ marginHorizontal: width * .01 }} />
               <Text style={style.alarmText}>Air Temperature</Text>
             </View>
             <View style={style.iconAndText}>
-              <Notification name="notifications-active" size={width * .05} color="#0ae916" style={{ marginHorizontal: width * .01 }} />
-              <Text style={{
-        fontSize: width * .01,
-        fontWeight: 'bold',
-        color: '#484149c5',
-    }}>Over Air </Text>
-              <Text style={{
-        fontSize: width * .01,
-        fontWeight: 'bold',
-        color: '#484149c5',
-    }}>Temperature</Text>
+              <Notification name="notifications-active" size={width * .05} color={this.state.airOvCondi ? '#0ae916' : 'red' } style={{ marginHorizontal: width * .01 }} />
+              <Text style={style.overRidTex}>Over Air </Text>
+              <Text style={style.overRidTex1}>Temperature</Text>
             </View>
             <View style={style.iconAndText}>
               <Notification name="notifications-active" size={width * .05} color="#0ae916" style={{ marginHorizontal: width * .01 }} />
               <Text style={style.alarmText}>System Failure</Text>
             </View>
-          {/* </View> */}
-          <TouchableOpacity onPress={() => this.onButtonStart()}>
-            <Menu name="menu-open" size={width * .05} color="black" />
-          </TouchableOpacity>
+          <LeftSlider />
         </View>
         <View style={style.inerContainer3}>
-          <Text style={style.weightHeading}>
-            WEIGHT BALANCE
+          <Text style={style.airHeading}>
+            Air Temperature
           </Text>
           <Text style={style.tempHeading}>
-            TEMPERATURE
+            Skin Temperature
           </Text>
-          <Text style={style.humHeading}>
-            HUMIDITY
+          <Text style={style.weigHeading}>
+            BabyWeight
           </Text>
         </View>
         <View style={style.inerContainer1}>
           <Oxygen />
           <Oxygen />
-
           <Oxygen />
         </View>
         <View style={style.inerContainer3}>
-          <Text style={style.weightHeading}>
-            WEIGHT BALANCE
+          <Text style={style.oxygenHeading}>
+            Oxygen
           </Text>
-          <Text style={style.tempHeading}>
-            TEMPERATURE
+          <Text style={style.Spo2Heading}>
+            SP02/Hr
           </Text>
           <Text style={style.humHeading}>
             HUMIDITY
@@ -141,153 +196,9 @@ export default class App extends Component {
           {/* Weight */}
           <Weight />
           {/* Temperature */}
-          <TouchableOpacity style={style.TemperatureView}>
-            <View style={style.Temperature}>
-              <View style={style.OxigenInerContainer}>
-                <View style={style.OxigenIner}>
-                  <View style={{ flex: 1, }}>
-                    <Text style={{ fontSize: width * .02, fontWeight: "bold", color: '#FF420E' }}>
-                      Current Temperature
-                    </Text>
-                    <View style={style.boxUperStyle}>
-                      <View style={style.likeInputOxygen}>
-                        <Text
-                          style={{
-                            position: 'absolute',
-                            fontSize: width * .05, fontWeight: "bold", color: '#484149c5'
-                          }} >
-                          {this.state.valueX}
-                        </Text>
-                      </View>
-                      <Text style={{ fontSize: width * .018, fontWeight: "bold", color: '#484149c5', left: width * .003, }}>
-                        o
-                      </Text>
-                      <Text style={{ fontSize: width * .035, fontWeight: "bold", color: '#484149c5' }}>
-                        C
-                      </Text>
-                      <TouchableOpacity >
-                        <NewOpen name="open-in-new" size={width * .035} color="black" style={{ bottom: height * .05, right: width * .011 }} />
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                  <View style={{ flexDirection: 'row', flex: 1, }}>
-                    <View>
-                      <Text style={{ fontSize: width * .018, fontWeight: "bold", color: '#FF420E', top: height * .006, marginVertical: width * .005 }}>
-                        Min Temp.
-                      </Text>
-                      <View style={style.boxLowerStyle}>
-                        <View style={style.likeInputMin}>
-                          <Text style={{ fontSize: width * .035, fontWeight: "bold", color: '#484149c5' }}>
-                            {this.state.valuey}
-                          </Text>
-                        </View>
-                        <Text style={{ fontSize: width * .018, fontWeight: "bold", color: '#484149c5', left: width * .001, bottom: height * .03 }}>
-                          o
-                        </Text>
-                        <Text style={{ fontSize: width * .03, fontWeight: "bold", color: '#484149c5', bottom: height * .01, marginRight: height * .02 }}>
-                          C
-                        </Text>
-                      </View>
-
-                    </View>
-                    <View style={{ flexDirection: 'row', }}>
-                      <View>
-                        <Text style={{ fontSize: width * .018, fontWeight: "bold", color: '#FF420E', top: height * .006, marginVertical: width * .005 }}>
-                          Max Temp.
-                      </Text>
-                        <View style={style.boxLowerStyle}>
-                          <View style={style.likeInputMin}>
-                            <Text style={{ fontSize: width * .035, fontWeight: "bold", color: '#484149c5' }}>
-                              {this.state.valuez}
-                          </Text>
-                          </View>
-                          <Text style={{ fontSize: width * .018, fontWeight: "bold", color: '#484149c5', left: width * .001, bottom: height * .03 }}>
-                            o
-                          </Text>
-                          <Text style={{ fontSize: width * .03, fontWeight: "bold", color: '#484149c5', bottom: height * .01, }}>
-                            C
-                          </Text>
-                        </View>
-
-                      </View>
-
-                    </View>
-
-
-                  </View>
-                </View>
-              </View>
-            </View>
-
-          </TouchableOpacity>
+          <SPO2 />
           {/* Humidity */}
-          <TouchableOpacity style={style.HumidityView}>
-            <View style={style.Humidity}>
-              <View style={style.OxigenInerContainer}>
-                <View style={style.OxigenIner}>
-                  <View style={{ flex: 1, }}>
-                    <Text style={{ fontSize: width * .02, fontWeight: "bold", color: '#FF420E' }}>
-                      Current Humidity
-                </Text>
-                    <View style={style.boxUperStyle}>
-                      <View style={style.likeInputOxygen}>
-                        <Text style={{ fontSize: width * .05, fontWeight: "bold", color: '#484149c5' }}>
-                          00.0
-                    </Text>
-                      </View>
-                      <Text style={{ fontSize: width * .035, fontWeight: "bold", color: '#484149c5', marginTop: height * .02, marginLeft: height * .01 }}>
-                        %
-                  </Text>
-                      <TouchableOpacity >
-                        <NewOpen name="open-in-new" size={width * .035} color="black" style={{ bottom: height * .05, right: width * .01 }} />
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                  <View style={{ flexDirection: 'row', flex: 1, }}>
-                    <View>
-                      <Text style={{ fontSize: width * .018, fontWeight: "bold", color: '#FF420E', top: height * .006, marginVertical: width * .005 }}>
-                        Min.Humid
-                      </Text>
-                      <View style={style.boxLowerStyle}>
-                        <View style={style.likeInputMin}>
-                          <Text style={{ fontSize: width * .035, fontWeight: "bold", color: '#484149c5' }}>
-                            75.0
-                          </Text>
-                        </View>
-                        <Text style={{ fontSize: width * .03, fontWeight: "bold", color: '#484149c5', top: height * .009, marginRight: height * .02 }}>
-                          %
-                        </Text>
-                      </View>
-
-                    </View>
-                    <View style={{ flexDirection: 'row', }}>
-                      <View>
-                        <Text style={{ fontSize: width * .018, fontWeight: "bold", color: '#FF420E', top: height * .006, marginVertical: width * .005 }}>
-                          Max.Humid
-                      </Text>
-                        <View style={style.boxLowerStyle}>
-                          <View style={style.likeInputMin}>
-                            <Text style={{ fontSize: width * .035, fontWeight: "bold", color: '#484149c5', }}>
-                              99.0
-                          </Text>
-                          </View>
-                          <Text style={{ fontSize: width * .03, fontWeight: "bold", color: '#484149c5', top: height * .009, }}>
-                            %
-                        </Text>
-                        </View>
-
-                      </View>
-
-                    </View>
-
-
-                  </View>
-                </View>
-              </View>
-            </View>
-
-          </TouchableOpacity>
-
+          <Humidity />
         </View>
       </View>
     );
