@@ -73,6 +73,19 @@
 		<string>Zocial.ttf</string>
 		<string>NovaSquare-Regular.ttf</string>
 		<string>MetalMania-Regular.ttf</string>
+		<string>Monospace.ttf</string>
+		<string>MonospaceBold.ttf</string>
+		<string>MonospaceOblique.ttf</string>
+		<string>Fiddler's_Cove_Condensed_Italic.ttf</string>
+		<string>metalMania-Regular.ttf</string>
+		<string>monospace.ttf</string>
+		<string>monospaceBold.ttf</string>
+		<string>notoserif.ttf</string>
+		<string>novaSquare.ttf</string>
+		<string>Roboto-Black.ttf</string>
+		<string>Roboto_medium.ttf</string>
+		<string>Roboto.ttf</string>
+		<string>rubicon-icon-font.ttf</string>
 	</array>
 </dict>
 </plist>

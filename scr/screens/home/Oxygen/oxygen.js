@@ -11,6 +11,7 @@ export default class App extends Component {
     state = {
         isModalVisible: false
     }
+    
 
     toggleModal = () => {
         this.setState({ isModalVisible: !this.state.isModalVisible });
@@ -23,14 +24,14 @@ export default class App extends Component {
                         <View style={style.OxigenInerContainer}>
                             <View style={style.OxigenIner}>
                                 <View style={{ flex: 1, }}>
-                                    <Text style={{ fontSize: width * .02, fontWeight: "bold", color: '#FF420E', }}>
+                                    <Text style={{ fontSize: width * .02, fontWeight: "bold", color: '#FF420E',fontFamily:"" }}>
                                         Current Oxygen Level
                                     </Text>
                                     <View style={style.boxUperStyle}>
                                         <View style={style.likeInputOxygen}>
                                             <Text style={{ fontSize: width * .05, fontWeight: "bold", color: '#484149c5' }}>
                                                 00.0
-                                    </Text>
+                                            </Text>
                                         </View>
                                         <Text style={{ fontSize: width * .035, fontWeight: "bold", color: '#484149c5', marginTop: height * .02, marginLeft: height * .01 }}>
                                             %
@@ -47,13 +48,12 @@ export default class App extends Component {
                                             <View style={style.likeInputMin}>
                                                 <Text style={{ fontSize: width * .035, fontWeight: "bold", color: '#484149c5' }}>
                                                     75.0
-                                            </Text>
+                                                </Text>
                                             </View>
                                             <Text style={{ fontSize: width * .03, fontWeight: "bold", color: '#484149c5', top: height * .009, marginRight: height * .02 }}>
                                                 %
                                             </Text>
                                         </View>
-
                                     </View>
                                     <View style={{ flexDirection: 'row', }}>
                                         <View>
@@ -64,7 +64,7 @@ export default class App extends Component {
                                                 <View style={style.likeInputMin}>
                                                     <Text style={{ fontSize: width * .035, fontWeight: "bold", color: '#484149c5' }}>
                                                         99.0
-                                                </Text>
+                                                    </Text>
                                                 </View>
                                                 <Text style={{ fontSize: width * .03, fontWeight: "bold", color: '#484149c5', top: height * .009, marginRight: height * .02 }}>
                                                     %

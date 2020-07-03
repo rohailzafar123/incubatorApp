@@ -13,21 +13,22 @@ import SPO2 from './Spo2/index';
 import Humidity from './Humidity/index';
 import LeftSlider from '../../component/leftSlideBar/index';
 
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart
-} from "react-native-chart-kit";
-import {
-  accelerometer,
-  gyroscope,
-  setUpdateIntervalForType,
-  SensorTypes,
-  barometer
-} from "react-native-sensors";
+// import {
+//   LineChart,
+//   BarChart,
+//   PieChart,
+//   ProgressChart,
+//   ContributionGraph,
+//   StackedBarChart
+// } from "react-native-chart-kit";
+// import {
+//   accelerometer,
+//   gyroscope,
+//   setUpdateIntervalForType,
+//   SensorTypes,
+//   barometer
+// } from "react-native-sensors";
+import ScreenBrightness from 'react-native-screen-brightness';
 import { map, filter } from "rxjs/operators";
 const { height, width } = Dimensions.get('window');
 export default class App extends Component {
@@ -57,6 +58,12 @@ export default class App extends Component {
     }
 
 }
+// componentDidMount(){
+
+// ScreenBrightness.getBrightness().then(brightness => {
+//   console.log('brightness', brightness);
+// });
+// }
     // setTimeout(() => {
     //   // If it's the last subscription to accelerometer it will stop polling in the native API
     //   subscription.unsubscribe();
@@ -64,6 +71,8 @@ export default class App extends Component {
     // console.log(subscription)
 
     componentDidMount() {
+    // ScreenBrightness.setBrightness(0.5); // between 0 and 1
+
       // this.interval = setInterval(() => this.setState({ alarmAir: this.state.alarmAir + 1 }), 1500);
       this.alarmAirFn();
       this.alarmPowFn();
