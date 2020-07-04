@@ -9,7 +9,10 @@ import SysSettings from 'react-native-vector-icons/Octicons';
 import User from 'react-native-vector-icons/EvilIcons';
 import Graph from 'react-native-vector-icons/Entypo';
 import Pass from 'react-native-vector-icons/MaterialCommunityIcons';
+import Bright from 'react-native-vector-icons/MaterialCommunityIcons';
 import Data from 'react-native-vector-icons/FontAwesome';
+import Slider from '@react-native-community/slider';
+import SystemSetting from 'react-native-system-setting';
 // import SysSettings from 'react-native-vector-icons/Octicons';
 
 
@@ -18,8 +21,9 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isModalVisible:false,
-            LockorUnlo:false,
+            isModalVisible: false,
+            LockorUnlo: false,
+            brightness: 0.2
         }
 
     }
@@ -49,8 +53,8 @@ export default class App extends Component {
                         maxWidth: width * .35,
                         // top:width * .13,
                         left: width * .6,
-                        borderTopLeftRadius:width * .02,
-                        borderBottomLeftRadius:width * .02,
+                        borderTopLeftRadius: width * .02,
+                        borderBottomLeftRadius: width * .02,
                         // maxHeight:height * .7,
 
                     }}>
@@ -68,7 +72,7 @@ export default class App extends Component {
                                 alignItems: 'center',
                                 flexDirection: 'row',
                                 paddingHorizontal: width * .015,
-                        borderTopLeftRadius:width * .02,
+                                borderTopLeftRadius: width * .02,
 
                             }}>
 
@@ -76,7 +80,7 @@ export default class App extends Component {
                                     fontSize: width * .02,
                                     color: 'red',
                                     fontWeight: 'bold',
-                                    fontFamily:'MetalMania-Regular',
+                                    fontFamily: 'MetalMania-Regular',
                                 }}>
                                     Settings
                                 </Text>
@@ -91,10 +95,10 @@ export default class App extends Component {
                             <View style={{
                                 flex: 1,
                                 elevation: width * .005,
-                                justifyContent:'center',
-                                alignItems:'center',
-                                marginTop:height * .02,
-                                
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginTop: height * .02,
+
                             }}>
                                 <TouchableOpacity style={style.listView} onPress={this.toggleModalLock}>
                                     <Text style={style.listText}>Lock Or Unlock</Text>
@@ -103,6 +107,25 @@ export default class App extends Component {
                                 <TouchableOpacity style={style.listView}>
                                     <Text style={style.listText}>System Setting</Text>
                                     <SysSettings name={'settings'} size={width * .02} />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={style.listView}>
+                                    <Text style={style.listText}>Brightness</Text>
+                                    <View style={{ width: width * .18 }}>
+                                        <Slider
+                                            maximumValue={1}
+                                            minimumValue={0}
+                                            minimumTrackTintColor="#fd5e5efd"
+                                            maximumTrackTintColor="#000000"
+                                            thumbTintColor='red'
+                                            step={0.1}
+                                            value={this.state.brightness}
+                                            onValueChange={(brightness) => {
+                                                this.setState({ brightness });
+                                                SystemSetting.setBrightness(brightness);
+                                            }}
+                                        />
+                                    </View>
+                                    <Bright name={'brightness-7'} size={width * .02} />
                                 </TouchableOpacity>
                                 <TouchableOpacity style={style.listView}>
                                     <Text style={style.listText}>Parameters</Text>
@@ -120,36 +143,55 @@ export default class App extends Component {
                                     <Text style={style.listText}>Data Record</Text>
                                     <Data name={'database'} size={width * .018} />
                                 </TouchableOpacity>
-                                <TouchableOpacity style={style.listView}>
+                                <TouchableOpacity style={style.listView} onPress={this.toggleModalLock}>
                                     <Text style={style.listText}>Unit</Text>
                                     <Text style={style.listText}>(c or f) (kg or lb)</Text>
                                 </TouchableOpacity>
                             </View>
 
                         </View>
-                    <Modal animationIn="slideInRight"
-                    animationOut="slideOutRight"
-                    onBackdropPress={() => this.toggleModalLock()}
-                    onSwipeComplete={() => this.toggleModalLock()}
-                    swipeDirection="right"
-                    isVisible={this.state.LockorUnlo}
-                    style={{
-                        elevation: width * .005,
-                        backgroundColor: 'white',
-                        maxHeight: height * 1,
-                        maxWidth: width * .35,
-                        // top:width * .13,
-                        // left: width * .6,
-                        // borderTopRightRadius:width * .05,
-                        // borderTopLeftRadius:width * .05,
-                        // maxHeight:height * .7,
+                        <Modal animationIn="slideInRight"
+                            animationOut="slideOutRight"
+                            onBackdropPress={() => this.toggleModalLock()}
+                            onSwipeComplete={() => this.toggleModalLock()}
 
-                    }}>
+                            swipeDirection="right"
+                            isVisible={this.state.LockorUnlo}
+                            style={{
+                                elevation: width * .005,
+                                borderBottomLeftRadius: width * .005,
+                                borderTopRightRadius: width * .005,
+                                borderTopLeftRadius: width * .025,
+                                borderBottomRightRadius: width * .025,
+                                backgroundColor: 'white',
+                                maxHeight: height * .5,
+                                maxWidth: width * .35,
+                                top: height * .15
+                            }}>
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
+                                <View style={{ width: width * .32, height: height * .45 }}>
+                                   
+                                    <View style={{
+                                        flex: 1, backgroundColor: 'white', borderBottomLeftRadius: width * .005,
+                                        borderTopRightRadius: width * .005,
+                                        borderTopLeftRadius: width * .025,
+                                        borderBottomRightRadius: width * .025,
+                                        shadowOffset: { width: width * .01, height: height * .02, },
+                                        shadowColor: 'red',
+                                        shadowOpacity: 1.0,
+                                        shadowRadius: 3.84,
+                                        elevation: width * .01,
+                                    }}>
 
-                    </Modal>
+                                    </View>
+                            </View>
+
+                            </View>
+
+                        </Modal>
                     </View>
                 </Modal>
-            </View>
+            </View >
         );
     }
 }

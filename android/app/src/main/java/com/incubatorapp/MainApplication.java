@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.robinpowered.react.ScreenBrightness.ScreenBrightnessPackage;
+import com.reactnativecommunity.slider.ReactSliderPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactInstanceManager;

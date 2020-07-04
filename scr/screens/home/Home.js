@@ -12,24 +12,6 @@ import Temp from './AirTemp/airTemp';
 import SPO2 from './Spo2/index';
 import Humidity from './Humidity/index';
 import LeftSlider from '../../component/leftSlideBar/index';
-
-// import {
-//   LineChart,
-//   BarChart,
-//   PieChart,
-//   ProgressChart,
-//   ContributionGraph,
-//   StackedBarChart
-// } from "react-native-chart-kit";
-// import {
-//   accelerometer,
-//   gyroscope,
-//   setUpdateIntervalForType,
-//   SensorTypes,
-//   barometer
-// } from "react-native-sensors";
-import ScreenBrightness from 'react-native-screen-brightness';
-import { map, filter } from "rxjs/operators";
 const { height, width } = Dimensions.get('window');
 export default class App extends Component {
   constructor(props) {
@@ -56,23 +38,25 @@ export default class App extends Component {
       sysCondi:true,
       powCondi:true,
     }
-
 }
 // componentDidMount(){
+  
 
-// ScreenBrightness.getBrightness().then(brightness => {
-//   console.log('brightness', brightness);
-// });
-// }
     // setTimeout(() => {
     //   // If it's the last subscription to accelerometer it will stop polling in the native API
     //   subscription.unsubscribe();
     // }, 5000);
     // console.log(subscription)
-
+    getBrightness(){
+      // ScreenBrightness.getBrightness().then(brightness => {
+      //   alert('brightness ' + brightness);
+      // });
+    }
     componentDidMount() {
-    // ScreenBrightness.setBrightness(0.5); // between 0 and 1
-
+    //   SystemSetting.getBrightness().then((brightness)=>{
+    //     console.log('Current brightness is ' + brightness);
+    // });
+    
       // this.interval = setInterval(() => this.setState({ alarmAir: this.state.alarmAir + 1 }), 1500);
       this.alarmAirFn();
       this.alarmPowFn();
@@ -178,6 +162,7 @@ export default class App extends Component {
           <Text style={style.airHeading}>
             Air Temperature
           </Text>
+          
           <Text style={style.tempHeading}>
             Skin Temperature
           </Text>

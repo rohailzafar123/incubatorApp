@@ -79,6 +79,10 @@ target 'incubatorApp' do
 
   pod 'react-native-config', :path => '../node_modules/react-native-config'
 
+  pod 'react-native-slider', :path => '../node_modules/@react-native-community/slider'
+
+  pod 'react-native-screen-brightness', :path => '../node_modules/react-native-screen-brightness'
+
   target 'incubatorAppTests' do
     inherit! :complete
     # Pods for testing

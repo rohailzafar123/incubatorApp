@@ -7,7 +7,7 @@ const { height, width } = Dimensions.get('window');
 
 export default styles = StyleSheet.create({
     listView:{
-        height:height * .08,
+        height:height * .07,
         width: width * .3,
         backgroundColor:'white',
         marginBottom:height * .02,
