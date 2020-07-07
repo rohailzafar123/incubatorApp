@@ -1,5 +1,5 @@
-import { StyleSheet, Dimensions } from "react-native"
-
+import { StyleSheet, Dimensions } from "react-native";
+import {Fonts} from '../../utils/fonts';
 //Packages
 
 //Files
@@ -24,11 +24,6 @@ export default styles = StyleSheet.create({
         elevation: 5,
         marginBottom:height * .01
     },
-    headerText: {
-        fontSize: width * .03,
-        fontWeight: 'bold',
-
-    },
     inerContainer1: {
         width: width * 1,
         height: height * .39,
@@ -39,25 +34,14 @@ export default styles = StyleSheet.create({
     },
     notificationIcon:{
         flexDirection:'row',
-      
     },
 
     iconAndText:{
         alignItems:'center'
     },
     alarmText:{
-        fontSize: width * .013,
-        fontWeight: 'bold',
-        color: '#484149c5',
-    },
-    overRidTex:{
-        fontSize: width * .01,
-        fontWeight: 'bold',
-        color: '#484149c5',
-    },
-    overRidTex1:{
-        fontSize: width * .01,
-        fontWeight: 'bold',
+        fontSize: width * .015,
+        fontFamily:Fonts.Montserrat,
         color: '#484149c5',
     },
     inerContainer3: {
@@ -65,63 +49,46 @@ export default styles = StyleSheet.create({
         height: height * .04,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
-
+        justifyContent: 'space-around',
     },
-    
     airHeading:{
-        fontSize:width * .02,
-        fontWeight: "bold",
+        fontSize:width * .022,
+        fontFamily:Fonts.BalooChettanBold,        
         color: '#484149c5',
-        // paddingHorizontal:width * .11,
         marginTop:width * .009,
-        // marginRight:width * .06
-    },
-    weigHeading:{
-        fontSize:width * .02,
-        fontWeight: "bold",
-        color: '#484149c5',
-        // paddingHorizontal:width * .11,
-        marginTop:width * .009,
-        right:width * .02
-        // marginRight:width * .06
     },
     tempHeading:{
-        fontSize:width * .02,
-        fontWeight: "bold",
+        fontSize:width * .022,
+        fontFamily:Fonts.BalooChettanBold,        
         color: '#484149c5',
-        paddingHorizontal:width * .2,
         marginTop:width * .009,
-        // marginRight:width * .06
-        right:width * .02
-
-    },
-    oxygenHeading:{
-        fontSize:width * .02,
-        fontWeight: "bold",
-        color: '#484149c5',
-        paddingHorizontal:width * .05,
-        marginTop:width * .009,
-        right:width * .01
-
-        // marginRight:width * .04
-    },
-    Spo2Heading:{
-        fontSize:width * .02,
-        fontWeight: "bold",
-        color: '#484149c5',
-        paddingHorizontal:width * .2,
-        marginTop:width * .009,
-        marginRight:width * .03,
+        right:width * .03
     },
     humHeading:{
-        fontSize:width * .02,
-        fontWeight: "bold",
+        fontSize:width * .022,
+        fontFamily:Fonts.BalooChettanBold,        
         color: '#484149c5',
-        paddingHorizontal:width * .02,
         marginTop:width * .009,
-        right:width * .01
-        // marginRight:width * .06
+        right:width * .03
+    },
+    weigHeading:{
+        fontSize:width * .022,
+        fontFamily:Fonts.BalooChettanBold,        
+        color: '#484149c5',
+        marginTop:width * .009,
+    },
+    Spo2Heading:{
+        fontSize:width * .022,
+        fontFamily:Fonts.BalooChettanBold,        
+        color: '#484149c5',
+        marginTop:width * .009,
+    },
+    oxygenHeading:{
+        fontSize:width * .022,
+        fontFamily:Fonts.BalooChettanBold,        
+        color: '#484149c5',
+        marginTop:width * .009,
+        left:width * .01
     },
     inerContainer2: {
         width: width * 1,
@@ -129,7 +96,6 @@ export default styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        // backgroundColor:'blue'
     },
     
    

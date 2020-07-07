@@ -11,6 +11,7 @@ import Send from 'react-native-vector-icons/FontAwesome';
 import { TextInput } from 'react-native-gesture-handler';
 import SwitchToggle from 'react-native-switch-toggle';
 import Graph from 'react-native-vector-icons/SimpleLineIcons';
+import { Fonts } from '../../../utils/fonts';
 
 const { height, width } = Dimensions.get('window');
 export default class App extends Component {
@@ -30,24 +31,29 @@ export default class App extends Component {
         // console.log(this.state.isModalVisibleGraph)
         return (
             <View>
-                <TouchableOpacity onPress={this.toggleModal}
-                    style={{
+                <TouchableOpacity onPress={this.toggleModal}>
+                    <View style={{
                         borderTopRightRadius: width * .015,
                         borderBottomLeftRadius: width * .015,
                         backgroundColor: 'orange',
-                        height: height * .11,
+                        height: height * .13,
                         width: width * .1,
                         alignItems: 'center',
-                        justifyContent: 'center'
+                        justifyContent: 'center',
+                        marginVertical:1
                     }}>
-                    <Graph name={'graph'} size={width * .05} color={"black"} />
-                    <Text style={{
-                         alignSelf:'center',
-                         fontSize: width * .016,
-                         fontWeight: 'bold',
-                         color: '#484149c5',
-                         bottom:height * .01
-                    }}>Graph</Text>
+                        <Graph name={'graph'} size={width * .05} color={"black"} />
+                        <Text style={{
+                            alignSelf: 'center',
+                            fontSize: width * .02,
+                            fontFamily: Fonts.Aladin,
+                            letterSpacing: 2,
+                            color: '#484149c5',
+                            bottom: height * .01
+                        }}>Graph</Text>
+
+                    </View>
+
                 </TouchableOpacity>
                 {/* <Modal
                     animationIn="slideInUp"

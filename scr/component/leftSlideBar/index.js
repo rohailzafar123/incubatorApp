@@ -143,9 +143,10 @@ export default class App extends Component {
                                     <Text style={style.listText}>Data Record</Text>
                                     <Data name={'database'} size={width * .018} />
                                 </TouchableOpacity>
-                                <TouchableOpacity style={style.listView} onPress={this.toggleModalLock}>
-                                    <Text style={style.listText}>Unit</Text>
-                                    <Text style={style.listText}>(c or f) (kg or lb)</Text>
+                                <TouchableOpacity style={style.listView} onPress={() => {
+                                    this.setState({ LockorUnlo: !this.state.LockorUnlo });
+                                }}>
+                                    <Text style={style.listText}>Units</Text>
                                 </TouchableOpacity>
                             </View>
 
@@ -170,9 +171,11 @@ export default class App extends Component {
                             }}>
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
                                 <View style={{ width: width * .32, height: height * .45 }}>
-                                   
+
                                     <View style={{
-                                        flex: 1, backgroundColor: 'white', borderBottomLeftRadius: width * .005,
+                                        flex: 1, 
+                                        backgroundColor: 'white', 
+                                        borderBottomLeftRadius: width * .005,
                                         borderTopRightRadius: width * .005,
                                         borderTopLeftRadius: width * .025,
                                         borderBottomRightRadius: width * .025,
@@ -180,11 +183,36 @@ export default class App extends Component {
                                         shadowColor: 'red',
                                         shadowOpacity: 1.0,
                                         shadowRadius: 3.84,
-                                        elevation: width * .01,
+                                        elevation: width * .015,
                                     }}>
+                                        <View style={{
+                                            width: width * .32,
+                                            height: height * .1
+                                            }}>
+                                                <View style={{
+                                                    flex:1,
+                                                    // backgroundColor:'red',
+                                                    borderTopRightRadius: width * .005,
+                                                    borderTopLeftRadius: width * .025,
+                                                    }}>
+                                                        <View style={{
+                                                            flex:1,
+                                                            justifyContent:'center',
+                                                            alignItems:'center'
+                                                            }}>
+                                                            <Text>
+                                                                Change the Unit
+                                                            </Text>
+
+                                                        </View>
+
+                                                </View>
+
+                                        </View>
+
 
                                     </View>
-                            </View>
+                                </View>
 
                             </View>
 

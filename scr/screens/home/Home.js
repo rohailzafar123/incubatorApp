@@ -11,6 +11,7 @@ import Graph from './Graph/index';
 import Temp from './AirTemp/airTemp';
 import SPO2 from './Spo2/index';
 import Humidity from './Humidity/index';
+import AirTemp from './AirTemp/airTemp';
 import LeftSlider from '../../component/leftSlideBar/index';
 const { height, width } = Dimensions.get('window');
 export default class App extends Component {
@@ -28,13 +29,13 @@ export default class App extends Component {
       alarmSensor:21,
       alarmFan:0,
       alarmAir:20,
-      alarmAirOver:0,
+      // alarmAirOver:0,
       alarmSystem:0,
       time:null,
       airCondi:true,
       senCondi:true,
       fanCondi:true,
-      airOvCondi:true,
+      // airOvCondi:true,
       sysCondi:true,
       powCondi:true,
     }
@@ -60,7 +61,7 @@ export default class App extends Component {
       // this.interval = setInterval(() => this.setState({ alarmAir: this.state.alarmAir + 1 }), 1500);
       this.alarmAirFn();
       this.alarmPowFn();
-      this.alarmAirOvFn();
+      // this.alarmAirOvFn();
       this.alarmFanFn();
       this.alarmSenFn();
       this.alarmSysFn();
@@ -101,15 +102,15 @@ export default class App extends Component {
         this.setState({fanCondi:true})
       }
     };
-    alarmAirOvFn = () => {
-      if ( this.state.alarmAirOver < 10){
-        this.setState({airOvCondi:false})
-      }else if(this.state.alarmAirOver > 20){
-        this.setState({airOvCondi:false})
-      }else{
-        this.setState({airOvCondi:true})
-      }
-    };
+    // alarmAirOvFn = () => {
+    //   if ( this.state.alarmAirOver < 10){
+    //     this.setState({airOvCondi:false})
+    //   }else if(this.state.alarmAirOver > 20){
+    //     this.setState({airOvCondi:false})
+    //   }else{
+    //     this.setState({airOvCondi:true})
+    //   }
+    // };
     alarmSysFn = () => {
       if ( this.state.alarmSystem < 10){
         this.setState({sysCondi:false})
@@ -145,13 +146,13 @@ export default class App extends Component {
             </View>
             <View style={style.iconAndText}>
               <Notification name="notifications-active" size={width * .05} color={this.state.airCondi ? '#0ae916' : 'red' } style={{ marginHorizontal: width * .01 }} />
-              <Text style={style.alarmText}>Air Temperature</Text>
+              <Text style={style.alarmText}>Over Temperature</Text>
             </View>
-            <View style={style.iconAndText}>
+            {/* <View style={style.iconAndText}>
               <Notification name="notifications-active" size={width * .05} color={this.state.airOvCondi ? '#0ae916' : 'red' } style={{ marginHorizontal: width * .01 }} />
               <Text style={style.overRidTex}>Over Air </Text>
               <Text style={style.overRidTex1}>Temperature</Text>
-            </View>
+            </View> */}
             <View style={style.iconAndText}>
               <Notification name="notifications-active" size={width * .05} color="#0ae916" style={{ marginHorizontal: width * .01 }} />
               <Text style={style.alarmText}>System Failure</Text>
@@ -166,24 +167,25 @@ export default class App extends Component {
           <Text style={style.tempHeading}>
             Skin Temperature
           </Text>
-          <Text style={style.weigHeading}>
-            BabyWeight
+          <Text style={style.humHeading}>
+            Humidity
           </Text>
         </View>
         <View style={style.inerContainer1}>
+          <AirTemp />
           <Oxygen />
-          <Oxygen />
-          <Oxygen />
+          <Humidity />
+
         </View>
         <View style={style.inerContainer3}>
-          <Text style={style.oxygenHeading}>
-            Oxygen
+          <Text style={style.weigHeading}>
+            BabyWeight
           </Text>
           <Text style={style.Spo2Heading}>
-            SP02/Hr
+            SP02/HR
           </Text>
-          <Text style={style.humHeading}>
-            HUMIDITY
+          <Text style={style.oxygenHeading}>
+            Oxygen Level
           </Text>
         </View>
         <View style={style.inerContainer2}>
@@ -192,7 +194,8 @@ export default class App extends Component {
           {/* Temperature */}
           <SPO2 />
           {/* Humidity */}
-          <Humidity />
+          <Oxygen />
+
         </View>
       </View>
     );
