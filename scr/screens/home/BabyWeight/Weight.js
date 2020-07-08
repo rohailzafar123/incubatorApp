@@ -19,7 +19,7 @@ export default class App extends Component {
         isModalVisible: false,
         toggle: false,
         currentWei: "00.0",
-        preWei:'00.0'
+        preWei: '00.0'
     }
     togglebuttun = () => {
         this.setState({ toggle: !this.state.toggle });
@@ -31,110 +31,62 @@ export default class App extends Component {
         // console.log(this.state.toggle)
         return (
             <View>
-                <TouchableOpacity style={style.weightView} onPress={this.toggleModal}>
-                    <View style={style.weight}>
-                        <View style={style.OxigenInerContainer}>
-                            <View style={style.OxigenIner}>
+                <View style={comStyle.TemperatureView}>
+                    <View style={comStyle.Temperature}>
+                        <View style={comStyle.skinInerContainer}>
+                            <View style={comStyle.skinIner}>
                                 <View style={{ flex: 1, }}>
-                                    <Text style={{
-                                        fontSize: width * .02,
-                                        fontWeight: "bold",
-                                        color: '#FF420E'
-                                    }}>
+                                    <Text style={comStyle.currentTempText}>
                                         Current Weight
-                                    </Text>
-                                    <View style={style.boxUperStyle}>
-                                        <View style={style.likeInputOxygen}>
-                                            <Text style={{
-                                                fontSize: width * .05,
-                                                fontWeight: "bold",
-                                                color: '#484149c5'
-                                            }}>
-                                                {this.state.currentWei}
-                                            </Text>
+              </Text>
+                                    <View style={comStyle.boxUperStyle}>
+                                        <View style={comStyle.likeInputOxygen}>
+                                            <Text
+                                                style={comStyle.tempInputCur} >
+                                                00.0
+                  </Text>
                                         </View>
-
-                                        {this.state.toggle == false ? (
+                                        
+                                        <Text style={comStyle.centiUper}>
+                                            kg
+                </Text>
+                                        <TouchableOpacity  style={comStyle.iconOpenRow} onPress={() => this.toggleModal()}>
                                             <View>
-                                                <Text style={{
-                                                    fontSize: width * .03,
-                                                    fontWeight: "bold",
-                                                    color: '#484149c5',
-                                                    marginTop: height * .02,
-                                                    marginLeft: height * .01
-                                                }}>Kgs.
-                                                                 </Text>
-                                                <NewOpen name="open-in-new" size={width * .035} color="black" style={{ bottom: height * .14, left: width * .022 }} />
+
+                                                <NewOpen name="open-in-new" size={width * .035} color="black" />
                                             </View>
-                                        ) : (
-                                                <View>
-                                                    <Text style={{
-                                                        fontSize: width * .03,
-                                                        fontWeight: "bold",
-                                                        color: '#484149c5',
-                                                        marginTop: height * .02,
-                                                        marginLeft: height * .01
-                                                    }}>£
-                                                                 </Text>
-                                                    <NewOpen name="open-in-new" size={width * .035} color="black" style={{ bottom: height * .14, left: width * .022 }} />
-                                                </View>
-
-                                            )}
-
-
+                                        </TouchableOpacity>
                                     </View>
                                 </View>
                                 <View style={{ flexDirection: 'row', flex: 1, }}>
                                     <View>
-                                        <Text style={{
-                                            fontSize: width * .018,
-                                            fontWeight: "bold",
-                                            color: '#FF420E',
-                                            top: height * .006,
-                                            marginVertical: width * .005
-                                        }}>
+                                        <Text style={comStyle.setTemp}>
                                             Previous Weight
-                                        </Text>
-                                        <View style={style.boxLowerStyle}>
-                                            <View style={style.likeInputMin}>
-                                                <Text style={{
-                                                    fontSize: width * .035,
-                                                    fontWeight: "bold",
-                                                    color: '#484149c5'
-                                                }}>
-                                                {this.state.preWei}
-                                                </Text>
+                </Text>
+                                        <View style={comStyle.boxLowerStyle}>
+                                            <View style={comStyle.likeInputMin}>
+                                                <Text style={comStyle.tempInputSet}>
+                                                    00.0
+                    </Text>
                                             </View>
-                                            {this.state.toggle == false ? (
-                                                <Text style={{
-                                                    fontSize: width * .03,
-                                                    fontWeight: "bold",
-                                                    color: '#484149c5',
-                                                    marginLeft: height * .01
-                                                }}>
-                                                    Kgs.
-                                                </Text>
-                                            ) : (
-                                                    <Text style={{
-                                                        fontSize: width * .03,
-                                                        fontWeight: "bold",
-                                                        color: '#484149c5',
-                                                        marginLeft: height * .01
-                                                    }}>
-                                                        £
-                                                    </Text>
-                                                )}
-
+                                            
+                                            <Text style={comStyle.centiLower}>
+                                                kg
+                  </Text>
                                         </View>
                                     </View>
                                     <View style={{ flexDirection: 'row', }}>
+
+
                                     </View>
+
+
                                 </View>
                             </View>
                         </View>
                     </View>
 
-                </TouchableOpacity>
+                </View>
                 <Modal
                     animationIn="slideInUp"
                     animationOut="slideOutDown"
@@ -150,18 +102,18 @@ export default class App extends Component {
                                     WEIGHT BALANCE
                                 </Text>
                                 <View style={style.headerIcon}>
-                                    
+
 
                                     <Status name="notifications-active" size={width * .05} color="#05dd3bc5" style={{ marginHorizontal: width * .01 }} />
                                     <Text style={style.alarmText}>Current Status</Text>
                                 </View>
                                 <View >
-                                <TouchableOpacity onPress={() => this.toggleModal()} style={style.submit}>
-                                
-                                    <Text style={style.alarmText}>Done</Text>
+                                    <TouchableOpacity onPress={() => this.toggleModal()} style={style.submit}>
 
-                                        </TouchableOpacity>
-                                    
+                                        <Text style={style.alarmText}>Done</Text>
+
+                                    </TouchableOpacity>
+
                                 </View>
                             </View>
 
@@ -186,7 +138,7 @@ export default class App extends Component {
                                                 style={style.currentWeiInp}
                                                 keyboardType={'numeric'}
                                                 maxLength={6}
-                                                onChangeText={currentWei => this.setState({currentWei})}
+                                                onChangeText={currentWei => this.setState({ currentWei })}
                                             />
                                         </View>
                                         {this.state.toggle == false ? (
@@ -212,7 +164,7 @@ export default class App extends Component {
                                                 style={style.preWeiInput}
                                                 keyboardType={'numeric'}
                                                 maxLength={6}
-                                                onChangeText={preWei => this.setState({preWei})}
+                                                onChangeText={preWei => this.setState({ preWei })}
 
                                             />
                                         </View>
@@ -223,11 +175,11 @@ export default class App extends Component {
                                                 marginLeft: width * .005,
                                             }}>Kgs</Text>
                                         ) : (
-                                            <Text style={{
-                                                fontSize: width * .025,
-                                                fontWeight: 'bold',
-                                                marginLeft: width * .005,
-                                            }}>£</Text>
+                                                <Text style={{
+                                                    fontSize: width * .025,
+                                                    fontWeight: 'bold',
+                                                    marginLeft: width * .005,
+                                                }}>£</Text>
                                             )}
 
                                     </View>

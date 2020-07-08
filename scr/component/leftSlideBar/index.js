@@ -14,6 +14,7 @@ import Data from 'react-native-vector-icons/FontAwesome';
 import Slider from '@react-native-community/slider';
 import SystemSetting from 'react-native-system-setting';
 // import SysSettings from 'react-native-vector-icons/Octicons';
+import { Fonts } from '../../utils/fonts';
 
 
 const { height, width } = Dimensions.get('window');
@@ -79,8 +80,7 @@ export default class App extends Component {
                                 <Text style={{
                                     fontSize: width * .02,
                                     color: 'red',
-                                    fontWeight: 'bold',
-                                    fontFamily: 'MetalMania-Regular',
+                                    fontFamily:Fonts.Handlee,
                                 }}>
                                     Settings
                                 </Text>

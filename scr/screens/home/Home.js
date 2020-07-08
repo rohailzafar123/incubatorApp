@@ -8,7 +8,7 @@ import Modal from 'react-native-modal';
 import Oxygen from './Oxygen/oxygen';
 import Weight from './BabyWeight/Weight';
 import Graph from './Graph/index';
-import Temp from './AirTemp/airTemp';
+import SkinTemp from './SkinTemp/index';
 import SPO2 from './Spo2/index';
 import Humidity from './Humidity/index';
 import AirTemp from './AirTemp/airTemp';
@@ -163,7 +163,6 @@ export default class App extends Component {
           <Text style={style.airHeading}>
             Air Temperature
           </Text>
-          
           <Text style={style.tempHeading}>
             Skin Temperature
           </Text>
@@ -173,9 +172,8 @@ export default class App extends Component {
         </View>
         <View style={style.inerContainer1}>
           <AirTemp />
-          <Oxygen />
+          <SkinTemp />
           <Humidity />
-
         </View>
         <View style={style.inerContainer3}>
           <Text style={style.weigHeading}>

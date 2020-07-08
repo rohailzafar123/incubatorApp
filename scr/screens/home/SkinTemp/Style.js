@@ -40,15 +40,13 @@ export default styles = StyleSheet.create({
         left: width * .005,
     },
     centiUper: {
-        fontSize: width * .035,
+        fontSize: width * .04,
         fontFamily: Fonts.BalooChettan2,
-        color: '#484149c5',
-        top: height * .01,
-
+        color: '#484149c5'
     },
     iconOpenRow: {
         bottom: height * .065,
-        right: width * .015
+        right: width * .011
     },
     setTemp: {
         fontSize: width * .023,
@@ -74,7 +72,7 @@ export default styles = StyleSheet.create({
         fontSize: width * .03,
         fontFamily: Fonts.BalooChettan2,
         color: '#484149c5',
-        // top: height * .005,
+        bottom: height * .01,
         marginRight: height * .02
     },
 

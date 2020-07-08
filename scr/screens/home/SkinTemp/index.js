@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Image, StatusBar, Dimensions, TouchableOpacity } from 'react-native';
-import style from './oxygenStyle';
+import style from './Style';
 import Menu from 'react-native-vector-icons/MaterialCommunityIcons';
 import NewOpen from 'react-native-vector-icons/MaterialCommunityIcons';
 import Notification from 'react-native-vector-icons/MaterialIcons';
@@ -18,65 +18,63 @@ export default class App extends Component {
     render() {
         return (
             <View>
-                <TouchableOpacity style={style.OxigenView} onPress={this.toggleModal}>
-                    <View style={style.Oxigen}>
-                        <View style={style.OxigenInerContainer}>
-                            <View style={style.OxigenIner}>
-                                <View style={{ flex: 1, }}>
-                                    <Text style={{ fontSize: width * .02, fontWeight: "bold", color: '#FF420E', }}>
-                                        Current Oxygen Level
-                                    </Text>
-                                    <View style={style.boxUperStyle}>
-                                        <View style={style.likeInputOxygen}>
-                                            <Text style={{ fontSize: width * .05, fontWeight: "bold", color: '#484149c5' }}>
-                                                00.0
-                                    </Text>
-                                        </View>
-                                        <Text style={{ fontSize: width * .035, fontWeight: "bold", color: '#484149c5', marginTop: height * .02, marginLeft: height * .01 }}>
-                                            %
-                                        </Text>
-                                        <NewOpen name="open-in-new" size={width * .035} color="black" style={{ bottom: height * .05, right: width * .01 }} />
-                                    </View>
-                                </View>
-                                <View style={{ flexDirection: 'row', flex: 1, }}>
-                                    <View>
-                                        <Text style={{ fontSize: width * .018, fontWeight: "bold", color: '#FF420E', top: height * .006, marginVertical: width * .005 }}>
-                                            Min.Per %
-                                        </Text>
-                                        <View style={style.boxLowerStyle}>
-                                            <View style={style.likeInputMin}>
-                                                <Text style={{ fontSize: width * .035, fontWeight: "bold", color: '#484149c5' }}>
-                                                    75.0
-                                            </Text>
-                                            </View>
-                                            <Text style={{ fontSize: width * .03, fontWeight: "bold", color: '#484149c5', top: height * .009, marginRight: height * .02 }}>
-                                                %
-                                            </Text>
-                                        </View>
-
-                                    </View>
-                                    <View style={{ flexDirection: 'row', }}>
-                                        <View>
-                                            <Text style={{ fontSize: width * .018, fontWeight: "bold", color: '#FF420E', top: height * .006, marginVertical: width * .005 }}>
-                                                Max.Per %
-                                            </Text>
-                                            <View style={style.boxLowerStyle}>
-                                                <View style={style.likeInputMin}>
-                                                    <Text style={{ fontSize: width * .035, fontWeight: "bold", color: '#484149c5' }}>
-                                                        99.0
-                                                </Text>
-                                                </View>
-                                                <Text style={{ fontSize: width * .03, fontWeight: "bold", color: '#484149c5', top: height * .009, marginRight: height * .02 }}>
-                                                    %
-                                                </Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-                        </View>
+                <View style={style.TemperatureView}>
+            <View style={style.Temperature}>
+              <View style={style.skinInerContainer}>
+                <View style={style.skinIner}>
+                  <View style={{ flex: 1, }}>
+                    <Text style={style.currentTempText}>
+                      Current Temperature
+                    </Text>
+                    <View style={style.boxUperStyle}>
+                      <View style={style.likeInputOxygen}>
+                        <Text
+                          style={style.tempInputCur} >
+                          32.1
+                        </Text>
+                      </View>
+                      <Text style={style.zeroUper}>
+                        o
+                      </Text>
+                      <Text style={style.centiUper}>
+                        C
+                      </Text>
+                      <TouchableOpacity style={style.iconOpenRow}>
+                        <NewOpen name="open-in-new" size={width * .035} color="black"  />
+                      </TouchableOpacity>
                     </View>
-                </TouchableOpacity>
+                  </View>
+                  <View style={{ flexDirection: 'row', flex: 1, }}>
+                    <View>
+                      <Text style={style.setTemp}>
+                        Set Temperature
+                      </Text>
+                      <View style={style.boxLowerStyle}>
+                        <View style={style.likeInputMin}>
+                          <Text style={style.tempInputSet}>
+                            34.1
+                          </Text>
+                        </View>
+                        <Text style={style.zeroLower}>
+                          o
+                        </Text>
+                        <Text style={style.centiLower}>
+                          C
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={{ flexDirection: 'row', }}>
+                      
+
+                    </View>
+
+
+                  </View>
+                </View>
+              </View>
+            </View>
+
+          </View>
                 {/* <Modal 
                 animationIn="slideInUp" 
                 animationOut="slideOutDown" 

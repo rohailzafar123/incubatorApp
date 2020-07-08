@@ -8,16 +8,17 @@ const { height, width } = Dimensions.get('window');
 export default styles = StyleSheet.create({
     weightView: {
         width: width * .32,
-        height: height * .35,
+        height: height * .34,
         margin: width * .005
     },
     weight: {
         flex: 1,
-        // borderWidth: 4,
-        // borderColor: "gray",
         borderRadius: height * .05,
-        elevation: 3,
+        elevation: width * .005,
+        borderWidth:width * .002,
+        backgroundColor:'white',
         padding: height * .022,
+        borderColor:'#5c5c5c70'
     },
     OxigenInerContainer: {
         flex: 1,

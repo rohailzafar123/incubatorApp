@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native"
+import { Fonts } from '../../utils/fonts';
 
 //Packages
 
@@ -21,8 +22,8 @@ export default styles = StyleSheet.create({
     },
     listText:{
         fontSize:width * .015,
-        fontWeight:'bold',
+        fontFamily:Fonts.BalooChettanBold,
         color:"#484149c5",
-        fontFamily:'MetalMania-Regular'
+        // fontFamily:'MetalMania-Regular'
     },
 });

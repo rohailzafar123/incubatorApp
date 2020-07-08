@@ -17,97 +17,83 @@ export default class App extends Component {
     };
     render() {
         return (
-            <View>
-                <TouchableOpacity style={style.HumidityView}>
-            <View style={style.Humidity}>
-              <View style={style.OxigenInerContainer}>
-                <View style={style.OxigenIner}>
-                  <View style={{ flex: 1, }}>
-                    <Text style={{ fontSize: width * .02, fontWeight: "bold", color: '#FF420E' }}>
-                      Current Humidity
-                </Text>
-                    <View style={style.boxUperStyle}>
-                      <View style={style.likeInputOxygen}>
-                        <Text style={{ fontSize: width * .05, fontWeight: "bold", color: '#484149c5' }}>
-                          00.0
-                    </Text>
-                      </View>
-                      <Text style={{ fontSize: width * .035, fontWeight: "bold", color: '#484149c5', marginTop: height * .02, marginLeft: height * .01 }}>
-                        %
+          <View>
+          <View style={style.TemperatureView}>
+      <View style={style.Temperature}>
+        <View style={style.skinInerContainer}>
+          <View style={style.skinIner}>
+            <View style={{ flex: 1, }}>
+              <Text style={style.currentTempText}>
+                Current Humidity
+              </Text>
+              <View style={style.boxUperStyle}>
+                <View style={style.likeInputOxygen}>
+                  <Text
+                    style={style.tempInputCur} >
+                    50
                   </Text>
-                      <TouchableOpacity >
-                        <NewOpen name="open-in-new" size={width * .035} color="black" style={{ bottom: height * .05, right: width * .01 }} />
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                  <View style={{ flexDirection: 'row', flex: 1, }}>
-                    <View>
-                      <Text style={{ fontSize: width * .018, fontWeight: "bold", color: '#FF420E', top: height * .006, marginVertical: width * .005 }}>
-                        Min.Humid
-                      </Text>
-                      <View style={style.boxLowerStyle}>
-                        <View style={style.likeInputMin}>
-                          <Text style={{ fontSize: width * .035, fontWeight: "bold", color: '#484149c5' }}>
-                            75.0
-                          </Text>
-                        </View>
-                        <Text style={{ fontSize: width * .03, fontWeight: "bold", color: '#484149c5', top: height * .009, marginRight: height * .02 }}>
-                          %
-                        </Text>
-                      </View>
-
-                    </View>
-                    <View style={{ flexDirection: 'row', }}>
-                      <View>
-                        <Text style={{ fontSize: width * .018, fontWeight: "bold", color: '#FF420E', top: height * .006, marginVertical: width * .005 }}>
-                          Max.Humid
-                      </Text>
-                        <View style={style.boxLowerStyle}>
-                          <View style={style.likeInputMin}>
-                            <Text style={{ fontSize: width * .035, fontWeight: "bold", color: '#484149c5', }}>
-                              99.0
-                          </Text>
-                          </View>
-                          <Text style={{ fontSize: width * .03, fontWeight: "bold", color: '#484149c5', top: height * .009, }}>
-                            %
-                        </Text>
-                        </View>
-
-                      </View>
-
-                    </View>
-
-
-                  </View>
                 </View>
+                
+                <Text style={style.centiUper}>
+                  %
+                </Text>
+                <TouchableOpacity style={style.iconOpenRow}>
+                  <NewOpen name="open-in-new" size={width * .035} color="black"  />
+                </TouchableOpacity>
               </View>
             </View>
+            <View style={{ flexDirection: 'row', flex: 1, }}>
+              <View>
+                <Text style={style.setTemp}>
+                   Normal Range
+                </Text>
+                <View style={style.boxLowerStyle}>
+                  <View style={style.likeInputMin}>
+                    <Text style={style.tempInputSet}>
+                      60
+                    </Text>
+                  </View>
+                 
+                  <Text style={style.centiLower}>
+                    %
+                  </Text>
+                </View>
+              </View>
+              <View style={{ flexDirection: 'row', }}>
+                
 
-          </TouchableOpacity>
-                {/* <Modal 
-                animationIn="slideInUp" 
-                animationOut="slideOutDown" 
-                onBackdropPress={() => this.toggleModal()} 
-                onSwipeComplete={() => this.toggleModal()} 
-                swipeDirection="right" 
-                isVisible={this.state.isModalVisible} 
-                style={{ 
-                    backgroundColor: 'white',
-                    maxHeight:height * .7,
-                    maxWidth:width * 1,
-                    top:width * .13,
-                    // left:width *.1,
-                    borderTopRightRadius:width * .05,
-                    borderTopLeftRadius:width * .05,
-                    maxHeight:height * .7,
-                    
-                    }}>
-                    <View style={{ flex: 1, justifyContent: 'center' }}>
-                        
-                    </View>
-                </Modal> */}
+              </View>
+
+
             </View>
+          </View>
+        </View>
+      </View>
 
+    </View>
+          {/* <Modal 
+          animationIn="slideInUp" 
+          animationOut="slideOutDown" 
+          onBackdropPress={() => this.toggleModal()} 
+          onSwipeComplete={() => this.toggleModal()} 
+          swipeDirection="right" 
+          isVisible={this.state.isModalVisible} 
+          style={{ 
+              backgroundColor: 'white',
+              maxHeight:height * .7,
+              maxWidth:width * 1,
+              top:width * .13,
+              // left:width *.1,
+              borderTopRightRadius:width * .05,
+              borderTopLeftRadius:width * .05,
+              maxHeight:height * .7,
+              
+              }}>
+              <View style={{ flex: 1, justifyContent: 'center' }}>
+                  
+              </View>
+          </Modal> */}
+      </View>
         )
     }
 }

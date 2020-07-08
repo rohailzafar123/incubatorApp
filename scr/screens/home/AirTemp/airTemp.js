@@ -17,76 +17,54 @@ export default class App extends Component {
     };
     render() {
         return (
-            <View>
-                <TouchableOpacity style={style.TemperatureView}>
+          <View>
+                <View style={style.TemperatureView}>
             <View style={style.Temperature}>
-              <View style={style.OxigenInerContainer}>
-                <View style={style.OxigenIner}>
+              <View style={style.skinInerContainer}>
+                <View style={style.skinIner}>
                   <View style={{ flex: 1, }}>
-                    <Text style={{ fontSize: width * .02, fontWeight: "bold", color: '#FF420E' }}>
+                    <Text style={style.currentTempText}>
                       Current Temperature
                     </Text>
                     <View style={style.boxUperStyle}>
                       <View style={style.likeInputOxygen}>
                         <Text
-                          style={{
-                            position: 'absolute',
-                            fontSize: width * .05, fontWeight: "bold", color: '#484149c5'
-                          }} >
-                          {this.state.valueX}
+                          style={style.tempInputCur} >
+                            33.1
                         </Text>
                       </View>
-                      <Text style={{ fontSize: width * .018, fontWeight: "bold", color: '#484149c5', left: width * .003, }}>
+                      <Text style={style.zeroUper}>
                         o
                       </Text>
-                      <Text style={{ fontSize: width * .035, fontWeight: "bold", color: '#484149c5' }}>
+                      <Text style={style.centiUper}>
                         C
                       </Text>
-                      <TouchableOpacity >
-                        <NewOpen name="open-in-new" size={width * .035} color="black" style={{ bottom: height * .05, right: width * .011 }} />
+                      <TouchableOpacity style={style.iconOpenRow}>
+                        <NewOpen name="open-in-new" size={width * .035} color="black"  />
                       </TouchableOpacity>
                     </View>
                   </View>
                   <View style={{ flexDirection: 'row', flex: 1, }}>
                     <View>
-                      <Text style={{ fontSize: width * .018, fontWeight: "bold", color: '#FF420E', top: height * .006, marginVertical: width * .005 }}>
-                        Min Temp.
+                      <Text style={style.setTemp}>
+                        Set Temperature
                       </Text>
                       <View style={style.boxLowerStyle}>
                         <View style={style.likeInputMin}>
-                          <Text style={{ fontSize: width * .035, fontWeight: "bold", color: '#484149c5' }}>
-                            {this.state.valuey}
+                          <Text style={style.tempInputSet}>
+                            32.1
                           </Text>
                         </View>
-                        <Text style={{ fontSize: width * .018, fontWeight: "bold", color: '#484149c5', left: width * .001, bottom: height * .03 }}>
+                        <Text style={style.zeroLower}>
                           o
                         </Text>
-                        <Text style={{ fontSize: width * .03, fontWeight: "bold", color: '#484149c5', bottom: height * .01, marginRight: height * .02 }}>
+                        <Text style={style.centiLower}>
                           C
                         </Text>
                       </View>
-
                     </View>
                     <View style={{ flexDirection: 'row', }}>
-                      <View>
-                        <Text style={{ fontSize: width * .018, fontWeight: "bold", color: '#FF420E', top: height * .006, marginVertical: width * .005 }}>
-                          Max Temp.
-                      </Text>
-                        <View style={style.boxLowerStyle}>
-                          <View style={style.likeInputMin}>
-                            <Text style={{ fontSize: width * .035, fontWeight: "bold", color: '#484149c5' }}>
-                              {this.state.valuez}
-                          </Text>
-                          </View>
-                          <Text style={{ fontSize: width * .018, fontWeight: "bold", color: '#484149c5', left: width * .001, bottom: height * .03 }}>
-                            o
-                          </Text>
-                          <Text style={{ fontSize: width * .03, fontWeight: "bold", color: '#484149c5', bottom: height * .01, }}>
-                            C
-                          </Text>
-                        </View>
-
-                      </View>
+                      
 
                     </View>
 
@@ -96,7 +74,7 @@ export default class App extends Component {
               </View>
             </View>
 
-          </TouchableOpacity>
+          </View>
                 {/* <Modal 
                 animationIn="slideInUp" 
                 animationOut="slideOutDown" 
