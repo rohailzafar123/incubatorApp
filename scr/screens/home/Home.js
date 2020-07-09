@@ -38,7 +38,14 @@ export default class App extends Component {
       // airOvCondi:true,
       sysCondi:true,
       powCondi:true,
-    }
+      weightSign:false,
+      tempSign:false,
+
+    },
+    this.handleWeight = this.handleWeight.bind(this);
+    this.handleTemp = this.handleTemp.bind(this);
+    
+
 }
 // componentDidMount(){
   
@@ -120,9 +127,21 @@ export default class App extends Component {
         this.setState({sysCondi:true})
       }
     };
+    handleWeight(child) {
+      this.setState({
+          weightSign: child,
+      });
+    };
+    handleTemp(child) {
+      this.setState({
+          tempSign: child,
+      });
+    };
   render() {
     // console.log(this.state.alarmAir);
     // console.log(this.state.airCondi)
+    console.log(this.state.weightSign,'weight')
+    console.log(this.state.tempSign,'temmp')
 
 
     return (
@@ -157,7 +176,7 @@ export default class App extends Component {
               <Notification name="notifications-active" size={width * .05} color="#0ae916" style={{ marginHorizontal: width * .01 }} />
               <Text style={style.alarmText}>System Failure</Text>
             </View>
-          <LeftSlider />
+          <LeftSlider selectWeight={this.handleWeight} selectTemp={this.handleTemp} />
         </View>
         <View style={style.inerContainer3}>
           <Text style={style.airHeading}>
@@ -171,8 +190,8 @@ export default class App extends Component {
           </Text>
         </View>
         <View style={style.inerContainer1}>
-          <AirTemp />
-          <SkinTemp />
+          <AirTemp value={this.state.tempSign} />
+          <SkinTemp value={this.state.tempSign} />
           <Humidity />
         </View>
         <View style={style.inerContainer3}>
@@ -188,7 +207,7 @@ export default class App extends Component {
         </View>
         <View style={style.inerContainer2}>
           {/* Weight */}
-          <Weight />
+          <Weight value={this.state.weightSign} />
           {/* Temperature */}
           <SPO2 />
           {/* Humidity */}

@@ -39,12 +39,18 @@ export default styles = StyleSheet.create({
         color: '#484149c5',
         left: width * .005,
     },
-    centiUper: {
+    kgUper: {
         fontSize: width * .035,
         fontFamily: Fonts.BalooChettan2,
         color: '#484149c5',
         top: height * .01,
-
+    },
+    pondUper: {
+        fontSize: width * .035,
+        fontFamily: Fonts.BalooChettan2,
+        color: '#484149c5',
+        top: height * .01,
+        marginRight:width * .018
     },
     iconOpenRow: {
         bottom: height * .065,

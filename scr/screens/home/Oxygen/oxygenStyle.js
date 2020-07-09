@@ -112,5 +112,69 @@ export default styles = StyleSheet.create({
         borderRadius: height * .005,
 
     },
+    modalMainContainer: {
+        backgroundColor: '#81c2f7',
+        maxHeight: height * .8,
+        maxWidth: width * 1,
+        top: height * .14,
+        borderTopRightRadius: width * .05,
+        borderTopLeftRadius: width * .05,
+    },
+    haiderContainer: {
+        width: width * .9,
+        height: height * .15,
+    },
+    headerInner: {
+        flex: 1,
+        flexDirection: "row",
+        alignItems: 'center',
+        backgroundColor: '#e44f3bfd',
+
+        justifyContent: 'space-between',
+        paddingHorizontal: width * .02,
+        elevation: width * .003,
+        borderTopRightRadius: width * .05,
+        borderTopLeftRadius: width * .05,
+    },
+    headerHeading: {
+        fontSize: width * .04,
+        fontFamily: Fonts.BalooChettan2,
+        color: 'white',
+    },
+    headerIcon: {
+        alignItems: 'center',
+        marginLeft: width * .35
+    },
+    submit:{
+        width: width * .058,
+        height: height * .1,
+        backgroundColor:'white',
+        borderRadius:width * .1,
+        justifyContent:'center',
+        alignItems:'center',
+        elevation: width * .003,
+
+
+    },
+    alarmText: {
+        // alignSelf:'center',
+        fontSize: width * .015,
+        fontFamily: Fonts.Handlee,
+        color: '#e44f3bfd',
+
+    },
+    bodyMainContainer: {
+        width: width * .9,
+        height: height * .62,
+        backgroundColor: 'white'
+    },
+    bodyContainer: {
+        flex: 1,
+        marginHorizontal: width * .02,
+        marginTop: width * .01,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+
+    },
 
 });

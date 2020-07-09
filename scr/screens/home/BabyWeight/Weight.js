@@ -15,11 +15,14 @@ import SwitchToggle from 'react-native-switch-toggle';
 const { height, width } = Dimensions.get('window');
 
 export default class App extends Component {
-    state = {
-        isModalVisible: false,
-        toggle: false,
-        currentWei: "00.0",
-        preWei: '00.0'
+    constructor(props) {
+        super(props);
+        this.state = {
+            isModalVisible: false,
+            toggle: false,
+            currentWei: "00.0",
+            preWei: '00.0',
+        }
     }
     togglebuttun = () => {
         this.setState({ toggle: !this.state.toggle });
@@ -38,19 +41,27 @@ export default class App extends Component {
                                 <View style={{ flex: 1, }}>
                                     <Text style={comStyle.currentTempText}>
                                         Current Weight
-              </Text>
+                                    </Text>
                                     <View style={comStyle.boxUperStyle}>
                                         <View style={comStyle.likeInputOxygen}>
                                             <Text
                                                 style={comStyle.tempInputCur} >
                                                 00.0
-                  </Text>
+                                            </Text>
                                         </View>
-                                        
-                                        <Text style={comStyle.centiUper}>
-                                            kg
-                </Text>
-                                        <TouchableOpacity  style={comStyle.iconOpenRow} onPress={() => this.toggleModal()}>
+                                        {
+                                            !this.props.value ? (
+                                                <Text style={comStyle.kgUper}>
+                                                    kg
+                                                </Text>
+                                            ) : (
+                                                    <Text style={comStyle.pondUper}>
+                                                        £
+                                                    </Text>
+                                                )
+                                        }
+
+                                        <TouchableOpacity style={comStyle.iconOpenRow} onPress={() => this.toggleModal()}>
                                             <View>
 
                                                 <NewOpen name="open-in-new" size={width * .035} color="black" />
@@ -62,17 +73,25 @@ export default class App extends Component {
                                     <View>
                                         <Text style={comStyle.setTemp}>
                                             Previous Weight
-                </Text>
+                                        </Text>
                                         <View style={comStyle.boxLowerStyle}>
                                             <View style={comStyle.likeInputMin}>
                                                 <Text style={comStyle.tempInputSet}>
                                                     00.0
-                    </Text>
+                                                </Text>
                                             </View>
-                                            
-                                            <Text style={comStyle.centiLower}>
-                                                kg
-                  </Text>
+                                            {
+                                                !this.props.value ? (
+                                                    <Text style={comStyle.centiLower}>
+                                                        kg
+                                                    </Text>
+                                                ) : (
+                                                        <Text style={comStyle.centiLower}>
+                                                            £
+                                                        </Text>
+                                                    )
+                                            }
+
                                         </View>
                                     </View>
                                     <View style={{ flexDirection: 'row', }}>
@@ -99,14 +118,14 @@ export default class App extends Component {
                         <View style={style.haiderContainer}>
                             <View style={style.headerInner}>
                                 <Text style={style.headerHeading}>
-                                    WEIGHT BALANCE
+                                    Weight History
                                 </Text>
-                                <View style={style.headerIcon}>
+                                {/* <View style={style.headerIcon}>
 
 
                                     <Status name="notifications-active" size={width * .05} color="#05dd3bc5" style={{ marginHorizontal: width * .01 }} />
                                     <Text style={style.alarmText}>Current Status</Text>
-                                </View>
+                                </View> */}
                                 <View >
                                     <TouchableOpacity onPress={() => this.toggleModal()} style={style.submit}>
 
@@ -120,7 +139,7 @@ export default class App extends Component {
                         </View>
                         <View style={style.bodyMainContainer}>
                             <View style={style.bodyContainer}>
-                                <View>
+                                {/* <View>
                                     <Text
                                         style={style.bodyHeading}>
                                         Weight Summary
@@ -241,8 +260,8 @@ export default class App extends Component {
                                         }}>
                                             Kgs/£
                                     </Text>
-                                    </View>
-                                </View>
+                                    </View> */}
+                                {/* </View> */}
                             </View>
                         </View>
                     </View>

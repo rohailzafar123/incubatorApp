@@ -38,7 +38,7 @@ export default class App extends Component {
                       <Text style={style.centiUper}>
                         %
                       </Text>
-                      <TouchableOpacity style={style.iconOpenRow}>
+                      <TouchableOpacity style={style.iconOpenRow} onPress={this.toggleModal}>
                         <NewOpen name="open-in-new" size={width * .035} color="black"  />
                       </TouchableOpacity>
                     </View>
@@ -72,28 +72,44 @@ export default class App extends Component {
             </View>
 
           </View>
-                {/* <Modal 
-                animationIn="slideInUp" 
-                animationOut="slideOutDown" 
-                onBackdropPress={() => this.toggleModal()} 
-                onSwipeComplete={() => this.toggleModal()} 
-                swipeDirection="right" 
-                isVisible={this.state.isModalVisible} 
-                style={{ 
-                    backgroundColor: 'white',
-                    maxHeight:height * .7,
-                    maxWidth:width * 1,
-                    top:width * .13,
-                    // left:width *.1,
-                    borderTopRightRadius:width * .05,
-                    borderTopLeftRadius:width * .05,
-                    maxHeight:height * .7,
-                    
-                    }}>
-                    <View style={{ flex: 1, justifyContent: 'center' }}>
-                        
+          <Modal
+                    animationIn="slideInUp"
+                    animationOut="slideOutDown"
+                    onBackdropPress={() => this.toggleModal()}
+                    onSwipeComplete={() => this.toggleModal()}
+                    swipeDirection="right"
+                    isVisible={this.state.isModalVisible}
+                    style={style.modalMainContainer}>
+                    <View style={{ flex: 1, }}>
+                        <View style={style.haiderContainer}>
+                            <View style={style.headerInner}>
+                                <Text style={style.headerHeading}>
+                                    Oxygen History
+                                </Text>
+                                {/* <View style={style.headerIcon}>
+
+
+                                    <Status name="notifications-active" size={width * .05} color="#05dd3bc5" style={{ marginHorizontal: width * .01 }} />
+                                    <Text style={style.alarmText}>Current Status</Text>
+                                </View> */}
+                                <View >
+                                    <TouchableOpacity onPress={() => this.toggleModal()} style={style.submit}>
+
+                                        <Text style={style.alarmText}>Done</Text>
+
+                                    </TouchableOpacity>
+
+                                </View>
+                            </View>
+
+                        </View>
+                        <View style={style.bodyMainContainer}>
+                            <View style={style.bodyContainer}>
+                                
+                            </View>
+                        </View>
                     </View>
-                </Modal> */}
+                </Modal>
             </View>
 
         )

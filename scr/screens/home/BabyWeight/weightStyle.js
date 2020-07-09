@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native"
+import { Fonts } from '../../../utils/fonts';
 
 //Packages
 
@@ -70,7 +71,7 @@ export default styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: '#e44f3bfd',
 
         justifyContent: 'space-between',
         paddingHorizontal: width * .02,
@@ -80,8 +81,8 @@ export default styles = StyleSheet.create({
     },
     headerHeading: {
         fontSize: width * .04,
-        fontWeight: 'bold',
-        color: '#484149c5',
+        fontFamily: Fonts.BalooChettan2,
+        color: 'white',
     },
     headerIcon: {
         alignItems: 'center',
@@ -90,7 +91,7 @@ export default styles = StyleSheet.create({
     submit:{
         width: width * .058,
         height: height * .1,
-        backgroundColor:'#81c2f7',
+        backgroundColor:'white',
         borderRadius:width * .1,
         justifyContent:'center',
         alignItems:'center',
@@ -100,15 +101,15 @@ export default styles = StyleSheet.create({
     },
     alarmText: {
         // alignSelf:'center',
-        fontSize: width * .013,
-        fontWeight: 'bold',
-        color: '#484149c5',
+        fontSize: width * .015,
+        fontFamily: Fonts.Handlee,
+        color: '#e44f3bfd',
 
     },
     bodyMainContainer: {
         width: width * .9,
         height: height * .62,
-        backgroundColor: '#81c2f7'
+        backgroundColor: 'white'
     },
     bodyContainer: {
         flex: 1,

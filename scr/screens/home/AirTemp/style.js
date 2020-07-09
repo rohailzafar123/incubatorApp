@@ -33,14 +33,9 @@ export default styles = StyleSheet.create({
         fontFamily: Fonts.BalooChettan2,
         color: '#484149c5'
     },
-    zeroUper: {
-        fontSize: width * .017,
-        fontFamily: Fonts.BalooChettan2,
-        color: '#484149c5',
-        left: width * .005,
-    },
+    
     centiUper: {
-        fontSize: width * .04,
+        fontSize: width * .038,
         fontFamily: Fonts.BalooChettan2,
         color: '#484149c5'
     },
@@ -61,18 +56,18 @@ export default styles = StyleSheet.create({
         fontFamily: Fonts.BalooChettan2,
 
     },
-    zeroLower: {
-        fontSize: width * .016,
-        fontFamily: Fonts.BalooChettan2,
-        color: '#484149c5',
-        left: width * .004,
-        bottom: height * .03
-    },
+    // zeroLower: {
+    //     fontSize: width * .016,
+    //     fontFamily: Fonts.BalooChettan2,
+    //     color: '#484149c5',
+    //     left: width * .004,
+    //     bottom: height * .03
+    // },
     centiLower: {
-        fontSize: width * .03,
+        fontSize: width * .028,
         fontFamily: Fonts.BalooChettan2,
         color: '#484149c5',
-        bottom: height * .01,
+        // bottom: height * .01,
         marginRight: height * .02
     },
 

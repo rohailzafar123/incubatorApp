@@ -12,11 +12,10 @@ import Pass from 'react-native-vector-icons/MaterialCommunityIcons';
 import Bright from 'react-native-vector-icons/MaterialCommunityIcons';
 import Data from 'react-native-vector-icons/FontAwesome';
 import Slider from '@react-native-community/slider';
+import SwitchToggle from 'react-native-switch-toggle';
 import SystemSetting from 'react-native-system-setting';
 // import SysSettings from 'react-native-vector-icons/Octicons';
 import { Fonts } from '../../utils/fonts';
-
-
 const { height, width } = Dimensions.get('window');
 export default class App extends Component {
     constructor(props) {
@@ -24,7 +23,10 @@ export default class App extends Component {
         this.state = {
             isModalVisible: false,
             LockorUnlo: false,
-            brightness: 0.2
+            brightness: 0.2,
+            toggleWeight: false,
+            toggleTemp: false,
+
         }
 
     }
@@ -34,8 +36,24 @@ export default class App extends Component {
     toggleModalLock = () => {
         this.setState({ LockorUnlo: !this.state.LockorUnlo });
     };
+    _doneUnit = () => {
+        this.setState(
+            { LockorUnlo: !this.state.LockorUnlo,
+                isModalVisible: !this.state.isModalVisible },
+            () => {
+                this.props.selectWeight(this.state.toggleWeight),
+                this.props.selectTemp(this.state.toggleTemp)
+
+            },
+        
+
+        );
+
+
+    }
     render() {
         return (
+
             <View >
                 <TouchableOpacity onPress={this.toggleModal}>
                     <Menu name="menu-open" size={width * .05} color="black" />
@@ -80,7 +98,7 @@ export default class App extends Component {
                                 <Text style={{
                                     fontSize: width * .02,
                                     color: 'red',
-                                    fontFamily:Fonts.Handlee,
+                                    fontFamily: Fonts.Handlee,
                                 }}>
                                     Settings
                                 </Text>
@@ -170,44 +188,158 @@ export default class App extends Component {
                                 top: height * .15
                             }}>
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
-                                <View style={{ width: width * .32, height: height * .45 }}>
+                                <View style={{
+                                    width: width * .32,
+                                    height: height * .45
+                                }}>
 
                                     <View style={{
-                                        flex: 1, 
-                                        backgroundColor: 'white', 
+                                        flex: 1,
+                                        backgroundColor: 'white',
                                         borderBottomLeftRadius: width * .005,
                                         borderTopRightRadius: width * .005,
                                         borderTopLeftRadius: width * .025,
                                         borderBottomRightRadius: width * .025,
-                                        shadowOffset: { width: width * .01, height: height * .02, },
-                                        shadowColor: 'red',
-                                        shadowOpacity: 1.0,
-                                        shadowRadius: 3.84,
                                         elevation: width * .015,
                                     }}>
                                         <View style={{
                                             width: width * .32,
-                                            height: height * .1
+                                            height: height * .12
+                                        }}>
+                                            <View style={{
+                                                flex: 1,
+                                                // backgroundColor:'red',
+                                                borderTopRightRadius: width * .005,
+                                                borderTopLeftRadius: width * .025,
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
                                             }}>
-                                                <View style={{
-                                                    flex:1,
-                                                    // backgroundColor:'red',
-                                                    borderTopRightRadius: width * .005,
-                                                    borderTopLeftRadius: width * .025,
-                                                    }}>
-                                                        <View style={{
-                                                            flex:1,
-                                                            justifyContent:'center',
-                                                            alignItems:'center'
-                                                            }}>
-                                                            <Text>
-                                                                Change the Unit
+
+                                                <Text style={{
+                                                    fontFamily: Fonts.Handlee,
+                                                    fontSize: width * .03,
+                                                    color: "red",
+                                                }}>
+                                                    Change the Unit
                                                             </Text>
 
-                                                        </View>
 
+                                            </View>
+
+                                        </View>
+                                        <View style={{
+                                            width: width * .32,
+                                            height: height * .2
+                                        }}>
+
+                                            <View style={{
+                                                flex: 1,
+                                                // backgroundColor:'red',
+                                                // borderTopRightRadius: width * .005,
+                                                // borderTopLeftRadius: width * .025,
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                            }}>
+                                                <View style={{
+                                                    flexDirection: 'row',
+                                                    margin: width * .02,
+
+                                                }}>
+                                                    <Text style={{
+                                                    fontFamily: Fonts.Handlee,
+                                                    fontSize: width * .02,
+                                                    color: "red",
+                                                    top:height *.01
+                                                }}>Weight: </Text>
+
+                                                    <SwitchToggle
+                                                        switchOn={this.state.toggleWeight}
+                                                        onPress={() => this.setState({ toggleWeight: !this.state.toggleWeight })}
+                                                        useNativeDriver={false}
+                                                        backgroundColorOn={'#555555'}
+                                                        circleColorOn={'#f68d80fd'}
+                                                        backgroundColorOff={'#555555'}
+                                                        circleColorOff={'white'}
+                                                        containerStyle={style.toggleContainer}
+                                                        circleStyle={style.toggleCircle}
+                                                    />
+                                                    <Text style={{
+                                                        fontSize: width * .023,
+                                                        fontFamily: Fonts.BalooChettanBold,
+                                                        // fontWeight: 'bold',
+                                                        marginLeft: width * .005,
+                                                    }}>
+                                                        Kgs/£
+                                                 </Text>
+                                                </View>
+                                                <View style={{
+                                                    flexDirection: 'row',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+
+                                                }}>
+                                                    <Text style={{
+                                                    fontFamily: Fonts.Handlee,
+                                                    fontSize: width * .02,
+                                                    color: "red",
+                                                }}>Temperature: </Text>
+                                                    <SwitchToggle
+                                                        switchOn={this.state.toggleTemp}
+                                                        onPress={() => this.setState({ toggleTemp: !this.state.toggleTemp })}
+                                                        useNativeDriver={false}
+                                                        backgroundColorOn={'#555555'}
+                                                        circleColorOn={'#f68d80fd'}
+                                                        backgroundColorOff={'#555555'}
+                                                        circleColorOff={'white'}
+                                                        containerStyle={style.toggleContainer}
+                                                        circleStyle={style.toggleCircle}
+                                                    />
+                                                    <Text style={{
+                                                        fontSize: width * .023,
+                                                        // fontWeight: 'bold',
+                                                        fontFamily: Fonts.BalooChettanBold,
+                                                        marginLeft: width * .005,
+                                                    }}>
+                                                        {'\u2103'}/{'\u2109'}
+                                                    </Text>
                                                 </View>
 
+                                            </View>
+                                        </View>
+                                        <View style={{
+                                            width: width * .32,
+                                            height: height * .13
+                                        }}>
+                                            <View style={{
+                                                flex: 1,
+                                                // backgroundColor:'red',
+                                                // borderTopRightRadius: width * .005,
+                                                // borderTopLeftRadius: width * .025,
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                            }}>
+                                                <TouchableOpacity style={{
+                                                    width: width * .2,
+                                                    height: height * .07,
+                                                    backgroundColor: '#e44f3bfd',
+                                                    elevation: width * .003,
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                    borderRadius: width * .1
+
+                                                }}
+                                                    onPress={this._doneUnit}
+                                                >
+                                                    <Text style={{
+                                                        fontSize: width * .023,
+                                                        fontFamily: Fonts.Handlee,
+                                                        color: 'white',
+                                                    }}>
+                                                        Done
+                                                    </Text>
+                                                </TouchableOpacity>
+
+                                            </View>
                                         </View>
 
 

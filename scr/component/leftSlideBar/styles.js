@@ -18,12 +18,26 @@ export default styles = StyleSheet.create({
         alignItems:"center",
         justifyContent:'space-between',
         flexDirection:'row',
-        paddingHorizontal:width * .01
+        paddingHorizontal:width * .01,
+        borderRadius:width * .003
     },
     listText:{
         fontSize:width * .015,
         fontFamily:Fonts.BalooChettanBold,
         color:"#484149c5",
         // fontFamily:'MetalMania-Regular'
+    },
+    toggleContainer:{
+        width: width * .09,
+        height: height * .07,
+        borderRadius: width * .04,
+        padding: width * .005,
+        elevation: width * .003,
+    },
+    toggleCircle:{
+        width: width * .03,
+        height: height * .05,
+        borderRadius: width * .1,
+        backgroundColor: 'white', // rgb(102,134,205)
     },
 });
