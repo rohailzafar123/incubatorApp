@@ -14,6 +14,8 @@ import Data from 'react-native-vector-icons/FontAwesome';
 import Slider from '@react-native-community/slider';
 import SwitchToggle from 'react-native-switch-toggle';
 import SystemSetting from 'react-native-system-setting';
+import Alarm from 'react-native-vector-icons/MaterialCommunityIcons';
+
 // import SysSettings from 'react-native-vector-icons/Octicons';
 import { Fonts } from '../../utils/fonts';
 const { height, width } = Dimensions.get('window');
@@ -38,14 +40,16 @@ export default class App extends Component {
     };
     _doneUnit = () => {
         this.setState(
-            { LockorUnlo: !this.state.LockorUnlo,
-                isModalVisible: !this.state.isModalVisible },
+            {
+                LockorUnlo: !this.state.LockorUnlo,
+                isModalVisible: !this.state.isModalVisible
+            },
             () => {
                 this.props.selectWeight(this.state.toggleWeight),
-                this.props.selectTemp(this.state.toggleTemp)
+                    this.props.selectTemp(this.state.toggleTemp)
 
             },
-        
+
 
         );
 
@@ -55,9 +59,19 @@ export default class App extends Component {
         return (
 
             <View >
-                <TouchableOpacity onPress={this.toggleModal}>
-                    <Menu name="menu-open" size={width * .05} color="black" />
-                </TouchableOpacity>
+                {
+                    this.props.locker ? (
+                        <TouchableOpacity onPress={this.toggleModal}>
+                            <Menu name="menu-open" size={width * .05} color="black" />
+                        </TouchableOpacity>
+
+                    ) : (
+                            <View>
+                                <Menu name="menu-open" size={width * .05} color="black" />
+                            </View>
+                        )
+                }
+                
                 <Modal
                     animationIn="slideInRight"
                     animationOut="slideOutRight"
@@ -118,9 +132,9 @@ export default class App extends Component {
                                 marginTop: height * .02,
 
                             }}>
-                                <TouchableOpacity style={style.listView} onPress={this.toggleModalLock}>
-                                    <Text style={style.listText}>Lock Or Unlock</Text>
-                                    <Lock name={'lock'} size={width * .02} />
+                                <TouchableOpacity style={style.listView} >
+                                    <Text style={style.listText}>Alarm Settings</Text>
+                                    <Alarm name={'alarm-light'} size={width * .02} />
                                 </TouchableOpacity>
                                 <TouchableOpacity style={style.listView}>
                                     <Text style={style.listText}>System Setting</Text>
@@ -246,11 +260,11 @@ export default class App extends Component {
 
                                                 }}>
                                                     <Text style={{
-                                                    fontFamily: Fonts.Handlee,
-                                                    fontSize: width * .02,
-                                                    color: "red",
-                                                    top:height *.01
-                                                }}>Weight: </Text>
+                                                        fontFamily: Fonts.Handlee,
+                                                        fontSize: width * .02,
+                                                        color: "red",
+                                                        top: height * .01
+                                                    }}>Weight: </Text>
 
                                                     <SwitchToggle
                                                         switchOn={this.state.toggleWeight}
@@ -279,10 +293,10 @@ export default class App extends Component {
 
                                                 }}>
                                                     <Text style={{
-                                                    fontFamily: Fonts.Handlee,
-                                                    fontSize: width * .02,
-                                                    color: "red",
-                                                }}>Temperature: </Text>
+                                                        fontFamily: Fonts.Handlee,
+                                                        fontSize: width * .02,
+                                                        color: "red",
+                                                    }}>Temperature: </Text>
                                                     <SwitchToggle
                                                         switchOn={this.state.toggleTemp}
                                                         onPress={() => this.setState({ toggleTemp: !this.state.toggleTemp })}

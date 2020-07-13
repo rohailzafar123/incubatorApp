@@ -37,9 +37,18 @@ export default class App extends Component {
                 <Text style={style.centiUper}>
                   %
                 </Text>
-                <TouchableOpacity style={style.iconOpenRow}>
-                  <NewOpen name="open-in-new" size={width * .035} color="black"  />
-                </TouchableOpacity>
+                {
+                      this.props.locker ? (
+                        <TouchableOpacity style={style.iconOpenRow}>
+                          <NewOpen name="open-in-new" size={width * .035} color="black" />
+                        </TouchableOpacity>
+                      ) : (
+                          <View style={style.iconOpenRow}>
+                            <NewOpen name="open-in-new" size={width * .035} color="black" />
+                          </View>
+                        )
+                  }
+                
               </View>
             </View>
             <View style={{ flexDirection: 'row', flex: 1, }}>
@@ -53,7 +62,6 @@ export default class App extends Component {
                       60
                     </Text>
                   </View>
-                 
                   <Text style={style.centiLower}>
                     %
                   </Text>

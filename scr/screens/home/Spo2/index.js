@@ -15,66 +15,71 @@ export default class App extends Component {
     toggleModal = () => {
         this.setState({ isModalVisible: !this.state.isModalVisible });
     };
-    
-  toggleModal = () => {
-      this.setState({ isModalVisible: !this.state.isModalVisible });
-  };
+
+    toggleModal = () => {
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+    };
     render() {
         return (
             <View>
-               <View style={style.TemperatureView}>
-      <View style={style.Temperature}>
-        <View style={style.skinInerContainer}>
-          <View style={style.skinIner}>
-            <View style={{ flex: 1, }}>
-              <Text style={style.currentTempText}>
-                SPOT
+                <View style={style.TemperatureView}>
+                    <View style={style.Temperature}>
+                        <View style={style.skinInerContainer}>
+                            <View style={style.skinIner}>
+                                <View style={{ flex: 1, }}>
+                                    <Text style={style.currentTempText}>
+                                        SPOT
               </Text>
-              <View style={style.boxUperStyle}>
-                <View style={style.likeInputOxygen}>
-                  <Text
-                    style={style.tempInputCur} >
-                    98
+                                    <View style={style.boxUperStyle}>
+                                        <View style={style.likeInputOxygen}>
+                                            <Text
+                                                style={style.tempInputCur} >
+                                                98
                   </Text>
-                </View>
-                
-                <Text style={style.centiUper}>
-                  %
+                                        </View>
+
+                                        <Text style={style.centiUper}>
+                                            %
                 </Text>
-                <TouchableOpacity style={style.iconOpenRow} onPress={this.toggleModal}>
-                  <NewOpen name="open-in-new" size={width * .035} color="black"  />
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={{ flexDirection: 'row', flex: 1, }}>
-              <View>
-                <Text style={style.setTemp}>
-                   HR
+                                        {
+                                            this.props.locker ? (
+                                                <TouchableOpacity style={style.iconOpenRow} onPress={this.toggleModal}>
+                                                    <NewOpen name="open-in-new" size={width * .035} color="black" />
+                                                </TouchableOpacity>
+                                            ) : (
+                                                    <View style={style.iconOpenRow}>
+                                                        <NewOpen name="open-in-new" size={width * .035} color="black" />
+                                                    </View>
+                                                )
+                                        }
+
+                                    </View>
+                                </View>
+                                <View style={{ flexDirection: 'row', flex: 1, }}>
+                                    <View>
+                                        <Text style={style.setTemp}>
+                                            HR
                 </Text>
-                <View style={style.boxLowerStyle}>
-                  <View style={style.likeInputMin}>
-                    <Text style={style.tempInputSet}>
-                      82
+                                        <View style={style.boxLowerStyle}>
+                                            <View style={style.likeInputMin}>
+                                                <Text style={style.tempInputSet}>
+                                                    82
                     </Text>
-                  </View>
-                  <Text style={style.centiLower}>
-                    %
+                                            </View>
+                                            <Text style={style.centiLower}>
+                                                %
                   </Text>
+                                        </View>
+                                    </View>
+                                    <View style={{ flexDirection: 'row', }}>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+
                 </View>
-              </View>
-              <View style={{ flexDirection: 'row', }}>
-                
-
-              </View>
-
-
-            </View>
-          </View>
-        </View>
-      </View>
-
-    </View> 
-    <Modal
+                <Modal
                     animationIn="slideInUp"
                     animationOut="slideOutDown"
                     onBackdropPress={() => this.toggleModal()}

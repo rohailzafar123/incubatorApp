@@ -60,13 +60,22 @@ export default class App extends Component {
                                                     </Text>
                                                 )
                                         }
+                                        {
+                                            this.props.locker ? (
+                                                <TouchableOpacity style={comStyle.iconOpenRow} onPress={() => this.toggleModal()}>
+                                                    <View>
+                                                        <NewOpen name="open-in-new" size={width * .035} color="black" />
+                                                    </View>
+                                                </TouchableOpacity>
+                                            ) : (
+                                                <View style={comStyle.iconOpenRow} >
+                                                        <View>
+                                                            <NewOpen name="open-in-new" size={width * .035} color="black" />
+                                                        </View>
+                                                </View>
+                                                )
+                                        }
 
-                                        <TouchableOpacity style={comStyle.iconOpenRow} onPress={() => this.toggleModal()}>
-                                            <View>
-
-                                                <NewOpen name="open-in-new" size={width * .035} color="black" />
-                                            </View>
-                                        </TouchableOpacity>
                                     </View>
                                 </View>
                                 <View style={{ flexDirection: 'row', flex: 1, }}>
