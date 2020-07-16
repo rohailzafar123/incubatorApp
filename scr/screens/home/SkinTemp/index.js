@@ -5,11 +5,14 @@ import Menu from 'react-native-vector-icons/MaterialCommunityIcons';
 import NewOpen from 'react-native-vector-icons/MaterialCommunityIcons';
 import Notification from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
+import Alarm from 'react-native-vector-icons/MaterialCommunityIcons';
+
 const { height, width } = Dimensions.get('window');
 
 export default class App extends Component {
   state = {
-    isModalVisible: false
+    isModalVisible: false,
+    skinTemp:false
   }
 
   toggleModal = () => {
@@ -30,7 +33,7 @@ export default class App extends Component {
                     <View style={style.likeInputOxygen}>
                       <Text
                         style={style.tempInputCur} >
-                        32.1
+                        {this.props.skinCurrentTemp}
                         </Text>
                     </View>
                     {!this.props.value ? (
@@ -54,6 +57,10 @@ export default class App extends Component {
                           </View>
                         )
                     }
+                    <View style={{position:'absolute',right:width * -.01,top:height * .09,}}>
+
+                      <Alarm name={'alarm-light'} size={width * .055} color={this.state.skinTemp ? '#0ae916' : 'red'} />
+                    </View>
                     
                   </View>
                 </View>
@@ -65,7 +72,7 @@ export default class App extends Component {
                     <View style={style.boxLowerStyle}>
                       <View style={style.likeInputMin}>
                         <Text style={style.tempInputSet}>
-                          34.1
+                        {this.props.skinSetTemp}
                           </Text>
                       </View>
                       {!this.props.value ? (
@@ -78,11 +85,8 @@ export default class App extends Component {
                           </Text>
                         )
                       }
+
                     </View>
-                  </View>
-                  <View style={{ flexDirection: 'row', }}>
-
-
                   </View>
 
 

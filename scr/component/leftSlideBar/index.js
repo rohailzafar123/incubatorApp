@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Image, StatusBar, Dimensions, TouchableOpacity } from 'react-native';
 import style from './styles';
 import Modal from 'react-native-modal';
-import Menu from 'react-native-vector-icons/MaterialCommunityIcons';
+import MenuOpen from 'react-native-vector-icons/AntDesign';
+import MenuClose from 'react-native-vector-icons/AntDesign';
 import Setting from 'react-native-vector-icons/Feather';
 import Lock from 'react-native-vector-icons/SimpleLineIcons';
 import SysSettings from 'react-native-vector-icons/Octicons';
@@ -15,7 +16,7 @@ import Slider from '@react-native-community/slider';
 import SwitchToggle from 'react-native-switch-toggle';
 import SystemSetting from 'react-native-system-setting';
 import Alarm from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import AlarmSetting from './AlaemSettings/index';
 // import SysSettings from 'react-native-vector-icons/Octicons';
 import { Fonts } from '../../utils/fonts';
 const { height, width } = Dimensions.get('window');
@@ -28,8 +29,18 @@ export default class App extends Component {
             brightness: 0.2,
             toggleWeight: false,
             toggleTemp: false,
-
+            currentAirValue: null,
+            setAirValue: null,
+            skinCurrentTemp:32.1,
+            skinSetTemp:34.1,            
         }
+        this.handleAirCurrent = this.handleAirCurrent.bind(this);
+        this.handleModalOff = this.handleModalOff.bind(this);
+        this.handleAirSet = this.handleAirSet.bind(this);
+        this.handleSkinCurrent = this.handleSkinCurrent.bind(this);
+        this.handleSkinSet = this.handleSkinSet.bind(this);
+
+
 
     }
     toggleModal = () => {
@@ -47,35 +58,62 @@ export default class App extends Component {
             () => {
                 this.props.selectWeight(this.state.toggleWeight),
                     this.props.selectTemp(this.state.toggleTemp)
-
             },
-
-
         );
-
-
     }
+    handleAirCurrent(child) {
+        this.setState({
+            currentAirValue: child,
+        },
+        () => this.props.airCurTemp(this.state.currentAirValue)
+        );
+    };
+    handleAirSet(child) {
+        this.setState({
+            setAirValue: child,
+        },
+        () => this.props.airSetTemp(this.state.setAirValue)
+        );
+    };
+    handleSkinSet(child) {
+        this.setState({
+            skinSetTemp: child,
+        },
+        () => this.props.skinSetTemp(this.state.skinSetTemp)
+        );
+    };
+    handleSkinCurrent(child) {
+        this.setState({
+            skinCurrentTemp: child,
+        },
+        () => this.props.skinCurTemp(this.state.skinCurrentTemp)
+        );
+    };
+    handleModalOff(child) {
+        this.setState({
+            isModalVisible: child,
+        });
+    };
     render() {
-        return (
 
+        return (
             <View >
                 {
                     this.props.locker ? (
                         <TouchableOpacity onPress={this.toggleModal}>
-                            <Menu name="menu-open" size={width * .05} color="black" />
+                            <MenuOpen name="menufold" size={width * .04} color="black" />
                         </TouchableOpacity>
 
                     ) : (
                             <View>
-                                <Menu name="menu-open" size={width * .05} color="black" />
+                                <MenuOpen name="menufold" size={width * .04} color="black" />
                             </View>
                         )
                 }
-                
                 <Modal
                     animationIn="slideInRight"
                     animationOut="slideOutRight"
-                    onBackdropPress={() => this.toggleModal()}
+                    // onBackdropPress={() => this.toggleModal()}
                     onSwipeComplete={() => this.toggleModal()}
                     swipeDirection="right"
                     isVisible={this.state.isModalVisible}
@@ -95,7 +133,6 @@ export default class App extends Component {
                         <View style={{
                             height: height * .1,
                             width: width * .35,
-
                         }}>
                             <View style={{
                                 flex: 1,
@@ -106,16 +143,24 @@ export default class App extends Component {
                                 flexDirection: 'row',
                                 paddingHorizontal: width * .015,
                                 borderTopLeftRadius: width * .02,
-
                             }}>
-
-                                <Text style={{
-                                    fontSize: width * .02,
-                                    color: 'red',
-                                    fontFamily: Fonts.Handlee,
+                                <View style={{
+                                    alignItems: 'center',
+                                    flexDirection: 'row',
                                 }}>
-                                    Settings
+                                    <TouchableOpacity onPress={this.toggleModal}>
+
+                                        <MenuClose name="menuunfold" size={width * .03} color="red" />
+                                    </TouchableOpacity>
+                                    <Text style={{
+                                        fontSize: width * .02,
+                                        color: 'red',
+                                        fontFamily: Fonts.Handlee,
+                                        marginLeft: width * .01
+                                    }}>
+                                        Settings
                                 </Text>
+                                </View>
                                 <Setting name="settings" size={width * .02} color="red" />
                             </View>
                         </View>
@@ -132,10 +177,14 @@ export default class App extends Component {
                                 marginTop: height * .02,
 
                             }}>
-                                <TouchableOpacity style={style.listView} >
-                                    <Text style={style.listText}>Alarm Settings</Text>
-                                    <Alarm name={'alarm-light'} size={width * .02} />
-                                </TouchableOpacity>
+                                <AlarmSetting 
+                                modalOff={this.handleModalOff} 
+                                airCurTemp={this.handleAirCurrent} 
+                                airSetTemp={this.handleAirSet} 
+                                skinCurTemp={this.handleSkinCurrent} 
+                                skinSetTemp={this.handleSkinSet} 
+                                
+                                />
                                 <TouchableOpacity style={style.listView}>
                                     <Text style={style.listText}>System Setting</Text>
                                     <SysSettings name={'settings'} size={width * .02} />
@@ -149,8 +198,8 @@ export default class App extends Component {
                                             minimumTrackTintColor="#fd5e5efd"
                                             maximumTrackTintColor="#000000"
                                             thumbTintColor='red'
-                                            step={0.1}
-                                            value={this.state.brightness}
+                                            step={0.01}
+                                            value={.2}
                                             onValueChange={(brightness) => {
                                                 this.setState({ brightness });
                                                 SystemSetting.setBrightness(brightness);
@@ -183,12 +232,13 @@ export default class App extends Component {
                             </View>
 
                         </View>
-                        <Modal animationIn="slideInRight"
-                            animationOut="slideOutRight"
-                            onBackdropPress={() => this.toggleModalLock()}
-                            onSwipeComplete={() => this.toggleModalLock()}
 
-                            swipeDirection="right"
+                        <Modal
+                            animationIn="slideInRight"
+                            animationOut="slideOutRight"
+                            // onBackdropPress={() => this.toggleModalLock()}
+                            // onSwipeComplete={() => this.toggleModalLock()}
+                            // swipeDirection="right"
                             isVisible={this.state.LockorUnlo}
                             style={{
                                 elevation: width * .005,
@@ -222,7 +272,6 @@ export default class App extends Component {
                                         }}>
                                             <View style={{
                                                 flex: 1,
-                                                // backgroundColor:'red',
                                                 borderTopRightRadius: width * .005,
                                                 borderTopLeftRadius: width * .025,
                                                 justifyContent: 'center',

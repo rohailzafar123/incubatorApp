@@ -49,7 +49,6 @@ export default class App extends Component {
                           </View>
                         )
                     }
-                    
                   </View>
                 </View>
                 <View style={{ flexDirection: 'row', flex: 1, }}>

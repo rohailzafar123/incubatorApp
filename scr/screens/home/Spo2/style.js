@@ -42,11 +42,12 @@ export default styles = StyleSheet.create({
     centiUper: {
         fontSize: width * .04,
         fontFamily: Fonts.BalooChettan2,
-        color: '#484149c5'
+        color: '#484149c5',
+        marginRight:width * .005
     },
     iconOpenRow: {
         bottom: height * .065,
-        right: width * .011
+        right: width * .033
     },
     setTemp: {
         fontSize: width * .023,
@@ -72,7 +73,7 @@ export default styles = StyleSheet.create({
         fontSize: width * .03,
         fontFamily: Fonts.BalooChettan2,
         color: '#484149c5',
-        marginRight: height * .02
+        marginRight: height * .03
     },
 
     skinInerContainer: {
@@ -84,7 +85,7 @@ export default styles = StyleSheet.create({
         // backgroundColor:'red'
     },
     likeInputOxygen: {
-        width: width * .23,
+        width: width * .2,
         height: height * .1,
         borderWidth: 1,
         // flexDirection: "row-reverse",

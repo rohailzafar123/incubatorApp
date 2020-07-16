@@ -42,15 +42,21 @@ export default class App extends Component {
       powCondi: true,
       weightSign: false,
       tempSign: false,
-      lock: true
-
+      lock: true,
+      currentAirValue: 33.1,
+      setAirValue: 32.1,
+      skinCurrentTemp: 32.1,
+      skinSetTemp: 34.1,
     },
-      this.handleWeight = this.handleWeight.bind(this);
+    this.handleWeight = this.handleWeight.bind(this);
     this.handleTemp = this.handleTemp.bind(this);
     this.timer = null;
     this.addOne = this.addOne.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
-
+    this.handleAirCurrent = this.handleAirCurrent.bind(this);
+    this.handleAirSet = this.handleAirSet.bind(this);
+    this.handleSkinCurrent = this.handleSkinCurrent.bind(this);
+    this.handleSkinSet = this.handleSkinSet.bind(this);
 
   }
   // componentDidMount(){
@@ -133,11 +139,33 @@ export default class App extends Component {
       weightSign: child,
     });
   };
+  handleAirCurrent(child) {
+    this.setState({
+      currentAirValue: child,
+    });
+  }
+  handleAirSet(child) {
+    this.setState({
+      setAirValue: child,
+    })
+  };
+  handleSkinSet(child) {
+    this.setState({
+      skinSetTemp: child,
+    })
+  };
+  handleSkinCurrent(child) {
+    this.setState({
+      skinCurrentTemp: child,
+    });
+  };
   handleTemp(child) {
     this.setState({
       tempSign: child,
     });
   };
+
+
   addOne() {
     setTimeout(this.setState({ lock: !this.state.lock }), 3000);
     ;
@@ -158,8 +186,10 @@ export default class App extends Component {
   render() {
     // console.log(this.state.alarmAir);
     // console.log(this.state.airCondi)
-    console.log(this.state.lock, 'weight')
+    // console.log(this.state.lock, 'weight')
     // console.log(this.state.tempSign, 'temmp')
+    console.log(this.state.currentTempValue)
+    console.log(this.state.currentTempValue)
 
 
     return (
@@ -171,18 +201,20 @@ export default class App extends Component {
 
           {
             this.state.lock == true ? (
-              <TouchableOpacity delayLongPress={2000} onLongPress={this._lockOff} style={{ justifyContent: 'center', alignItems: 'center' }}>
+              <TouchableOpacity delayLongPress={2000} onLongPress={this._lockOff} style={{ justifyContent: 'center', alignItems: 'center', left: width * .01, position: 'absolute' }}>
                 <Unlock name={'unlock'} size={width * .05} color='#0ae916' />
                 <Text style={style.alarmText}>Unlocked</Text>
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity delayLongPress={2000} onLongPress={this._lockOn} style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <TouchableOpacity delayLongPress={2000} onLongPress={this._lockOn} style={{ justifyContent: 'center', alignItems: 'center', left: width * .02, position: 'absolute' }}>
                   <Lock name={'lock'} size={width * .05} color='red' />
                   <Text style={style.alarmText}>Locked</Text>
                 </TouchableOpacity>
               )
-            }
-          <View style={{borderWidth:1,borderColor:'#6b6a6a59',height:height * .12,position:'absolute',left:width *.1}}></View>
+          }
+          <View style={{ borderWidth: 1, borderColor: '#6b6a6a59', height: height * .12, position: 'absolute', left: width * .095 }}></View>
+          <View style={{ marginHorizontal: width * .03 }}></View>
+
           {/* <Graph /> */}
           <View style={style.iconAndText}>
             <Notification name="notifications-active" size={width * .05} color={this.state.powCondi ? '#0ae916' : 'red'} style={{ marginHorizontal: width * .01 }} />
@@ -196,10 +228,10 @@ export default class App extends Component {
             <Notification name="notifications-active" size={width * .05} color={this.state.fanCondi ? '#0ae916' : 'red'} style={{ marginHorizontal: width * .01 }} />
             <Text style={style.alarmText}>Fan Failure</Text>
           </View>
-          <View style={style.iconAndText}>
+          {/* <View style={style.iconAndText}>
             <Notification name="notifications-active" size={width * .05} color={this.state.airCondi ? '#0ae916' : 'red'} style={{ marginHorizontal: width * .01 }} />
             <Text style={style.alarmText}>Over Temperature</Text>
-          </View>
+          </View> */}
           {/* <View style={style.iconAndText}>
               <Notification name="notifications-active" size={width * .05} color={this.state.airOvCondi ? '#0ae916' : 'red' } style={{ marginHorizontal: width * .01 }} />
               <Text style={style.overRidTex}>Over Air </Text>
@@ -209,8 +241,16 @@ export default class App extends Component {
             <Notification name="notifications-active" size={width * .05} color="#0ae916" style={{ marginHorizontal: width * .01 }} />
             <Text style={style.alarmText}>System Failure</Text>
           </View>
-          <View style={{borderWidth:1,borderColor:'#6b6a6a59',height:height * .12,position:'absolute',right:width *.08}}></View>
-          <LeftSlider selectWeight={this.handleWeight} selectTemp={this.handleTemp} locker={this.state.lock} />
+          <View style={{ borderWidth: 1, borderColor: '#6b6a6a59', height: height * .12, position: 'absolute', right: width * .08 }}></View>
+          <LeftSlider
+            selectWeight={this.handleWeight}
+            selectTemp={this.handleTemp}
+            locker={this.state.lock}
+            airCurTemp={this.handleAirCurrent}
+            airSetTemp={this.handleAirSet}
+            skinCurTemp={this.handleSkinCurrent}
+            skinSetTemp={this.handleSkinSet}
+          />
         </View>
         <View style={style.inerContainer3}>
           <Text style={style.airHeading}>
@@ -220,20 +260,31 @@ export default class App extends Component {
             Skin Temperature
           </Text>
           <Text style={style.humHeading}>
-            Humidity
+            SP02/HR
           </Text>
         </View>
         <View style={style.inerContainer1}>
-          <AirTemp value={this.state.tempSign} locker={this.state.lock} />
-          <SkinTemp value={this.state.tempSign} locker={this.state.lock} />
-          <Humidity locker={this.state.lock} />
+          <AirTemp
+            value={this.state.tempSign}
+            locker={this.state.lock}
+            airCurrentTemp={this.state.currentAirValue}
+            airSetTemp={this.state.setAirValue}
+          />
+          <SkinTemp
+            value={this.state.tempSign}
+            locker={this.state.lock}
+            skinCurrentTemp={this.state.skinCurrentTemp}
+            skinSetTemp={this.state.skinSetTemp}
+
+          />
+          <SPO2 locker={this.state.lock} />
         </View>
         <View style={style.inerContainer3}>
           <Text style={style.weigHeading}>
             BabyWeight
           </Text>
           <Text style={style.Spo2Heading}>
-            SP02/HR
+            Humidity
           </Text>
           <Text style={style.oxygenHeading}>
             Oxygen Level
@@ -243,7 +294,7 @@ export default class App extends Component {
           {/* Weight */}
           <Weight value={this.state.weightSign} locker={this.state.lock} />
           {/* Temperature */}
-          <SPO2 locker={this.state.lock} />
+          <Humidity locker={this.state.lock} />
           {/* Humidity */}
           <Oxygen locker={this.state.lock} />
 

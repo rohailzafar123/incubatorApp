@@ -37,7 +37,7 @@ export default styles = StyleSheet.create({
     },
 
     iconAndText:{
-        alignItems:'center'
+        alignItems:'center',
     },
     alarmText:{
         fontSize: width * .015,
@@ -63,7 +63,7 @@ export default styles = StyleSheet.create({
         fontFamily:Fonts.BalooChettanBold,        
         color: '#484149c5',
         // marginTop:width * .009,
-        right:width * .045
+        right:width * .048
     },
     humHeading:{
         fontSize:width * .03,

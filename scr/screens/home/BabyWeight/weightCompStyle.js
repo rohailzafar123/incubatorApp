@@ -43,14 +43,18 @@ export default styles = StyleSheet.create({
         fontSize: width * .035,
         fontFamily: Fonts.BalooChettan2,
         color: '#484149c5',
-        top: height * .01,
+        top: height * .05,
+        marginLeft:width * .002,
+
     },
     pondUper: {
         fontSize: width * .035,
         fontFamily: Fonts.BalooChettan2,
         color: '#484149c5',
-        top: height * .01,
-        marginRight:width * .018
+        top: height * .05,
+        marginRight:width * .016,
+        marginLeft:width * .002,
+
     },
     iconOpenRow: {
         bottom: height * .065,
@@ -84,18 +88,22 @@ export default styles = StyleSheet.create({
         marginRight: height * .02
     },
 
-    skinInerContainer: {
-        flex: 1,
-    },
-    skinIner: {
-        flex: 1,
-        paddingHorizontal: height * .01,
+    weighHeaderContainer: {
+        height:height * .27,
+        width:width * .29,
         // backgroundColor:'red'
+    },
+    footerContainer:{
+        height:height * .12,
+        width:width * .29,
     },
     likeInputOxygen: {
         width: width * .23,
-        height: height * .1,
+        height: height * .2,
         borderWidth: 1,
+        borderColor:'#5c5c5c70',
+        backgroundColor:'white',
+        elevation:width * .002,
         // flexDirection: "row-reverse",
         alignItems: 'center',
         borderRadius: height * .005,

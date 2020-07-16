@@ -61,7 +61,7 @@ export default styles = StyleSheet.create({
         fontSize: width * .028,
         fontFamily: Fonts.BalooChettan2,
         color: '#484149c5',
-        marginRight: height * .02
+        marginRight: height * .03
     },
 
     skinInerContainer: {

@@ -5,6 +5,8 @@ import Menu from 'react-native-vector-icons/MaterialCommunityIcons';
 import NewOpen from 'react-native-vector-icons/MaterialCommunityIcons';
 import Notification from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
+import Alarm from 'react-native-vector-icons/MaterialCommunityIcons';
+
 const { height, width } = Dimensions.get('window');
 
 export default class App extends Component {
@@ -29,18 +31,19 @@ export default class App extends Component {
                                 <View style={{ flex: 1, }}>
                                     <Text style={style.currentTempText}>
                                         SPOT
-              </Text>
+                                    </Text>
                                     <View style={style.boxUperStyle}>
                                         <View style={style.likeInputOxygen}>
                                             <Text
                                                 style={style.tempInputCur} >
                                                 98
-                  </Text>
+                                            </Text>
                                         </View>
 
                                         <Text style={style.centiUper}>
                                             %
-                </Text>
+                                        </Text>
+                                        <Alarm name={'alarm-light'} size={width * .05} color={this.state.powCondi ? '#0ae916' : 'red'} />
                                         {
                                             this.props.locker ? (
                                                 <TouchableOpacity style={style.iconOpenRow} onPress={this.toggleModal}>
@@ -59,20 +62,20 @@ export default class App extends Component {
                                     <View>
                                         <Text style={style.setTemp}>
                                             HR
-                </Text>
+                                        </Text>
                                         <View style={style.boxLowerStyle}>
                                             <View style={style.likeInputMin}>
                                                 <Text style={style.tempInputSet}>
                                                     82
-                    </Text>
+                                                </Text>
                                             </View>
                                             <Text style={style.centiLower}>
                                                 %
-                  </Text>
+                                            </Text>
+                                            <Alarm name={'alarm-light'} size={width * .04} color={this.state.powCondi ? '#0ae916' : 'red'} />
                                         </View>
                                     </View>
-                                    <View style={{ flexDirection: 'row', }}>
-                                    </View>
+
                                 </View>
                             </View>
                         </View>

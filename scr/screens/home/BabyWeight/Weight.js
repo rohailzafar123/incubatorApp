@@ -10,6 +10,7 @@ import Status from 'react-native-vector-icons/MaterialIcons';
 import Send from 'react-native-vector-icons/FontAwesome';
 import { TextInput } from 'react-native-gesture-handler';
 import SwitchToggle from 'react-native-switch-toggle';
+import Alarm from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 const { height, width } = Dimensions.get('window');
@@ -22,6 +23,7 @@ export default class App extends Component {
             toggle: false,
             currentWei: "00.0",
             preWei: '00.0',
+            weight:false
         }
     }
     togglebuttun = () => {
@@ -36,82 +38,80 @@ export default class App extends Component {
             <View>
                 <View style={comStyle.TemperatureView}>
                     <View style={comStyle.Temperature}>
-                        <View style={comStyle.skinInerContainer}>
-                            <View style={comStyle.skinIner}>
-                                <View style={{ flex: 1, }}>
-                                    <Text style={comStyle.currentTempText}>
-                                        Current Weight
+                        <View style={comStyle.weighHeaderContainer}>
+                            <View style={{ flex: 1,paddingLeft:width * .005 }}>
+                                <Text style={comStyle.currentTempText}>
+                                    Current Weight
                                     </Text>
-                                    <View style={comStyle.boxUperStyle}>
-                                        <View style={comStyle.likeInputOxygen}>
-                                            <Text
-                                                style={comStyle.tempInputCur} >
-                                                00.0
+                                <View style={comStyle.boxUperStyle}>
+                                    <View style={comStyle.likeInputOxygen}>
+                                        <Text
+                                            style={comStyle.tempInputCur} >
+                                            00.0
                                             </Text>
-                                        </View>
-                                        {
-                                            !this.props.value ? (
-                                                <Text style={comStyle.kgUper}>
-                                                    kg
+                                    </View>
+                                    {
+                                        !this.props.value ? (
+                                            <Text style={comStyle.kgUper}>
+                                                kg
+                                            </Text>
+                                        ) : (
+                                                <Text style={comStyle.pondUper}>
+                                                    £
                                                 </Text>
-                                            ) : (
-                                                    <Text style={comStyle.pondUper}>
-                                                        £
-                                                    </Text>
-                                                )
-                                        }
-                                        {
-                                            this.props.locker ? (
-                                                <TouchableOpacity style={comStyle.iconOpenRow} onPress={() => this.toggleModal()}>
+                                            )
+                                    }
+                                    {
+                                        this.props.locker ? (
+                                            <TouchableOpacity style={comStyle.iconOpenRow} onPress={() => this.toggleModal()}>
+                                                <View>
+                                                    <NewOpen name="open-in-new" size={width * .035} color="black" />
+                                                </View>
+                                            </TouchableOpacity>
+                                        ) : (
+                                                <View style={comStyle.iconOpenRow} >
                                                     <View>
                                                         <NewOpen name="open-in-new" size={width * .035} color="black" />
                                                     </View>
-                                                </TouchableOpacity>
-                                            ) : (
-                                                <View style={comStyle.iconOpenRow} >
-                                                        <View>
-                                                            <NewOpen name="open-in-new" size={width * .035} color="black" />
-                                                        </View>
                                                 </View>
-                                                )
-                                        }
+                                            )
+                                    }
 
-                                    </View>
                                 </View>
-                                <View style={{ flexDirection: 'row', flex: 1, }}>
-                                    <View>
+                            </View>
+                        </View>
+                        {/* <View style={comStyle.footerContainer}>
+                            <View style={{ flex: 1,justifyContent:'center',alignItems:'center',}}> */}
+                                {/* <View>
                                         <Text style={comStyle.setTemp}>
-                                            Previous Weight
+                                        Previous Weight
                                         </Text>
                                         <View style={comStyle.boxLowerStyle}>
-                                            <View style={comStyle.likeInputMin}>
-                                                <Text style={comStyle.tempInputSet}>
+                                        <View style={comStyle.likeInputMin}>
+                                        <Text style={comStyle.tempInputSet}>
                                                     00.0
-                                                </Text>
+                                                    </Text>
                                             </View>
                                             {
                                                 !this.props.value ? (
                                                     <Text style={comStyle.centiLower}>
                                                         kg
-                                                    </Text>
-                                                ) : (
-                                                        <Text style={comStyle.centiLower}>
-                                                            £
                                                         </Text>
-                                                    )
-                                            }
-
-                                        </View>
-                                    </View>
-                                    <View style={{ flexDirection: 'row', }}>
-
-
-                                    </View>
-
-
-                                </View>
-                            </View>
-                        </View>
+                                                        ) : (
+                                                            <Text style={comStyle.centiLower}>
+                                                            £
+                                                            </Text>
+                                                            )
+                                                        }
+                                                        
+                                                        </View>
+                                                        </View>
+                                                        <View style={{ flexDirection: 'row', }}>
+                                                        
+                                                        
+                                                    </View> */}
+                            {/* </View> */}
+                        {/* </View> */}
                     </View>
 
                 </View>
