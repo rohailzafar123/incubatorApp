@@ -7,53 +7,7 @@ import { Fonts } from '../../../utils/fonts';
 const { height, width } = Dimensions.get('window');
 
 export default styles = StyleSheet.create({
-    weightView: {
-        width: width * .32,
-        height: height * .34,
-        margin: width * .005
-    },
-    weight: {
-        flex: 1,
-        borderRadius: height * .05,
-        elevation: width * .005,
-        borderWidth:width * .002,
-        backgroundColor:'white',
-        padding: height * .022,
-        borderColor:'#5c5c5c70'
-    },
-    OxigenInerContainer: {
-        flex: 1,
-
-    },
-    OxigenIner: {
-        flex: 1,
-        paddingHorizontal: height * .01,
-        // backgroundColor:'red'
-    },
-    boxUperStyle: {
-        flexDirection: 'row'
-    },
-    likeInputOxygen: {
-        width: width * .23,
-        height: height * .1,
-        borderWidth: 1,
-        flexDirection: "row-reverse",
-        alignItems: 'center',
-    },
-    boxLowerStyle: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        // marginBottom: height * .02,  
-    },
-    likeInputMin: {
-        width: width * .1,
-        height: height * .07,
-        borderWidth: 1,
-        // flexDirection:"row-reverse",
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
+    
     // Modal Styling
     modalMainContainer: {
         backgroundColor: '#81c2f7',
@@ -84,10 +38,6 @@ export default styles = StyleSheet.create({
         fontFamily: Fonts.BalooChettan2,
         color: 'white',
     },
-    headerIcon: {
-        alignItems: 'center',
-        marginLeft: width * .35
-    },
     submit:{
         width: width * .058,
         height: height * .1,
@@ -99,13 +49,6 @@ export default styles = StyleSheet.create({
 
 
     },
-    alarmText: {
-        // alignSelf:'center',
-        fontSize: width * .015,
-        fontFamily: Fonts.Handlee,
-        color: '#e44f3bfd',
-
-    },
     bodyMainContainer: {
         width: width * .9,
         height: height * .62,
@@ -113,142 +56,32 @@ export default styles = StyleSheet.create({
     },
     bodyContainer: {
         flex: 1,
-        marginHorizontal: width * .02,
         marginTop: width * .01,
-        flexDirection: 'row',
-        justifyContent: 'space-between'
+        alignItems: 'center'
 
     },
-    bodyHeading: {
-        fontSize: width * .03,
-        fontWeight: 'bold',
-        paddingBottom: width * .005,
-        marginBottom:width * .005,
-    },
-    graphImage:{
-        width: width * .58,
-        height: height * .45,
-    },
-    dataContainer:{
-        width: width * .27,
-        height: height * .585,
-        backgroundColor: '#ffe3e383',
-        elevation: width * .003,
-        marginLeft: width * .01,
-        borderRadius: width * .04,
-        padding: width * .015
-    },
-    currentWieHeading:{
-        fontSize: width * .02,
-        fontWeight: 'bold',
-        color: '#484149c5',
-        marginBottom: width * .002,
-        marginLeft: width * .002,
-
-    },
-    currentWeiView:{
-        elevation: width * .003,
-        width: width * .18,
-        height: height * .09,
+    renderListContainer:{
+        marginVertical: height * .005,
+        justifyContent: 'space-between',
         backgroundColor: 'white',
-        borderRadius: width * .05,
-        paddingHorizontal:width * .01,
-    },
-    currentWeiInp:{
-        fontSize: width * .03,
-        fontWeight: 'bold',
-        textAlign: 'right',
-        color: '#484149c5',
-        paddingVertical: width * .008,
-    },
-    preWeiHeading:{
-        fontSize: width * .02,
-        fontWeight: 'bold',
-        color: '#484149c5',
-        marginBottom: width * .002,
-        marginLeft: width * .002,
-
-    },
-    preWeiInpuView:{
-            elevation: width * .003,
-            width: width * .14,
-            height: height * .09,
-            backgroundColor: 'white',
-            borderRadius: width * .03,
-            paddingHorizontal: width * .01,
-    },
-    preWeiInput:{
-        fontSize: width * .025,
-        fontWeight: 'bold',
-        textAlign: 'right',
-        color: '#484149c5',
-        paddingVertical: width * .01,
-    },
-    minWieHeading:{
-        fontSize: width * .018,
-        fontWeight: 'bold',
-        color: '#484149c5',
-        marginBottom: width * .002,
-        marginLeft: width * .002,
-
-    },
-    minWeiInpuView:{
-        elevation: width * .003,
-        width: width * .09,
-        height: height * .09,
-        backgroundColor: 'white',
-        borderRadius: width * .03,
-        paddingHorizontal: width * .01,
-    },
-    minWeiInput:{
-        fontSize: width * .022,
-        fontWeight: 'bold',
-        textAlign: 'right',
-        color: '#484149c5',
-        paddingVertical: width * .011,
-    },
-    maxWeiHeading:{
-        fontSize: width * .018,
-        fontWeight: 'bold',
-        color: '#484149c5',
-        marginBottom: width * .002,
-        marginLeft: width * .002,
-
-    },
-    maxWeiInpuView:{
-        elevation: width * .003,
-        width: width * .09,
-        height: height * .09,
-        backgroundColor: 'white',
-        borderRadius: width * .03,
-        paddingHorizontal: width * .01,
-    },
-    maxWeiInput:{
-        fontSize: width * .022,
-        fontWeight: 'bold',
-        textAlign: 'right',
-        color: '#484149c5',
-        paddingVertical: width * .011,
-
-    },
-    toggleHeading:{
-        fontSize: width * .018,
-        fontWeight: 'bold',
-        color: '#484149c5',
-        marginBottom: width * .002,
-        marginLeft: width * .002,
-    },
-    toggleContainer:{
-        width: width * .09,
+        elevation: width * .002,
         height: height * .07,
-        borderRadius: width * .04,
-        padding: 5,
-        elevation: width * .003,
+        borderColor: 'gray',
+        borderWidth: .5,
+        paddingHorizontal: width * .02,
+        width: width * .88,
+        flexDirection: 'row',
+        alignItems: 'center'
     },
-    toggleCircle:{
-        width: width * .03,
-        height: height * .05,
-        borderRadius: width * .1,
-        backgroundColor: 'white', // rgb(102,134,205)
+    renderListHeading1:{
+        fontFamily: Fonts.BalooChettan2,
+        fontSize: width * .02,
+        color: "#484149c5",
     },
+    renderListHeading2:{
+        fontFamily: Fonts.BalooChettan2,
+        fontSize: width * .02,
+        color: "#484149c5",
+        marginRight:width * .04
+    }
 });

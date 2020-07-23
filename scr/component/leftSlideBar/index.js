@@ -29,16 +29,16 @@ export default class App extends Component {
             brightness: 0.2,
             toggleWeight: false,
             toggleTemp: false,
-            currentAirValue: null,
-            setAirValue: null,
-            skinCurrentTemp:32.1,
-            skinSetTemp:34.1,            
+            higherAirValue: null,
+            lowAirValue: 32.1,
+            skinHigherTemp:32.1,
+            skinLowerTemp:34.1,            
         }
-        this.handleAirCurrent = this.handleAirCurrent.bind(this);
+        this.handleAirHigher = this.handleAirHigher.bind(this);
         this.handleModalOff = this.handleModalOff.bind(this);
-        this.handleAirSet = this.handleAirSet.bind(this);
-        this.handleSkinCurrent = this.handleSkinCurrent.bind(this);
-        this.handleSkinSet = this.handleSkinSet.bind(this);
+        this.handleAirLower = this.handleAirLower.bind(this);
+        this.handleSkinHigher = this.handleSkinHigher.bind(this);
+        this.handleSkinLower = this.handleSkinLower.bind(this);
 
 
 
@@ -61,32 +61,32 @@ export default class App extends Component {
             },
         );
     }
-    handleAirCurrent(child) {
+    handleAirHigher(child) {
         this.setState({
-            currentAirValue: child,
+            higherAirValue: child,
         },
-        () => this.props.airCurTemp(this.state.currentAirValue)
+        () => this.props.airHigTemp(this.state.higherAirValue)
         );
     };
-    handleAirSet(child) {
+    handleAirLower(child) {
         this.setState({
-            setAirValue: child,
+            lowAirValue: child,
         },
-        () => this.props.airSetTemp(this.state.setAirValue)
+        () => this.props.airLoweTemp(this.state.lowAirValue)
         );
     };
-    handleSkinSet(child) {
+    handleSkinLower(child) {
         this.setState({
-            skinSetTemp: child,
+            skinLowerTemp: child,
         },
-        () => this.props.skinSetTemp(this.state.skinSetTemp)
+        () => this.props.skinLowTemp(this.state.skinLowerTemp)
         );
     };
-    handleSkinCurrent(child) {
+    handleSkinHigher(child) {
         this.setState({
-            skinCurrentTemp: child,
+            skinHigherTemp: child,
         },
-        () => this.props.skinCurTemp(this.state.skinCurrentTemp)
+        () => this.props.skinHighTemp(this.state.skinHigherTemp)
         );
     };
     handleModalOff(child) {
@@ -106,7 +106,7 @@ export default class App extends Component {
 
                     ) : (
                             <View>
-                                <MenuOpen name="menufold" size={width * .04} color="black" />
+                                <MenuOpen name="menufold" size={width * .04} color="red" />
                             </View>
                         )
                 }
@@ -179,10 +179,10 @@ export default class App extends Component {
                             }}>
                                 <AlarmSetting 
                                 modalOff={this.handleModalOff} 
-                                airCurTemp={this.handleAirCurrent} 
-                                airSetTemp={this.handleAirSet} 
-                                skinCurTemp={this.handleSkinCurrent} 
-                                skinSetTemp={this.handleSkinSet} 
+                                airHigTemp={this.handleAirHigher} 
+                                airLowTemp={this.handleAirLower} 
+                                skinHighTemp={this.handleSkinHigher} 
+                                skinLowTemp={this.handleSkinLower} 
                                 
                                 />
                                 <TouchableOpacity style={style.listView}>

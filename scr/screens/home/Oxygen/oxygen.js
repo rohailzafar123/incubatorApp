@@ -45,7 +45,7 @@ export default class App extends Component {
                         </TouchableOpacity>
                       ) : (
                           <View style={style.iconOpenRow}>
-                            <NewOpen name="open-in-new" size={width * .035} color="black" />
+                            <NewOpen name="open-in-new" size={width * .035} color="red" />
                           </View>
                         )
                     }
@@ -69,11 +69,7 @@ export default class App extends Component {
                     </View>
                   </View>
                   <View style={{ flexDirection: 'row', }}>
-
-
                   </View>
-
-
                 </View>
               </View>
             </View>

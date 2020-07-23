@@ -145,13 +145,13 @@ export default styles = StyleSheet.create({
         borderRadius: width * .003,
         justifyContent: 'center',
         alignItems: 'center',
-
     },
     currentInput:{
         fontFamily: Fonts.BalooChettan2,
         fontSize: width * .02,
         color: "red",
         textAlign:'center'
+
     },
     setHeading:{
         fontFamily: Fonts.Handlee,

@@ -27,12 +27,12 @@ export default class App extends Component {
       valueX: null,
       valuey: null,
       valuez: null,
-      alarmPower: 21,
-      alarmSensor: 21,
-      alarmFan: 0,
+      alarmPower: 15,
+      alarmSensor: 15,
+      alarmFan: 16,
       alarmAir: 20,
       // alarmAirOver:0,
-      alarmSystem: 0,
+      alarmSystem: 14,
       time: null,
       airCondi: true,
       senCondi: true,
@@ -43,20 +43,20 @@ export default class App extends Component {
       weightSign: false,
       tempSign: false,
       lock: true,
-      currentAirValue: 33.1,
-      setAirValue: 32.1,
-      skinCurrentTemp: 32.1,
-      skinSetTemp: 34.1,
+      higherAirValue: 40,
+      lowAirValue: 32.1,
+      skinHigherTemp: 32.1,
+      skinLowTemp: 34.1,
     },
     this.handleWeight = this.handleWeight.bind(this);
     this.handleTemp = this.handleTemp.bind(this);
     this.timer = null;
     this.addOne = this.addOne.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
-    this.handleAirCurrent = this.handleAirCurrent.bind(this);
-    this.handleAirSet = this.handleAirSet.bind(this);
-    this.handleSkinCurrent = this.handleSkinCurrent.bind(this);
-    this.handleSkinSet = this.handleSkinSet.bind(this);
+    this.handleAirHigher = this.handleAirHigher.bind(this);
+    this.handleAirLow = this.handleAirLow.bind(this);
+    this.handleSkinHigher = this.handleSkinHigher.bind(this);
+    this.handleSkinLower = this.handleSkinLower.bind(this);
 
   }
   // componentDidMount(){
@@ -74,21 +74,12 @@ export default class App extends Component {
 
     // this.interval = setInterval(() => this.setState({ alarmAir: this.state.alarmAir + 1 }), 1500);
     // this.alarmAirOvFn();
-    this.alarmAirFn();
     this.alarmPowFn();
     this.alarmFanFn();
     this.alarmSenFn();
     this.alarmSysFn();
   }
-  alarmAirFn = () => {
-    if (this.state.alarmAir < 20) {
-      this.setState({ airCondi: false })
-    } else if (this.state.alarmAir > 37) {
-      this.setState({ airCondi: false })
-    } else {
-      this.setState({ airCondi: true })
-    }
-  };
+  
   alarmPowFn = () => {
     if (this.state.alarmPower < 10) {
       this.setState({ powCondi: false })
@@ -139,24 +130,24 @@ export default class App extends Component {
       weightSign: child,
     });
   };
-  handleAirCurrent(child) {
+  handleAirHigher(child) {
     this.setState({
-      currentAirValue: child,
+      higherAirValue: child,
     });
   }
-  handleAirSet(child) {
+  handleAirLow(child) {
     this.setState({
-      setAirValue: child,
+      lowAirValue: child,
     })
   };
-  handleSkinSet(child) {
+  handleSkinLower(child) {
     this.setState({
-      skinSetTemp: child,
+      skinLowTemp: child,
     })
   };
-  handleSkinCurrent(child) {
+  handleSkinHigher(child) {
     this.setState({
-      skinCurrentTemp: child,
+      skinHigherTemp: child,
     });
   };
   handleTemp(child) {
@@ -188,8 +179,8 @@ export default class App extends Component {
     // console.log(this.state.airCondi)
     // console.log(this.state.lock, 'weight')
     // console.log(this.state.tempSign, 'temmp')
-    console.log(this.state.currentTempValue)
-    console.log(this.state.currentTempValue)
+    console.log(this.state.higherAirValue,'high temp')
+    console.log(this.state.lowAirValue,'low temp')
 
 
     return (
@@ -228,28 +219,19 @@ export default class App extends Component {
             <Notification name="notifications-active" size={width * .05} color={this.state.fanCondi ? '#0ae916' : 'red'} style={{ marginHorizontal: width * .01 }} />
             <Text style={style.alarmText}>Fan Failure</Text>
           </View>
-          {/* <View style={style.iconAndText}>
-            <Notification name="notifications-active" size={width * .05} color={this.state.airCondi ? '#0ae916' : 'red'} style={{ marginHorizontal: width * .01 }} />
-            <Text style={style.alarmText}>Over Temperature</Text>
-          </View> */}
-          {/* <View style={style.iconAndText}>
-              <Notification name="notifications-active" size={width * .05} color={this.state.airOvCondi ? '#0ae916' : 'red' } style={{ marginHorizontal: width * .01 }} />
-              <Text style={style.overRidTex}>Over Air </Text>
-              <Text style={style.overRidTex1}>Temperature</Text>
-            </View> */}
           <View style={style.iconAndText}>
-            <Notification name="notifications-active" size={width * .05} color="#0ae916" style={{ marginHorizontal: width * .01 }} />
+            <Notification name="notifications-active" size={width * .05} color={this.state.sysCondi ? '#0ae916' : 'red'} style={{ marginHorizontal: width * .01 }} />
             <Text style={style.alarmText}>System Failure</Text>
           </View>
           <View style={{ borderWidth: 1, borderColor: '#6b6a6a59', height: height * .12, position: 'absolute', right: width * .08 }}></View>
           <LeftSlider
             selectWeight={this.handleWeight}
             selectTemp={this.handleTemp}
+            airHigTemp={this.handleAirHigher}
+            airLoweTemp={this.handleAirLow}
+            skinHighTemp={this.handleSkinHigher}
+            skinLowTemp={this.handleSkinLower}
             locker={this.state.lock}
-            airCurTemp={this.handleAirCurrent}
-            airSetTemp={this.handleAirSet}
-            skinCurTemp={this.handleSkinCurrent}
-            skinSetTemp={this.handleSkinSet}
           />
         </View>
         <View style={style.inerContainer3}>
@@ -264,17 +246,21 @@ export default class App extends Component {
           </Text>
         </View>
         <View style={style.inerContainer1}>
+
+          {/* Air Temperature */}
           <AirTemp
             value={this.state.tempSign}
             locker={this.state.lock}
-            airCurrentTemp={this.state.currentAirValue}
-            airSetTemp={this.state.setAirValue}
+            airHigherTemp={this.state.higherAirValue}
+            airLowerTemp={this.state.lowAirValue}
           />
+
+          {/* Skin Temperature */}
           <SkinTemp
             value={this.state.tempSign}
             locker={this.state.lock}
-            skinCurrentTemp={this.state.skinCurrentTemp}
-            skinSetTemp={this.state.skinSetTemp}
+            skinHighTemp={this.state.skinHigherTemp}
+            skinLowerTemp={this.state.skinLowTemp}
 
           />
           <SPO2 locker={this.state.lock} />

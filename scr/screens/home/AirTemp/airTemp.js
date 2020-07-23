@@ -8,16 +8,28 @@ import Modal from 'react-native-modal';
 import Alarm from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const { height, width } = Dimensions.get('window');
-
 export default class App extends Component {
   state = {
     isModalVisible: false,
-    airTemp:true
+    airTemp:true,
+    currentAirTemperature:35,
   }
+  componentDidMount(){
+  const high = this.props.airHigherTemp;
+  const lower = this.props.airLowerTemp;
 
+    if(this.state.currentAirTemperature > high || this.state.currentAirTemperature < lower){
+      this.setState({airTemp:false})
+    }else{
+      this.setState({airTemp:true})
+    }
+  }
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
+
+
+  
   render() {
     return (
       <View>
@@ -33,7 +45,7 @@ export default class App extends Component {
                     <View style={style.likeInputOxygen}>
                       <Text
                         style={style.tempInputCur} >
-                        {this.props.airCurrentTemp}
+                        {this.props.airHigherTemp}
                         </Text>
                     </View>
                     {!this.props.value ? (
@@ -53,7 +65,7 @@ export default class App extends Component {
                         </TouchableOpacity>
                       ) : (
                           <View style={style.iconOpenRow}>
-                            <NewOpen name="open-in-new" size={width * .035} color="black" />
+                            <NewOpen name="open-in-new" size={width * .035} color="red" />
                           </View>
                         )
                     }
@@ -72,7 +84,7 @@ export default class App extends Component {
                     <View style={style.boxLowerStyle}>
                       <View style={style.likeInputMin}>
                         <Text style={style.tempInputSet}>
-                        {this.props.airSetTemp}
+                        {this.props.airLowerTemp}
                           </Text>
                       </View>
                       {!this.props.value ? (
@@ -85,8 +97,6 @@ export default class App extends Component {
                           </Text>
                         )
                       }
-
-
                     </View>
                   </View>
 

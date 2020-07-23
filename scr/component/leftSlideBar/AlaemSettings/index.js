@@ -22,16 +22,16 @@ export default class App extends Component {
             LockorUnlo: false,
             toggleWeight: false,
             toggleTemp: false,
-            currentAirValue: 33.1,
-            setAirValue: 22.1,
-            skinCurrentTemp:32.1,
-            skinSetTemp:34.1,
+            higherAirValue: null,
+            lowerAirValue: 22.1,
+            skinHighTemp:32.1,
+            skinLowTemp:34.1,
         },
-            this.handleAirCurrent = this.handleAirCurrent.bind(this);
-            this.handleAirSet = this.handleAirSet.bind(this);
+            this.handleAirHigher = this.handleAirHigher.bind(this);
+            this.handleAirlower = this.handleAirlower.bind(this);
             // this.handleSkinCurrent = this.handleSkinCurrent.bind(this);
-            this.handleSkinSet = this.handleSkinSet.bind(this);
-            this.handleSkinCurrent = this.handleSkinCurrent.bind(this);
+            this.handleSkinLow = this.handleSkinLow.bind(this);
+            this.handleSkinHigh = this.handleSkinHigh.bind(this);
 
     }
     toggleModal = () => {
@@ -40,32 +40,32 @@ export default class App extends Component {
     collectData = () => {
         this.setState({ isModalVisible: !this.state.isModalVisible },
             () => 
-            this.props.airCurTemp(this.state.currentAirValue),
-            this.props.airSetTemp(this.state.setAirValue),
-            this.props.skinCurTemp(this.state.skinCurrentTemp),
-            this.props.skinSetTemp(this.state.skinSetTemp),
+            this.props.airHigTemp(this.state.higherAirValue),
+            this.props.airLowTemp(this.state.lowerAirValue),
+            this.props.skinHighTemp(this.state.skinHighTemp),
+            this.props.skinLowTemp(this.state.skinLowTemp),
             this.props.modalOff(!this.state.isModalVisible),
 
             );
     }
-    handleAirCurrent(child) {
+    handleAirHigher(child) {
         this.setState({
-            currentAirValue: child,
+            higherAirValue: child,
         });
     }
-    handleAirSet(child) {
+    handleAirlower(child) {
         this.setState({
-            setAirValue: child,
+            lowerAirValue: child,
         });
     }
-    handleSkinCurrent(child) {
+    handleSkinHigh(child) {
         this.setState({
-            skinCurrentTemp: child,
+            skinHighTemp: child,
         });
     }
-    handleSkinSet(child) {
+    handleSkinLow(child) {
         this.setState({
-            skinSetTemp: child,
+            skinLowTemp: child,
         });
     }
     // handleSkinCurrent(child) {
@@ -113,9 +113,13 @@ export default class App extends Component {
                                 {/* Box Body */}
                                 <View style={style.boxBody}>
                                     <View style={style.boxBodyInner}>
-                                        <AirTemp currentTemp={this.handleAirCurrent} setTemp={this.handleAirSet} />
-                                        <SkinTemp skinCurTemp={this.handleSkinCurrent} skinSetTemp={this.handleSkinSet} />
+                                        {/* Air Temperature */}
+                                        <AirTemp currentTemp={this.handleAirHigher} setTemp={this.handleAirlower} />
+                                        {/* Skin Temperature */}
+                                        <SkinTemp highSkinTemp={this.handleSkinHigh} lowerSkinTemp={this.handleSkinLow} />
+                                        {/* Spo2 */}
                                         <Spo2 skinCurrentTemp={this.handleSkinCurrent}/>
+                                        {/* Hr */}
                                         <Hr />
                                    </View>
                                 </View>

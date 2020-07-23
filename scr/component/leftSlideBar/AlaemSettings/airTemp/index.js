@@ -6,7 +6,7 @@ import SwitchToggle from 'react-native-switch-toggle';
 import Alarm from 'react-native-vector-icons/MaterialCommunityIcons';
 import Back from 'react-native-vector-icons/MaterialCommunityIcons';
 import Check from 'react-native-vector-icons/AntDesign';
-
+import NumericInput from 'react-native-numeric-input'
 // import SysSettings from 'react-native-vector-icons/Octicons';
 import { Fonts } from '../../../../utils/fonts';
 import { TextInput } from 'react-native-gesture-handler';
@@ -19,39 +19,43 @@ export default class App extends Component {
             LockorUnlo: false,
             toggleWeight: false,
             toggleTemp: false,
-            airCurrentTemp:null,
-            airSetTemp:null,
-            airTemp:false,
+            airHightTemp: 40,
+            airLowerTemp: 20,
+            airTemp: false,
+            higher: 40,
+            lower: 20
         }
     }
-    
+
     changeValueHandler = () => {
 
-        if (this.state.airCurrentTemp == null ){
-            alert('Empty Current Temperature');
+        if (this.state.airHightTemp == null) {
+            alert('Empty Higher Temperature');
             this.setState(
-                { 
-                airTemp: this.state.airTemp,
+                {
+                    airTemp: this.state.airTemp,
+                });
+        }
+        else if (this.state.airLowerTemp == null) {
+            alert('Empty lower Temperature');
+            this.setState(
+                {
+                    airTemp: this.state.airTemp,
+                });
+        }
+        else if (this.state.airHightTemp < 20 || this.state.airHightTemp > 40 || this.state.airLowerTemp < 20 || this.state.airLowerTemp > 40) {
+            alert('Please Set Value Above 20 In Lower and Lower 40 Value In Higher');
+            this.setState({
+                airTemp: this.state.airTemp
             });
         }
-        else if(this.state.airSetTemp == null){
-            alert('Empty Set Temperature');
-            this.setState(
-                { 
-                airTemp: this.state.airTemp,
-            });
-        }
-        else if(this.state.airCurrentTemp < 20 || this.state.airCurrentTemp > 100 || this.state.airSetTemp < 20 || this.state.airSetTemp > 100){
-            alert('Please Set Value upper 20 and lower 100');
-            this.setState({ 
-                airTemp: this.state.airTemp });
-        }
-        else{
-            this.setState({ 
-                airTemp: !this.state.airTemp },
+        else {
+            this.setState({
+                airTemp: !this.state.airTemp
+            },
                 () => {
-                    this.props.currentTemp(this.state.airCurrentTemp),
-                        this.props.setTemp(this.state.airSetTemp)
+                    this.props.currentTemp(this.state.airHightTemp),
+                        this.props.setTemp(this.state.airLowerTemp)
                 }
             );
         }
@@ -59,11 +63,11 @@ export default class App extends Component {
     toggleAir = () => {
         this.setState({ airTemp: !this.state.airTemp });
     };
-    
-  
+
+
     render() {
-        // console.log(this.state.airCurrentTemp)
-        // console.log(this.state.airSetTemp)
+        console.log(this.state.airHightTemp)
+        console.log(this.state.airLowerTemp)
         return (
             <View>
 
@@ -74,9 +78,6 @@ export default class App extends Component {
                 <Modal
                     animationIn="slideInDown"
                     animationOut="slideOutUp"
-                    onBackdropPress={() => this.toggleAir()}
-                    onSwipeComplete={() => this.toggleAir()}
-                    swipeDirection="right"
                     isVisible={this.state.airTemp}
                     style={style.modal}>
                     <View style={style.modalInner}>
@@ -95,29 +96,38 @@ export default class App extends Component {
                                 <View style={style.bodyContainer}>
                                     <View style={style.bodyInner}>
                                         <Text style={style.currentHeading}>
-                                            Current Temperature
+                                            Higher Temperature
                                         </Text>
-                                        <View style={style.currentInputView}>
-                                            <TextInput
+                                        {/* <TextInput
                                                 placeholder='Type Here'
                                                 keyboardType="number-pad"
                                                 maxLength={5}
                                                 style={style.currentInput}
                                                 onChangeText={airCurrentTemp => this.setState({airCurrentTemp})}
-                                            />
-                                        </View>
+                                                
+                                            /> */}
+                                        <NumericInput
+                                            onChange={airHightTemp => this.setState({ airHightTemp })}
+                                            totalWidth={width * .15}
+                                            totalHeight={height * .05}
+                                            initValue={this.state.airHightTemp}
+                                            rounded
+
+                                        />
+
+
                                         <Text style={style.currentHeading}>
-                                            Set Temperature
+                                            Lower Temperature
                                         </Text>
-                                        <View style={style.currentInputView}>
-                                            <TextInput
-                                                placeholder='Type Here'
-                                                keyboardType="number-pad"
-                                                maxLength={5}
-                                                style={style.currentInput}
-                                                onChangeText={airSetTemp => this.setState({airSetTemp})}
-                                            />
-                                        </View>
+                                        <NumericInput
+                                            onChange={airLowerTemp => this.setState({ airLowerTemp })}
+                                            totalWidth={width * .15}
+                                            totalHeight={height * .05}
+                                            initValue={this.state.airLowerTemp}
+                                            rounded
+
+                                        />
+                                        
                                     </View>
                                 </View>
                                 <View style={style.footerContainer}>

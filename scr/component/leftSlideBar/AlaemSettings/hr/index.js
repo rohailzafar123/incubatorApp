@@ -17,53 +17,61 @@ export default class App extends Component {
         this.state = {
             isModalVisible: false,
             LockorUnlo: false,
-            brightness: 0.2,
             toggleWeight: false,
             toggleTemp: false,
+            skinCurrentTemp: null,
+            skinSetTemp: null,
+            airTemp: false,
         }
     }
-    toggleModal = () => {
-        this.setState({ isModalVisible: !this.state.isModalVisible });
-    };
-    toggleModalLock = () => {
-        this.setState({ LockorUnlo: !this.state.LockorUnlo });
-    };
+
+    changeValueHandler = () => {
+
+        if (this.state.skinCurrentTemp == null) {
+            alert('Empty Current Temperature');
+            this.setState(
+                {
+                    airTemp: this.state.airTemp,
+                });
+        }
+        else if (this.state.skinSetTemp == null) {
+            alert('Empty Set Temperature');
+            this.setState(
+                {
+                    airTemp: this.state.airTemp,
+                });
+        }
+        else if (this.state.skinCurrentTemp < 20 || this.state.skinCurrentTemp > 100 || this.state.skinSetTemp < 20 || this.state.skinSetTemp > 100) {
+            alert('Please Set Value upper 20 and lower 100');
+            this.setState({
+                airTemp: this.state.airTemp
+            });
+        }
+        else {
+            this.setState({
+                airTemp: !this.state.airTemp
+            },
+                () => {
+                    this.props.skinCurTemp(this.state.skinCurrentTemp),
+                        this.props.skinSetTemp(this.state.skinSetTemp)
+                }
+            );
+        }
+    }
+
     toggleAir = () => {
         this.setState({ airTemp: !this.state.airTemp });
     };
-    toggleSkin = () => {
-        this.setState({ skinTemp: !this.state.skinTemp });
-    };
-    toggleSpot = () => {
-        this.setState({ spot: !this.state.spot });
-    };
-    toggleHr = () => {
-        this.setState({ Hr: !this.state.Hr });
-    };
-
-    _doneUnit = () => {
-        this.setState(
-            {
-                LockorUnlo: !this.state.LockorUnlo,
-                isModalVisible: !this.state.isModalVisible
-            },
-            () => {
-                this.props.selectWeight(this.state.toggleWeight),
-                    this.props.selectTemp(this.state.toggleTemp)
-
-            },
 
 
-        );
-
-
-    }
     render() {
+        // console.log(this.state.airCurrentTemp)
+        // console.log(this.state.airSetTemp)
         return (
             <View>
 
                 <TouchableOpacity style={style.listView} onPress={this.toggleAir}>
-                    <Text style={style.listText}>Heart Rate (hr)</Text>
+                    <Text style={style.listText}>Heart Rate</Text>
                     <Alarm name={'alarm-light'} size={width * .02} />
                 </TouchableOpacity>
                 <Modal
@@ -83,14 +91,14 @@ export default class App extends Component {
                                             <Back name={'keyboard-backspace'} size={width * .03} color='white' />
                                         </TouchableOpacity>
                                         <Text style={style.headerHeading}>
-                                        Heart Rate (hr)
+                                            Heart Rate
                                         </Text>
                                     </View>
                                 </View>
                                 <View style={style.bodyContainer}>
                                     <View style={style.bodyInner}>
                                         <Text style={style.currentHeading}>
-                                            Current Temperature
+                                            Set HR Level
                                         </Text>
                                         <View style={style.currentInputView}>
                                             <TextInput
@@ -98,17 +106,7 @@ export default class App extends Component {
                                                 keyboardType="number-pad"
                                                 maxLength={5}
                                                 style={style.currentInput}
-                                            />
-                                        </View>
-                                        <Text style={style.currentHeading}>
-                                            Set Temperature
-                                        </Text>
-                                        <View style={style.currentInputView}>
-                                            <TextInput
-                                                placeholder='Type Here'
-                                                keyboardType="number-pad"
-                                                maxLength={5}
-                                                style={style.currentInput}
+                                                onChangeText={skinSetTemp => this.setState({ skinSetTemp })}
                                             />
                                         </View>
                                     </View>
@@ -116,7 +114,7 @@ export default class App extends Component {
                                 <View style={style.footerContainer}>
                                     <View style={style.footerInner}>
                                         <TouchableOpacity style={style.bottonView}
-                                            onPress={this.toggleAir}>
+                                            onPress={this.changeValueHandler}>
                                             <Text style={style.bottonText}>
                                                 Submit
                                             </Text>

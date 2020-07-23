@@ -11,7 +11,8 @@ const { height, width } = Dimensions.get('window');
 
 export default class App extends Component {
     state = {
-        isModalVisible: false
+        isModalVisible: false,
+        powCondi:true
     }
 
     toggleModal = () => {
@@ -30,7 +31,7 @@ export default class App extends Component {
                             <View style={style.skinIner}>
                                 <View style={{ flex: 1, }}>
                                     <Text style={style.currentTempText}>
-                                        SPOT
+                                        SPO2
                                     </Text>
                                     <View style={style.boxUperStyle}>
                                         <View style={style.likeInputOxygen}>
@@ -51,7 +52,7 @@ export default class App extends Component {
                                                 </TouchableOpacity>
                                             ) : (
                                                     <View style={style.iconOpenRow}>
-                                                        <NewOpen name="open-in-new" size={width * .035} color="black" />
+                                                        <NewOpen name="open-in-new" size={width * .035} color="red" />
                                                     </View>
                                                 )
                                         }

@@ -44,7 +44,10 @@ export default styles = StyleSheet.create({
         fontFamily: Fonts.BalooChettan2,
         color: '#484149c5',
         top: height * .05,
+        left:width * .01,
         marginLeft:width * .002,
+
+        // marginLeft:width * .0,
 
     },
     pondUper: {
@@ -52,13 +55,14 @@ export default styles = StyleSheet.create({
         fontFamily: Fonts.BalooChettan2,
         color: '#484149c5',
         top: height * .05,
+        left:width * .01,
         marginRight:width * .016,
         marginLeft:width * .002,
 
     },
     iconOpenRow: {
         bottom: height * .065,
-        right: width * .015
+        right: width * .007
     },
     setTemp: {
         fontSize: width * .023,
@@ -98,8 +102,8 @@ export default styles = StyleSheet.create({
         width:width * .29,
     },
     likeInputOxygen: {
-        width: width * .23,
-        height: height * .2,
+        width: width * .22,
+        height: height * .22,
         borderWidth: 1,
         borderColor:'#5c5c5c70',
         backgroundColor:'white',
@@ -127,6 +131,22 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: height * .005,
 
+    },
+    zeroBotton:{
+        width:width * .055,
+        height:height * .07,
+        borderRadius: width * .002,
+        backgroundColor:'red',
+        justifyContent:'center',
+        alignItems:'center',
+        position:'absolute',
+        right:width * .0,
+        bottom:height * .01
+    },
+    zeroText:{
+        color:'white',
+        fontSize:width * .011,
+        fontFamily:Fonts.BalooChettanBold,
     },
 
 });

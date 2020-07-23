@@ -139,7 +139,7 @@ export default styles = StyleSheet.create({
         // marginLeft: width * .05,
     },
     currentInputView:{
-        width: width * .1,
+        width: width * .2,
         height: height * .075,
         borderWidth: 1,
         borderRadius: width * .003,
