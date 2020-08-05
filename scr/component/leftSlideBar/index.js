@@ -7,7 +7,6 @@ import MenuClose from 'react-native-vector-icons/AntDesign';
 import Setting from 'react-native-vector-icons/Feather';
 import Lock from 'react-native-vector-icons/SimpleLineIcons';
 import SysSettings from 'react-native-vector-icons/Octicons';
-import User from 'react-native-vector-icons/EvilIcons';
 import Graph from 'react-native-vector-icons/Entypo';
 import Pass from 'react-native-vector-icons/MaterialCommunityIcons';
 import Bright from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -17,6 +16,7 @@ import SwitchToggle from 'react-native-switch-toggle';
 import SystemSetting from 'react-native-system-setting';
 import Alarm from 'react-native-vector-icons/MaterialCommunityIcons';
 import AlarmSetting from './AlaemSettings/index';
+import Parameter from './Parameter/index';
 // import SysSettings from 'react-native-vector-icons/Octicons';
 import { Fonts } from '../../utils/fonts';
 const { height, width } = Dimensions.get('window');
@@ -26,13 +26,23 @@ export default class App extends Component {
         this.state = {
             isModalVisible: false,
             LockorUnlo: false,
-            brightness: 0.2,
+            brightness: .2,
             toggleWeight: false,
             toggleTemp: false,
             higherAirValue: null,
             lowAirValue: 32.1,
-            skinHigherTemp:32.1,
-            skinLowerTemp:34.1,            
+            skinHigherTemp: 32.1,
+            skinLowerTemp: 34.1,
+            spo2Uper:99,
+            spo2Lower:91,
+            hrUpper:190,
+            hrLower:70,
+            switchAir:true,
+            switchSkin:true,
+            switchSpo2:true,
+            switchWeight:true,
+            switchHumidity:true,
+            switchOxygen:true,
         }
         this.handleAirHigher = this.handleAirHigher.bind(this);
         this.handleModalOff = this.handleModalOff.bind(this);
@@ -43,6 +53,7 @@ export default class App extends Component {
 
 
     }
+    
     toggleModal = () => {
         this.setState({ isModalVisible: !this.state.isModalVisible });
     };
@@ -65,28 +76,56 @@ export default class App extends Component {
         this.setState({
             higherAirValue: child,
         },
-        () => this.props.airHigTemp(this.state.higherAirValue)
+            () => this.props.airHigTemp(this.state.higherAirValue)
         );
     };
     handleAirLower(child) {
         this.setState({
             lowAirValue: child,
         },
-        () => this.props.airLoweTemp(this.state.lowAirValue)
+            () => this.props.airLoweTemp(this.state.lowAirValue)
         );
     };
     handleSkinLower(child) {
         this.setState({
             skinLowerTemp: child,
         },
-        () => this.props.skinLowTemp(this.state.skinLowerTemp)
+            () => this.props.skinLowTemp(this.state.skinLowerTemp)
         );
     };
     handleSkinHigher(child) {
         this.setState({
             skinHigherTemp: child,
         },
-        () => this.props.skinHighTemp(this.state.skinHigherTemp)
+            () => this.props.skinHighTemp(this.state.skinHigherTemp)
+        );
+    };
+    handleSpo2Upper = (child) => {
+        this.setState({
+            spo2Uper: child,
+        },
+            () => this.props.spo2Uper(this.state.spo2Uper)
+        );
+    };
+    handleSpo2Lower = (child) => {
+        this.setState({
+            spo2Lower: child,
+        },
+            () => this.props.spo2Lower(this.state.spo2Lower)
+        );
+    };
+    handleHrUpper = (child) => {
+        this.setState({
+            hrUpper: child,
+        },
+            () => this.props.hrUper(this.state.hrUpper)
+        );
+    };
+    handleHRLower = (child) => {
+        this.setState({
+            hrLower: child,
+        },
+            () => this.props.hrLower(this.state.hrLower)
         );
     };
     handleModalOff(child) {
@@ -94,8 +133,49 @@ export default class App extends Component {
             isModalVisible: child,
         });
     };
+    handleSwitchAir = (child) => {
+        this.setState({
+            switchAir: child,
+        },
+            () => this.props.switchAir(this.state.switchAir)
+        );
+    };
+    handleSwitchSkin = (child) => {
+        this.setState({
+            switchSkin: child,
+        },
+            () => this.props.switchSkin(this.state.switchSkin)
+        );
+    };
+    handleSwitchSpo2 = (child) => {
+        this.setState({
+            switchSpo2: child,
+        },
+            () => this.props.switchSpo2(this.state.switchSpo2)
+        );
+    };
+    handleSwitchWeight = (child) => {
+        this.setState({
+            switchWeight: child,
+        },
+            () => this.props.switchWeight(this.state.switchWeight)
+        );
+    };
+    handleSwitchHumidity = (child) => {
+        this.setState({
+            switchHumidity: child,
+        },
+            () => this.props.switchHumidity(this.state.switchHumidity)
+        );
+    };
+    handleSwitchOxygen = (child) => {
+        this.setState({
+            switchOxygen: child,
+        },
+            () => this.props.switchOxygen(this.state.switchOxygen)
+        );
+    };
     render() {
-
         return (
             <View >
                 {
@@ -103,7 +183,6 @@ export default class App extends Component {
                         <TouchableOpacity onPress={this.toggleModal}>
                             <MenuOpen name="menufold" size={width * .04} color="black" />
                         </TouchableOpacity>
-
                     ) : (
                             <View>
                                 <MenuOpen name="menufold" size={width * .04} color="red" />
@@ -117,73 +196,33 @@ export default class App extends Component {
                     onSwipeComplete={() => this.toggleModal()}
                     swipeDirection="right"
                     isVisible={this.state.isModalVisible}
-                    style={{
-                        elevation: width * .005,
-                        backgroundColor: 'white',
-                        maxHeight: height * 1,
-                        maxWidth: width * .35,
-                        // top:width * .13,
-                        left: width * .6,
-                        borderTopLeftRadius: width * .02,
-                        borderBottomLeftRadius: width * .02,
-                        // maxHeight:height * .7,
-
-                    }}>
+                    style={style.modalMainContainer}>
                     <View style={{ flex: 1 }}>
-                        <View style={{
-                            height: height * .1,
-                            width: width * .35,
-                        }}>
-                            <View style={{
-                                flex: 1,
-                                backgroundColor: 'white',
-                                elevation: width * .005,
-                                justifyContent: "space-between",
-                                alignItems: 'center',
-                                flexDirection: 'row',
-                                paddingHorizontal: width * .015,
-                                borderTopLeftRadius: width * .02,
-                            }}>
-                                <View style={{
-                                    alignItems: 'center',
-                                    flexDirection: 'row',
-                                }}>
+                        <View style={style.modalHeaderContainer}>
+                            <View style={style.modalHeaderInner}>
+                                <View style={style.menuBottonView}>
                                     <TouchableOpacity onPress={this.toggleModal}>
-
                                         <MenuClose name="menuunfold" size={width * .03} color="red" />
                                     </TouchableOpacity>
-                                    <Text style={{
-                                        fontSize: width * .02,
-                                        color: 'red',
-                                        fontFamily: Fonts.Handlee,
-                                        marginLeft: width * .01
-                                    }}>
+                                    <Text style={style.headerHeading}>
                                         Settings
-                                </Text>
+                                    </Text>
                                 </View>
                                 <Setting name="settings" size={width * .02} color="red" />
                             </View>
                         </View>
-                        <View style={{
-                            height: height * .73,
-                            width: width * .35,
-                            // backgroundColor:'red',
-                        }} >
-                            <View style={{
-                                flex: 1,
-                                elevation: width * .005,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                marginTop: height * .02,
-
-                            }}>
-                                <AlarmSetting 
-                                modalOff={this.handleModalOff} 
-                                airHigTemp={this.handleAirHigher} 
-                                airLowTemp={this.handleAirLower} 
-                                skinHighTemp={this.handleSkinHigher} 
-                                skinLowTemp={this.handleSkinLower} 
-                                
+                        <View style={style.modalBodyContainer} >
+                            <View style={style.modalBodyInner}>
+                                <AlarmSetting
+                                    modalOff={this.handleModalOff}
+                                    airHigTemp={this.handleAirHigher}
+                                    airLowTemp={this.handleAirLower}
+                                    skinHighTemp={this.handleSkinHigher}
+                                    skinLowTemp={this.handleSkinLower}
+                                    spo2Uper={this.handleSpo2Upper}
+                                    hrLower={this.handleHRLower}
+                                    hrUper={this.handleHrUpper}
+                                    spo2Lower={this.handleSpo2Lower}
                                 />
                                 <TouchableOpacity style={style.listView}>
                                     <Text style={style.listText}>System Setting</Text>
@@ -199,7 +238,7 @@ export default class App extends Component {
                                             maximumTrackTintColor="#000000"
                                             thumbTintColor='red'
                                             step={0.01}
-                                            value={.2}
+                                            value={this.state.brightness}
                                             onValueChange={(brightness) => {
                                                 this.setState({ brightness });
                                                 SystemSetting.setBrightness(brightness);
@@ -208,10 +247,14 @@ export default class App extends Component {
                                     </View>
                                     <Bright name={'brightness-7'} size={width * .02} />
                                 </TouchableOpacity>
-                                <TouchableOpacity style={style.listView}>
-                                    <Text style={style.listText}>Parameters</Text>
-                                    <User name={'user'} size={width * .025} />
-                                </TouchableOpacity>
+                                <Parameter 
+                                switchAir = {this.handleSwitchAir}
+                                switchSkin = {this.handleSwitchSkin}
+                                switchSpo2 = {this.handleSwitchSpo2}
+                                switchWeight = {this.handleSwitchWeight}
+                                switchHumidity = {this.handleSwitchHumidity}
+                                switchOxygen = {this.handleSwitchOxygen}
+                                />
                                 <TouchableOpacity style={style.listView}>
                                     <Text style={style.listText}>Graph Setting</Text>
                                     <Graph name={'area-graph'} size={width * .02} />
@@ -285,10 +328,7 @@ export default class App extends Component {
                                                 }}>
                                                     Change the Unit
                                                             </Text>
-
-
                                             </View>
-
                                         </View>
                                         <View style={{
                                             width: width * .32,
@@ -375,9 +415,6 @@ export default class App extends Component {
                                         }}>
                                             <View style={{
                                                 flex: 1,
-                                                // backgroundColor:'red',
-                                                // borderTopRightRadius: width * .005,
-                                                // borderTopLeftRadius: width * .025,
                                                 justifyContent: 'center',
                                                 alignItems: 'center',
                                             }}>

@@ -26,6 +26,10 @@ export default class App extends Component {
             lowerAirValue: 22.1,
             skinHighTemp:32.1,
             skinLowTemp:34.1,
+            spo2Upper:99,
+            spo2Lower:91,
+            hrUpper:190,
+            hrLower:70,
         },
             this.handleAirHigher = this.handleAirHigher.bind(this);
             this.handleAirlower = this.handleAirlower.bind(this);
@@ -44,6 +48,10 @@ export default class App extends Component {
             this.props.airLowTemp(this.state.lowerAirValue),
             this.props.skinHighTemp(this.state.skinHighTemp),
             this.props.skinLowTemp(this.state.skinLowTemp),
+            this.props.spo2Uper(this.state.spo2Upper),
+            this.props.spo2Lower(this.state.spo2Lower),
+            this.props.hrUper(this.state.hrUpper),
+            this.props.hrLower(this.state.hrLower),
             this.props.modalOff(!this.state.isModalVisible),
 
             );
@@ -68,11 +76,26 @@ export default class App extends Component {
             skinLowTemp: child,
         });
     }
-    // handleSkinCurrent(child) {
-    //     this.setState({
-    //         currentSkinTemp: child,
-    //     });
-    // }
+    handleSpo2Uper = (child) => {
+        this.setState({
+            spo2Upper: child,
+        });
+    }
+    handleSpo2Lower = (child) => {
+        this.setState({
+            spo2Lower: child,
+        });
+    }
+    handleHrUper = (child) => {
+        this.setState({
+            hrUpper: child,
+        });
+    }
+    handleHrLower = (child) => {
+        this.setState({
+            hrLower: child,
+        });
+    }
     render() {
         // console.log(this.state.skinCurrentTemp)
         // console.log(this.state.skinSetTemp)
@@ -118,9 +141,9 @@ export default class App extends Component {
                                         {/* Skin Temperature */}
                                         <SkinTemp highSkinTemp={this.handleSkinHigh} lowerSkinTemp={this.handleSkinLow} />
                                         {/* Spo2 */}
-                                        <Spo2 skinCurrentTemp={this.handleSkinCurrent}/>
+                                        <Spo2 spo2Uper={this.handleSpo2Uper} spo2Lower={this.handleSpo2Lower}/>
                                         {/* Hr */}
-                                        <Hr />
+                                        <Hr hrUper={this.handleHrUper} hrLower={this.handleHrLower} />
                                    </View>
                                 </View>
                             </View>

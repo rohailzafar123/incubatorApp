@@ -14,7 +14,6 @@ import Alarm from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Fonts } from '../../../utils/fonts';
 import Back from 'react-native-vector-icons/MaterialCommunityIcons';
 import NumericInput from 'react-native-numeric-input'
-
 import Check from 'react-native-vector-icons/AntDesign';
 
 const { height, width } = Dimensions.get('window');
@@ -28,7 +27,6 @@ export default class App extends Component {
             currentWei: 0,
             preWei: 3,
             weight: false,
-            toggle: false,
             dateList: [],
             date: new Date().getDate(),
             month: new Date().getMonth() + 1,
@@ -79,20 +77,20 @@ export default class App extends Component {
             <View>
                 {
                     this.props.locker ? (
-                        <TouchableOpacity style={comStyle.TemperatureView} onPress={() => this.openToggel()}>
+                        <View style={comStyle.TemperatureView} >
                             <View style={comStyle.Temperature}>
                                 <View style={comStyle.weighHeaderContainer}>
                                     <View style={{ flex: 1, paddingLeft: width * .005 }}>
                                         <Text style={comStyle.currentTempText}>
                                             Current Weight
-                                    </Text>
+                                        </Text>
                                         <View style={comStyle.boxUperStyle}>
-                                            <View style={comStyle.likeInputOxygen}>
+                                            <TouchableOpacity style={comStyle.likeInputOxygen} onPress={() => this.openToggel()}>
                                                 <Text
                                                     style={comStyle.tempInputCur} >
                                                     {this.state.currentWei}
                                                 </Text>
-                                            </View>
+                                            </TouchableOpacity>
                                             {
                                                 !this.props.value ? (
                                                     <Text style={comStyle.kgUper}>
@@ -120,7 +118,7 @@ export default class App extends Component {
                                     </View>
                                 </View>
                             </View>
-                        </TouchableOpacity>
+                        </View>
                     ) : (
                             <View style={comStyle.TemperatureView} >
                                 <View style={comStyle.Temperature}>
@@ -128,7 +126,7 @@ export default class App extends Component {
                                         <View style={{ flex: 1, paddingLeft: width * .005 }}>
                                             <Text style={comStyle.currentTempText}>
                                                 Current Weight
-                                    </Text>
+                                            </Text>
                                             <View style={comStyle.boxUperStyle}>
                                                 <View style={comStyle.likeInputOxygen}>
                                                     <Text
@@ -157,7 +155,7 @@ export default class App extends Component {
                                                 >
                                                     <Text style={comStyle.zeroText}>
                                                         Auto Zero
-                                    </Text>
+                                                    </Text>
                                                 </View>
                                             </View>
                                         </View>
@@ -170,169 +168,59 @@ export default class App extends Component {
                     animationIn="bounceIn"
                     animationOut="bounceOut"
                     isVisible={this.state.toggle}
-                    style={{
-                        backgroundColor: 'white',
-                        maxHeight: height * .4,
-                        maxWidth: width * .4,
-                        top: height * .14,
-                        left: width * .26,
-                        borderBottomLeftRadius: width * .005,
-                        borderTopRightRadius: width * .005,
-                        borderTopLeftRadius: width * .025,
-                        borderBottomRightRadius: width * .025,
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}>
-                    <View style={{
-                        height: height * .33,
-                        width: width * .35,
-
-                    }}>
-                        <View style={{
-                            flex: 1,
-                            backgroundColor: 'white',
-                            borderBottomLeftRadius: width * .005,
-                            borderTopRightRadius: width * .005,
-                            borderTopLeftRadius: width * .025,
-                            borderBottomRightRadius: width * .025,
-                            elevation: width * .01,
-                            // alignSelf:'center'
-                        }}>
-                            <View style={{
-                                height: height * .1,
-                                width: width * .35,
-                            }}>
-                                <View style={{
-                                    flex: 1,
-                                    borderTopRightRadius: width * .005,
-                                    borderTopLeftRadius: width * .025,
-                                    justifyContent: 'center',
-                                    paddingLeft: width * .02,
-                                    alignItems: 'center',
-                                    flexDirection: 'row',
-                                    elevation: width * .002,
-                                    backgroundColor: '#e44f3bd5',
-                                }}>
-                                    <TouchableOpacity onPress={this.openToggel} style={{
-                                        position: 'absolute',
-                                        left: width * .0,
-                                        height: height * .09,
-                                        width: width * .07,
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                    }}>
+                    style={style.insertWeightModal}>
+                    <View style={style.insertWeightContainer}>
+                        <View style={style.insertWeightInner}>
+                            <View style={style.insertWeightHeader}>
+                                <View style={style.inserWeightHeaderInner}>
+                                    <TouchableOpacity onPress={this.openToggel} style={style.inserBackBotton}>
                                         <Back name={'keyboard-backspace'} size={width * .03} color='white' />
                                     </TouchableOpacity>
-                                    <Text style={{
-                                        fontFamily: Fonts.Handlee,
-                                        fontSize: width * .03,
-                                        color: "white",
-                                    }}>
+                                    <Text style={style.inserHeaderHeading}>
                                         Baby Weight
-                                        </Text>
+                                    </Text>
                                 </View>
                             </View>
-                            <View style={{
-                                height: height * .13,
-                                width: width * .35,
-                            }}>
-                                <View style={{
-                                    flex: 1,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    flexDirection: 'row',
-
-                                }}>
-                                    <Text style={{
-                                        fontFamily: Fonts.Handlee,
-                                        fontSize: width * .02,
-                                        color: "#e44f3bd5",
-                                        marginRight: width * .005
-                                    }}>
+                            <View style={style.inserBodyConatiner}>
+                                <View style={style.inserBodyInner}>
+                                    <Text style={style.inserTypeHeading}>
                                         Type Weight
                                     </Text>
-                                    <View style={{
-                                        width: width * .1,
-                                        height: height * .075,
-                                        borderWidth: 1,
-                                        borderRadius: width * .003,
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        borderColor: '#e44f3bd5'
-                                    }}>
+                                    <View style={style.inserTextinputView}>
                                         <TextInput
                                             placeholder='Type Here'
                                             keyboardType="number-pad"
                                             maxLength={3}
-                                            style={{
-                                                fontFamily: Fonts.BalooChettan2,
-                                                fontSize: width * .02,
-                                                color: "#e44f3bd5",
-                                                textAlign: 'center'
-                                            }}
+                                            style={style.inserTextinput}
                                             onChangeText={e => this.setState({ currentWei: e })}
                                         />
                                     </View>
                                     {
                                         !this.props.value ? (
-                                            <Text style={{
-                                                fontSize: width * .025,
-                                                fontFamily: Fonts.BalooChettan2,
-                                                color: '#e44f3bd5',
-                                                marginLeft: width * .005
-                                            }}>
+                                            <Text style={style.inserConditionUnit}>
                                                 kg
                                             </Text>
                                         ) : (
-                                                <Text style={{
-                                                    fontSize: width * .025,
-                                                    fontFamily: Fonts.BalooChettan2,
-                                                    color: '#e44f3bd5',
-                                                    marginLeft: width * .005
-                                                }}>
+                                                <Text style={style.inserConditionUnit}>
                                                     £
                                                 </Text>
-                                            )
+                                        )
                                     }
                                 </View>
                             </View>
-                            <View style={{
-                                height: height * .1,
-                                width: width * .35,
-                            }}>
-                                <View style={{
-                                    flex: 1,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}>
-                                    <TouchableOpacity style={{
-                                        width: width * .2,
-                                        height: height * .07,
-                                        backgroundColor: '#e44f3bd5',
-                                        elevation: width * .003,
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        borderRadius: width * .1,
-                                        flexDirection: 'row'
-                                    }}
+                            <View style={style.inserFooterContainer}>
+                                <View style={style.inserFooterInner}>
+                                    <TouchableOpacity style={style.inserSubmitBottonView}
                                         onPress={this.submitCondition}>
-                                        <Text style={{
-                                            fontSize: width * .023,
-                                            fontFamily: Fonts.Handlee,
-                                            color: 'white',
-                                        }}>
+                                        <Text style={style.inserSubmitText}>
                                             Submit
                                             </Text>
                                         <Check name={'checkcircle'} size={width * .012} color='white' style={style.check} />
                                     </TouchableOpacity>
                                 </View>
                             </View>
-
                         </View>
-
                     </View>
-
-
                 </Modal>
                 <Modal
                     animationIn="slideInUp"
@@ -345,53 +233,23 @@ export default class App extends Component {
                                 <Text style={style.headerHeading}>
                                     Weight History
                                 </Text>
-                                {/* <View style={style.headerIcon}>
-
-
-                                    <Status name="notifications-active" size={width * .05} color="#05dd3bc5" style={{ marginHorizontal: width * .01 }} />
-                                    <Text style={style.alarmText}>Current Status</Text>
-                                </View> */}
                                 <View >
                                     <TouchableOpacity onPress={() => this.toggleModal()} style={style.submit}>
-
                                         <Text style={style.alarmText}>Done</Text>
-
                                     </TouchableOpacity>
-
                                 </View>
                             </View>
-
                         </View>
                         <View style={style.bodyMainContainer}>
                             <View style={style.bodyContainer}>
-                                <View style={{
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
-                                    width: width * .84,
-
-                                }}>
-                                    <Text style={{
-                                        fontFamily: Fonts.BalooChettan2,
-                                        fontSize: width * .04,
-                                        color: "#e44f3bd5",
-                                        textAlign: 'center',
-                                    }}>
+                                <View style={style.historyContentHeadingView}>
+                                    <Text style={style.headingDate}>
                                         Date
                                     </Text>
-                                    <Text style={{
-                                        fontFamily: Fonts.BalooChettan2,
-                                        fontSize: width * .04,
-                                        color: "#e44f3bd5",
-                                        textAlign: 'center',
-                                        marginLeft: width * .05
-                                    }}>
+                                    <Text style={style.headingTime}>
                                         Time
                                     </Text>
-                                    <Text style={{
-                                        fontFamily: Fonts.BalooChettan2,
-                                        fontSize: width * .04,
-                                        color: "#e44f3bd5",
-                                    }}>
+                                    <Text style={style.headingWeight}>
                                         Weight
                                     </Text>
                                 </View>
@@ -404,7 +262,6 @@ export default class App extends Component {
                                         renderItem={this._renderMyList}
                                     />
                                 </ScrollView>
-
                             </View>
                         </View>
                     </View>

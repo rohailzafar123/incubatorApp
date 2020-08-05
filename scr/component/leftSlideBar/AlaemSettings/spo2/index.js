@@ -19,8 +19,8 @@ export default class App extends Component {
             LockorUnlo: false,
             toggleWeight: false,
             toggleTemp: false,
-            airHightTemp: 40,
-            airLowerTemp: 20,
+            uperLimit: 99,
+            lowerLimit: 91,
             airTemp: false,
             higher: 40,
             lower: 20
@@ -29,22 +29,22 @@ export default class App extends Component {
 
     changeValueHandler = () => {
 
-        if (this.state.airHightTemp == null) {
+        if (this.state.uperLimit == null) {
             alert('Empty Higher Temperature');
             this.setState(
                 {
                     airTemp: this.state.airTemp,
                 });
         }
-        else if (this.state.airLowerTemp == null) {
+        else if (this.state.lowerLimit == null) {
             alert('Empty lower Temperature');
             this.setState(
                 {
                     airTemp: this.state.airTemp,
                 });
         }
-        else if (this.state.airHightTemp < 20 || this.state.airHightTemp > 40 || this.state.airLowerTemp < 20 || this.state.airLowerTemp > 40) {
-            alert('Please Set Value Above 20 In Lower and Lower 40 Value In Higher');
+        else if (this.state.uperLimit < 90 || this.state.uperLimit > 100 || this.state.lowerLimit < 90 || this.state.lowerLimit > 100) {
+            alert('Please Set Value Above 90 In Lower and Lower 100 Value In Higher');
             this.setState({
                 airTemp: this.state.airTemp
             });
@@ -53,10 +53,10 @@ export default class App extends Component {
             this.setState({
                 airTemp: !this.state.airTemp
             },
-                () => {
-                    this.props.highSkinTemp(this.state.airHightTemp),
-                        this.props.lowerSkinTemp(this.state.airLowerTemp)
-                }
+            () => {
+                this.props.spo2Uper(this.state.uperLimit),
+                    this.props.spo2Lower(this.state.lowerLimit)
+            }
             );
         }
     }
@@ -66,8 +66,8 @@ export default class App extends Component {
 
 
     render() {
-        console.log(this.state.airHightTemp)
-        console.log(this.state.airLowerTemp)
+        // console.log(this.state.uperLimit)
+        // console.log(this.state.lowerLimit)
         return (
             <View>
 
@@ -96,7 +96,7 @@ export default class App extends Component {
                                 <View style={style.bodyContainer}>
                                     <View style={style.bodyInner}>
                                         <Text style={style.currentHeading}>
-                                            Higher Temperature
+                                            Upper Limit
                                         </Text>
                                         {/* <TextInput
                                                 placeholder='Type Here'
@@ -107,23 +107,23 @@ export default class App extends Component {
                                                 
                                             /> */}
                                         <NumericInput
-                                            onChange={airHightTemp => this.setState({ airHightTemp })}
+                                            onChange={uperLimit => this.setState({ uperLimit })}
                                             totalWidth={width * .15}
                                             totalHeight={height * .05}
-                                            initValue={this.state.airHightTemp}
+                                            initValue={this.state.uperLimit}
                                             rounded
 
                                         />
 
 
                                         <Text style={style.currentHeading}>
-                                            Lower Temperature
+                                            Lower Limit
                                         </Text>
                                         <NumericInput
-                                            onChange={airLowerTemp => this.setState({ airLowerTemp })}
+                                            onChange={lowerLimit => this.setState({ lowerLimit })}
                                             totalWidth={width * .15}
                                             totalHeight={height * .05}
-                                            initValue={this.state.airLowerTemp}
+                                            initValue={this.state.lowerLimit}
                                             rounded
 
                                         />

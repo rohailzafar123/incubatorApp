@@ -15,21 +15,27 @@ export default styles = StyleSheet.create({
     headerContainer: {
         width: width * 1,
         height: height * .14,
-        paddingHorizontal: width * .016,
+        paddingHorizontal: width * .03,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         backgroundColor: 'white',
         elevation: 5,
-        marginBottom:height * .01
+        borderBottomWidth:3,
+        borderLeftWidth:1,
+        borderRightWidth:1,
+        borderBottomRightRadius: width * .03,
+        borderBottomLeftRadius: width * .03,
+        marginBottom:height * .01,
+        borderColor:'#ff6c6c'
     },
     inerContainer1: {
         width: width * 1,
-        height: height * .35,
-        padding: width * .01,
+        height:height * .84,
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent:'center',
+        alignItems:'center',
+        flexWrap:'wrap'
         
     },
     notificationIcon:{
@@ -44,56 +50,92 @@ export default styles = StyleSheet.create({
         fontFamily:Fonts.Montserrat,
         color: '#484149c5',
     },
-    inerContainer3: {
-        width: width * 1,
-        height: height * .07,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-
-    },
+    
     airHeading:{
         fontSize:width * .03,
         fontFamily:Fonts.BalooChettanBold,        
         color: '#484149c5',
+        alignSelf:'center',
+        textShadowOffset: {
+            width: width * 0.003,
+            height: height * 0.003,
+        },
+        textShadowRadius: width * 0.05,
+        textShadowColor: 'white',
         // marginTop:width * .009,
     },
     tempHeading:{
         fontSize:width * .03,
         fontFamily:Fonts.BalooChettanBold,        
         color: '#484149c5',
+        alignSelf:'center',
+        textShadowOffset: {
+            width: width * 0.003,
+            height: height * 0.003,
+        },
+        textShadowRadius: width * 0.05,
+        textShadowColor: 'white',
         // marginTop:width * .009,
-        right:width * .048
     },
     humHeading:{
         fontSize:width * .03,
         fontFamily:Fonts.BalooChettanBold,        
         color: '#484149c5',
+        alignSelf:'center',
+        textShadowOffset: {
+            width: width * 0.003,
+            height: height * 0.003,
+        },
+        textShadowRadius: width * 0.05,
+        textShadowColor: 'white',
+
         // marginTop:width * .009,
-        right:width * .04
     },
     weigHeading:{
         fontSize:width * .03,
         fontFamily:Fonts.BalooChettanBold,        
         color: '#484149c5',
+        alignSelf:'center',        
+        textShadowOffset: {
+            width: width * 0.003,
+            height: height * 0.003,
+        },
+        textShadowRadius: width * 0.05,
+        textShadowColor: 'white',
+
         // marginTop:width * .009,
     },
     Spo2Heading:{
         fontSize:width * .03,
         fontFamily:Fonts.BalooChettanBold,        
         color: '#484149c5',
+        alignSelf:'center',
+        textShadowOffset: {
+            width: width * 0.003,
+            height: height * 0.003,
+        },
+        textShadowRadius: width * 0.05,
+        textShadowColor: 'white',
+
         // marginTop:width * .009,
     },
     oxygenHeading:{
         fontSize:width * .03,
         fontFamily:Fonts.BalooChettanBold,        
         color: '#484149c5',
+        alignSelf:'center',
+        textShadowOffset: {
+            width: width * 0.003,
+            height: height * 0.003,
+        },
+        textShadowRadius: width * 0.05,
+        textShadowColor: 'white',
+
         // marginTop:width * .009,
-        left:width * .01
     },
     inerContainer2: {
         width: width * 1,
-        height: height * .35,
+        height: height * .42,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',

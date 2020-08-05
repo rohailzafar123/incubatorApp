@@ -9,8 +9,9 @@ const { height, width } = Dimensions.get('window');
 export default styles = StyleSheet.create({
     TemperatureView: {
         width: width * .32,
-        height: height * .34,
-        margin: width * .005
+        height: height * .33,
+        margin: width * .005,
+
     },
     Temperature: {
         flex: 1,
@@ -75,11 +76,13 @@ export default styles = StyleSheet.create({
     likeInputOxygen: {
         width: width * .23,
         height: height * .1,
-        borderWidth: 1,
         // flexDirection: "row-reverse",
         alignItems: 'center',
         borderRadius: height * .005,
         justifyContent: 'center',
+        elevation:width * .003,
+        backgroundColor:'white',
+        borderWidth: .5,
     },
     boxUperStyle: {
         flexDirection: 'row'
@@ -93,7 +96,9 @@ export default styles = StyleSheet.create({
     likeInputMin: {
         width: width * .2,
         height: height * .07,
-        borderWidth: 1,
+        elevation:width * .003,
+        backgroundColor:'white',
+        borderWidth: .5,
         // flexDirection:"row-reverse",
         alignItems: 'center',
         justifyContent: 'center',

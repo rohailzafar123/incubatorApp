@@ -15,6 +15,8 @@ import SPO2 from './Spo2/index';
 import Humidity from './Humidity/index';
 import AirTemp from './AirTemp/airTemp';
 import LeftSlider from '../../component/leftSlideBar/index';
+
+// TODO: What to do with the module?
 const { height, width } = Dimensions.get('window');
 export default class App extends Component {
   constructor(props) {
@@ -47,11 +49,21 @@ export default class App extends Component {
       lowAirValue: 32.1,
       skinHigherTemp: 32.1,
       skinLowTemp: 34.1,
+      spo2Uper: 99,
+      spo2Lower: 91,
+      hrUper: 190,
+      hrLower: 70,
+      switchAir: true,
+      switchSkin: true,
+      switchSpo2: true,
+      switchWeight: true,
+      switchHumidity: true,
+      switchOxygen: true,
+
     },
-    this.handleWeight = this.handleWeight.bind(this);
+      this.handleWeight = this.handleWeight.bind(this);
     this.handleTemp = this.handleTemp.bind(this);
     this.timer = null;
-    this.addOne = this.addOne.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
     this.handleAirHigher = this.handleAirHigher.bind(this);
     this.handleAirLow = this.handleAirLow.bind(this);
@@ -59,27 +71,13 @@ export default class App extends Component {
     this.handleSkinLower = this.handleSkinLower.bind(this);
 
   }
-  // componentDidMount(){
-
-
-  // setTimeout(() => {
-  //   // If it's the last subscription to accelerometer it will stop polling in the native API
-  //   subscription.unsubscribe();
-  // }, 5000);
-  // console.log(subscription)
   componentDidMount() {
-    //   SystemSetting.getBrightness().then((brightness)=>{
-    //     console.log('Current brightness is ' + brightness);
-    // });
-
-    // this.interval = setInterval(() => this.setState({ alarmAir: this.state.alarmAir + 1 }), 1500);
-    // this.alarmAirOvFn();
     this.alarmPowFn();
     this.alarmFanFn();
     this.alarmSenFn();
     this.alarmSysFn();
   }
-  
+
   alarmPowFn = () => {
     if (this.state.alarmPower < 10) {
       this.setState({ powCondi: false })
@@ -107,15 +105,6 @@ export default class App extends Component {
       this.setState({ fanCondi: true })
     }
   };
-  // alarmAirOvFn = () => {
-  //   if ( this.state.alarmAirOver < 10){
-  //     this.setState({airOvCondi:false})
-  //   }else if(this.state.alarmAirOver > 20){
-  //     this.setState({airOvCondi:false})
-  //   }else{
-  //     this.setState({airOvCondi:true})
-  //   }
-  // };
   alarmSysFn = () => {
     if (this.state.alarmSystem < 10) {
       this.setState({ sysCondi: false })
@@ -150,22 +139,71 @@ export default class App extends Component {
       skinHigherTemp: child,
     });
   };
+  handleSpo2Uper = (child) => {
+    this.setState({
+      spo2Uper: child,
+    })
+  };
+  handleSpo2Lower = (child) => {
+    this.setState({
+      spo2Lower: child,
+    });
+  };
+  handleHrUper = (child) => {
+    this.setState({
+      hrUper: child,
+    })
+  };
+  handleHrLower = (child) => {
+    this.setState({
+      hrLower: child,
+    });
+  };
   handleTemp(child) {
     this.setState({
       tempSign: child,
     });
   };
+  handleParameter = (child) => {
+    this.setState({
+      parameter: child,
+    });
+  };
+  handleSwitchAir = (child) => {
+    this.setState({
+      switchAir: child,
+    });
+  };
+  handleSwitchSkin = (child) => {
+    this.setState({
+      switchSkin: child,
+    });
+  };
+  handleSwitchSpo2 = (child) => {
+    this.setState({
+      switchSpo2: child,
+    });
+  };
+  handleSwitchWeight = (child) => {
+    this.setState({
+      switchWeight: child,
+    });
+  };
+  handleSwitchHumidity = (child) => {
+    this.setState({
+      switchHumidity: child,
+    });
+  };
+  handleSwitchOxygen = (child) => {
+    this.setState({
+      switchOxygen: child,
+    });
+  };
 
-
-  addOne() {
-    setTimeout(this.setState({ lock: !this.state.lock }), 3000);
-    ;
-
-  }
 
   stopTimer() {
     clearTimeout(this.timer);
-  }
+  };
   _lockOn = () => {
     this.setState({ lock: !this.state.lock, }),
       alert('System Unlocked')
@@ -175,35 +213,40 @@ export default class App extends Component {
       alert('System Locked')
   };
   render() {
-    // console.log(this.state.alarmAir);
-    // console.log(this.state.airCondi)
-    // console.log(this.state.lock, 'weight')
-    // console.log(this.state.tempSign, 'temmp')
-    console.log(this.state.higherAirValue,'high temp')
-    console.log(this.state.lowAirValue,'low temp')
-
-
     return (
-      <View style={styles.container}>
+      <View style={style.container}>
         <StatusBar backgroundColor="black" barStyle="default" hidden={true} showHideTransition={'fade'}></StatusBar>
-        <View style={style.headerContainer}>
-          {/* <Text style={style.headerText}>My App Incuabator</Text> */}
-          {/* <View style={style.notificationIcon}> */}
+        <Image source={require('../../../images/background1.jpg')} style={{
+          width: width * 1,
+          height: height * 1,
+          position: 'absolute',
+          opacity: .5,
 
+        }}
+        />
+        <View style={style.headerContainer}>
+          <Image source={require('../../../images/background.jpg')} style={{
+            width: width * 1,
+            height: height * .14,
+            position: 'absolute',
+            opacity: .3,
+
+          }}
+          />
           {
             this.state.lock == true ? (
-              <TouchableOpacity delayLongPress={2000} onLongPress={this._lockOff} style={{ justifyContent: 'center', alignItems: 'center', left: width * .01, position: 'absolute' }}>
+              <TouchableOpacity delayLongPress={1000} onLongPress={this._lockOff} style={{ justifyContent: 'center', alignItems: 'center', left: width * .02, position: 'absolute' }}>
                 <Unlock name={'unlock'} size={width * .05} color='#0ae916' />
                 <Text style={style.alarmText}>Unlocked</Text>
               </TouchableOpacity>
             ) : (
-                <TouchableOpacity delayLongPress={2000} onLongPress={this._lockOn} style={{ justifyContent: 'center', alignItems: 'center', left: width * .02, position: 'absolute' }}>
+                <TouchableOpacity delayLongPress={1000} onLongPress={this._lockOn} style={{ justifyContent: 'center', alignItems: 'center', left: width * .03, position: 'absolute' }}>
                   <Lock name={'lock'} size={width * .05} color='red' />
                   <Text style={style.alarmText}>Locked</Text>
                 </TouchableOpacity>
               )
           }
-          <View style={{ borderWidth: 1, borderColor: '#6b6a6a59', height: height * .12, position: 'absolute', left: width * .095 }}></View>
+          <View style={{ borderWidth: 1, borderColor: '#6b6a6a59', height: height * .12, position: 'absolute', left: width * .11 }}></View>
           <View style={{ marginHorizontal: width * .03 }}></View>
 
           {/* <Graph /> */}
@@ -223,7 +266,7 @@ export default class App extends Component {
             <Notification name="notifications-active" size={width * .05} color={this.state.sysCondi ? '#0ae916' : 'red'} style={{ marginHorizontal: width * .01 }} />
             <Text style={style.alarmText}>System Failure</Text>
           </View>
-          <View style={{ borderWidth: 1, borderColor: '#6b6a6a59', height: height * .12, position: 'absolute', right: width * .08 }}></View>
+          <View style={{ borderWidth: 1, borderColor: '#6b6a6a59', height: height * .12, position: 'absolute', right: width * .1 }}></View>
           <LeftSlider
             selectWeight={this.handleWeight}
             selectTemp={this.handleTemp}
@@ -231,62 +274,125 @@ export default class App extends Component {
             airLoweTemp={this.handleAirLow}
             skinHighTemp={this.handleSkinHigher}
             skinLowTemp={this.handleSkinLower}
+            spo2Uper={this.handleSpo2Uper}
+            spo2Lower={this.handleSpo2Lower}
+            hrUper={this.handleHrUper}
+            hrLower={this.handleHrLower}
+            switchAir={this.handleSwitchAir}
+            switchSkin={this.handleSwitchSkin}
+            switchSpo2={this.handleSwitchSpo2}
+            switchWeight={this.handleSwitchWeight}
+            switchHumidity={this.handleSwitchHumidity}
+            switchOxygen={this.handleSwitchOxygen}
             locker={this.state.lock}
           />
         </View>
-        <View style={style.inerContainer3}>
-          <Text style={style.airHeading}>
-            Air Temperature
-          </Text>
-          <Text style={style.tempHeading}>
-            Skin Temperature
-          </Text>
-          <Text style={style.humHeading}>
-            SP02/HR
-          </Text>
-        </View>
-        <View style={style.inerContainer1}>
 
+        <View style={style.inerContainer1}>
           {/* Air Temperature */}
-          <AirTemp
-            value={this.state.tempSign}
-            locker={this.state.lock}
-            airHigherTemp={this.state.higherAirValue}
-            airLowerTemp={this.state.lowAirValue}
-          />
+          {
+            !this.state.switchAir ? (
+              null
+            ) : (
+                <View>
+                  <Text style={style.airHeading}>
+                    Air Temperature
+                  </Text>
+                  <AirTemp
+                    value={this.state.tempSign}
+                    locker={this.state.lock}
+                    airHigherTemp={this.state.higherAirValue}
+                    airLowerTemp={this.state.lowAirValue}
+                  />
+                </View>
+              )
+          }
 
           {/* Skin Temperature */}
-          <SkinTemp
-            value={this.state.tempSign}
-            locker={this.state.lock}
-            skinHighTemp={this.state.skinHigherTemp}
-            skinLowerTemp={this.state.skinLowTemp}
+          {
+            !this.state.switchSkin ? (
+              null
+            ) : (
+                <View>
+                  <Text style={style.tempHeading}>
+                    Skin Temperature
+                  </Text>
+                  <SkinTemp
+                    value={this.state.tempSign}
+                    locker={this.state.lock}
+                    skinHighTemp={this.state.skinHigherTemp}
+                    skinLowerTemp={this.state.skinLowTemp}
+                  />
+                </View>
+              )
+          }
 
-          />
-          <SPO2 locker={this.state.lock} />
-        </View>
-        <View style={style.inerContainer3}>
-          <Text style={style.weigHeading}>
-            BabyWeight
-          </Text>
-          <Text style={style.Spo2Heading}>
-            Humidity
-          </Text>
-          <Text style={style.oxygenHeading}>
-            Oxygen Level
-          </Text>
-        </View>
-        <View style={style.inerContainer2}>
+          {/* Spo2 / Hr */}
+          {
+            !this.state.switchSpo2 ? (
+              null
+            ) : (
+                <View>
+                  <Text style={style.humHeading}>
+                    SP02/HR
+                  </Text>
+                  <SPO2
+                    locker={this.state.lock}
+                    spo2Upper={this.state.spo2Uper}
+                    spo2Lower={this.state.spo2Lower}
+                    hrUpper={this.state.hrUper}
+                    hrLower={this.state.hrLower}
+                  />
+                </View>
+              )
+          }
+
           {/* Weight */}
-          <Weight value={this.state.weightSign} locker={this.state.lock} />
-          {/* Temperature */}
-          <Humidity locker={this.state.lock} />
+          {
+            !this.state.switchWeight ? (
+              null
+            ) : (
+                <View >
+                  <Text style={style.weigHeading}>
+                    BabyWeight
+                  </Text>
+                  <Weight value={this.state.weightSign} locker={this.state.lock} />
+                </View>
+              )
+          }
+
           {/* Humidity */}
-          <Oxygen locker={this.state.lock} />
+          {
+            !this.state.switchHumidity ? (
+              null
+            ) : (
+                <View>
+                  <Text style={style.Spo2Heading}>
+                    Humidity
+                  </Text>
+                  <Humidity locker={this.state.lock} />
+                </View>
+              )
+          }
 
-        </View>
+          {/* Oxygen */}
+          {
+            !this.state.switchOxygen ? (
+              null
+            ) : (
+                <View>
+                  <Text style={style.oxygenHeading}>
+                    Oxygen Level
+                  </Text>
+                  <Oxygen locker={this.state.lock} />
+                </View>
+              )
+          }
 
-      </View>
+
+        </View >
+
+      </View >
     );
   }
 }

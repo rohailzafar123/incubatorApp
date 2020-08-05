@@ -6,7 +6,7 @@ import SwitchToggle from 'react-native-switch-toggle';
 import Alarm from 'react-native-vector-icons/MaterialCommunityIcons';
 import Back from 'react-native-vector-icons/MaterialCommunityIcons';
 import Check from 'react-native-vector-icons/AntDesign';
-
+import NumericInput from 'react-native-numeric-input'
 // import SysSettings from 'react-native-vector-icons/Octicons';
 import { Fonts } from '../../../../utils/fonts';
 import { TextInput } from 'react-native-gesture-handler';
@@ -19,30 +19,30 @@ export default class App extends Component {
             LockorUnlo: false,
             toggleWeight: false,
             toggleTemp: false,
-            skinCurrentTemp: null,
-            skinSetTemp: null,
+            uperLimit: 190,
+            lowerLimit: 70,
             airTemp: false,
         }
     }
 
     changeValueHandler = () => {
 
-        if (this.state.skinCurrentTemp == null) {
-            alert('Empty Current Temperature');
+        if (this.state.uperLimit == null) {
+            alert('Empty Higher Temperature');
             this.setState(
                 {
                     airTemp: this.state.airTemp,
                 });
         }
-        else if (this.state.skinSetTemp == null) {
-            alert('Empty Set Temperature');
+        else if (this.state.lowerLimit == null) {
+            alert('Empty lower Temperature');
             this.setState(
                 {
                     airTemp: this.state.airTemp,
                 });
         }
-        else if (this.state.skinCurrentTemp < 20 || this.state.skinCurrentTemp > 100 || this.state.skinSetTemp < 20 || this.state.skinSetTemp > 100) {
-            alert('Please Set Value upper 20 and lower 100');
+        else if (this.state.uperLimit < 70 || this.state.uperLimit > 190 || this.state.lowerLimit < 70 || this.state.lowerLimit > 170) {
+            alert('Please Set Value Above 70 In Lower and Lower 170 Value In Higher');
             this.setState({
                 airTemp: this.state.airTemp
             });
@@ -51,22 +51,21 @@ export default class App extends Component {
             this.setState({
                 airTemp: !this.state.airTemp
             },
-                () => {
-                    this.props.skinCurTemp(this.state.skinCurrentTemp),
-                        this.props.skinSetTemp(this.state.skinSetTemp)
-                }
+            () => {
+                this.props.hrUper(this.state.uperLimit),
+                this.props.hrLower(this.state.lowerLimit)
+            }
             );
         }
     }
-
     toggleAir = () => {
         this.setState({ airTemp: !this.state.airTemp });
     };
 
 
     render() {
-        // console.log(this.state.airCurrentTemp)
-        // console.log(this.state.airSetTemp)
+        // console.log(this.state.uperLimit)
+        // console.log(this.state.lowerLimit)
         return (
             <View>
 
@@ -77,9 +76,6 @@ export default class App extends Component {
                 <Modal
                     animationIn="slideInDown"
                     animationOut="slideOutUp"
-                    onBackdropPress={() => this.toggleAir()}
-                    onSwipeComplete={() => this.toggleAir()}
-                    swipeDirection="right"
                     isVisible={this.state.airTemp}
                     style={style.modal}>
                     <View style={style.modalInner}>
@@ -98,17 +94,38 @@ export default class App extends Component {
                                 <View style={style.bodyContainer}>
                                     <View style={style.bodyInner}>
                                         <Text style={style.currentHeading}>
-                                            Set HR Level
+                                            Upper Limit
                                         </Text>
-                                        <View style={style.currentInputView}>
-                                            <TextInput
+                                        {/* <TextInput
                                                 placeholder='Type Here'
                                                 keyboardType="number-pad"
                                                 maxLength={5}
                                                 style={style.currentInput}
-                                                onChangeText={skinSetTemp => this.setState({ skinSetTemp })}
-                                            />
-                                        </View>
+                                                onChangeText={airCurrentTemp => this.setState({airCurrentTemp})}
+                                                
+                                            /> */}
+                                        <NumericInput
+                                            onChange={uperLimit => this.setState({ uperLimit })}
+                                            totalWidth={width * .15}
+                                            totalHeight={height * .05}
+                                            initValue={this.state.uperLimit}
+                                            rounded
+
+                                        />
+
+
+                                        <Text style={style.currentHeading}>
+                                            Lower Limit
+                                        </Text>
+                                        <NumericInput
+                                            onChange={lowerLimit => this.setState({ lowerLimit })}
+                                            totalWidth={width * .15}
+                                            totalHeight={height * .05}
+                                            initValue={this.state.lowerLimit}
+                                            rounded
+
+                                        />
+                                        
                                     </View>
                                 </View>
                                 <View style={style.footerContainer}>

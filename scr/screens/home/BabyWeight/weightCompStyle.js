@@ -9,8 +9,9 @@ const { height, width } = Dimensions.get('window');
 export default styles = StyleSheet.create({
     TemperatureView: {
         width: width * .32,
-        height: height * .34,
-        margin: width * .005
+        height: height * .33,
+        margin: width * .005,
+        
     },
     Temperature: {
         flex: 1,
@@ -104,8 +105,9 @@ export default styles = StyleSheet.create({
     likeInputOxygen: {
         width: width * .22,
         height: height * .22,
-        borderWidth: 1,
-        borderColor:'#5c5c5c70',
+        elevation:width * .003,
+        backgroundColor:'white',
+        borderWidth: .5,       
         backgroundColor:'white',
         elevation:width * .002,
         // flexDirection: "row-reverse",

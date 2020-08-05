@@ -9,8 +9,8 @@ const { height, width } = Dimensions.get('window');
 export default styles = StyleSheet.create({
     TemperatureView: {
         width: width * .32,
-        height: height * .34,
-        margin: width * .005
+        height: height * .33,
+        margin: width * .005,
     },
     Temperature: {
         flex: 1,
@@ -56,13 +56,6 @@ export default styles = StyleSheet.create({
         fontFamily: Fonts.BalooChettan2,
 
     },
-    // zeroLower: {
-    //     fontSize: width * .016,
-    //     fontFamily: Fonts.BalooChettan2,
-    //     color: '#484149c5',
-    //     left: width * .004,
-    //     bottom: height * .03
-    // },
     centiLower: {
         fontSize: width * .028,
         fontFamily: Fonts.BalooChettan2,
@@ -82,11 +75,13 @@ export default styles = StyleSheet.create({
     likeInputOxygen: {
         width: width * .23,
         height: height * .1,
-        borderWidth: 1,
         // flexDirection: "row-reverse",
         alignItems: 'center',
         borderRadius: height * .005,
         justifyContent: 'center',
+        elevation:width * .003,
+        backgroundColor:'white',
+        borderWidth: .5,
 
     },
     boxUperStyle: {
@@ -96,17 +91,20 @@ export default styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+        
         // marginBottom: height * .02,  
     },
     likeInputMin: {
         width: width * .2,
         height: height * .07,
-        borderWidth: 1,
+        elevation:width * .003,
+        backgroundColor:'white',
+        borderWidth: .5,
         // flexDirection:"row-reverse",
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: height * .005,
-
+        
     },
 
 });

@@ -9,8 +9,9 @@ const { height, width } = Dimensions.get('window');
 export default styles = StyleSheet.create({
     TemperatureView: {
         width: width * .32,
-        height: height * .34,
-        margin: width * .005
+        height: height * .33,
+        margin: width * .005,
+
     },
     Temperature: {
         flex: 1,

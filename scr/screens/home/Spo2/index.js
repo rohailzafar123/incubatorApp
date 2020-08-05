@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Image, StatusBar, Dimensions, TouchableOpacity } from 'react-native';
+import { Platform, StyleSheet, Text, View, Image, StatusBar, Dimensions, TouchableOpacity, TextInput, ScrollView, FlatList } from 'react-native';
 import style from './style';
 import Menu from 'react-native-vector-icons/MaterialCommunityIcons';
 import NewOpen from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -12,16 +12,74 @@ const { height, width } = Dimensions.get('window');
 export default class App extends Component {
     state = {
         isModalVisible: false,
-        powCondi:true
+        powCondi: true,
+        currentSkinemperature: 31,
+        currentTemp: 0,
+        setTemp: 0,
+        preWei: 3,
+        toggle: false,
+        currentAirTemperature: 35,
+        setTempList: [],
+        airTempList: [],
+        temperatureHistory: [],
+        date: new Date().getDate(),
+        month: new Date().getMonth() + 1,
+        year: new Date().getFullYear(),
+        hour: new Date().getHours(),
+        minutes: new Date().getMinutes(),
     }
+    componentDidMount() {
+        const high = this.props.skinHighTemp;
+        const lower = this.props.skinLowerTemp;
 
-    toggleModal = () => {
-        this.setState({ isModalVisible: !this.state.isModalVisible });
+        if (this.state.currentSkinemperature > high || this.state.currentSkinemperature < lower) {
+            this.setState({ airTemp: false })
+        } else {
+            this.setState({ airTemp: true })
+        }
+    }
+    _renderMyList = ({ item }) => (
+        <View style={{ flex: 1, }}>
+            <View style={modalStyle.renderMyListContainer}>
+                <Text style={modalStyle.renderListHeading1}>
+                    {this.state.date}/{this.state.month}/{this.state.year}
+                </Text>
+                <Text style={modalStyle.renderListHeading2}>
+                    {this.state.hour}:{this.state.minutes}
+                </Text>
+                <Text style={modalStyle.renderListSetTemp}>
+                    {item.setTemperature}
+                </Text>
+                <Text style={modalStyle.renderListAirTemp}>
+                    {item.currentTemperature}
+                </Text>
+            </View>
+        </View>
+    )
+    openToggel = () => {
+        this.setState({ toggle: !this.state.toggle, currentTemp: null, setTemp: null })
+    }
+    submitCondition = () => {
+        const historyData = this.state.currentTemp;
+        const historyData2 = this.state.setTemp;
+        let unit;
+        !this.props.value ? (unit = '\u2103') : (unit = '\u2109');
+        if (this.state.currentTemp == null || this.state.setTemp == null) {
+            alert('Type Plase Or Go Back')
+        }
+        else if (this.state.currentTemp <= 20 || this.state.currentTemp >= 39 || this.state.setTemp <= 20 || this.state.setTemp >= 39) {
+            alert('Not Accepted Temperature Will Set Greater Then 20 And Less Than 39')
+        }
+        else {
+            this.setState({ toggle: !this.state.toggle });
+            this.state.temperatureHistory.push({ currentTemperature: this.state.currentTemp + unit, setTemperature: this.state.setTemp + unit });
+        }
     };
 
     toggleModal = () => {
         this.setState({ isModalVisible: !this.state.isModalVisible });
     };
+
     render() {
         return (
             <View>
