@@ -53,12 +53,7 @@ export default class App extends Component {
       spo2Lower: 91,
       hrUper: 190,
       hrLower: 70,
-      switchAir: true,
-      switchSkin: true,
-      switchSpo2: true,
-      switchWeight: true,
-      switchHumidity: true,
-      switchOxygen: true,
+      
 
     },
       this.handleWeight = this.handleWeight.bind(this);
@@ -69,7 +64,12 @@ export default class App extends Component {
     this.handleAirLow = this.handleAirLow.bind(this);
     this.handleSkinHigher = this.handleSkinHigher.bind(this);
     this.handleSkinLower = this.handleSkinLower.bind(this);
-
+    this.handleSwitchAir = this.handleSwitchAir.bind(this);
+    this.handleSwitchSkin = this.handleSwitchSkin.bind(this);
+    this.handleSwitchHumidity = this.handleSwitchHumidity.bind(this);
+    this.handleSwitchSpo2 = this.handleSwitchSpo2.bind(this);
+    this.handleSwitchWeight = this.handleSwitchWeight.bind(this);
+    this.handleSwitchOxygen = this.handleSwitchOxygen.bind(this);
   }
   componentDidMount() {
     this.alarmPowFn();
@@ -164,37 +164,32 @@ export default class App extends Component {
       tempSign: child,
     });
   };
-  handleParameter = (child) => {
-    this.setState({
-      parameter: child,
-    });
-  };
-  handleSwitchAir = (child) => {
+  handleSwitchAir(child) {
     this.setState({
       switchAir: child,
     });
   };
-  handleSwitchSkin = (child) => {
+  handleSwitchSkin(child) {
     this.setState({
       switchSkin: child,
     });
   };
-  handleSwitchSpo2 = (child) => {
+  handleSwitchSpo2(child) {
     this.setState({
       switchSpo2: child,
     });
   };
-  handleSwitchWeight = (child) => {
+  handleSwitchWeight(child) {
     this.setState({
       switchWeight: child,
     });
   };
-  handleSwitchHumidity = (child) => {
+  handleSwitchHumidity(child) {
     this.setState({
       switchHumidity: child,
     });
   };
-  handleSwitchOxygen = (child) => {
+  handleSwitchOxygen (child) {
     this.setState({
       switchOxygen: child,
     });

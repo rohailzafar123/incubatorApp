@@ -30,12 +30,7 @@ export default class App extends Component {
             turnOnparameter: false,
             selectedParameter: [],
             valueParameter: [],
-            airTemp:true,
-            skinTemp:true,
-            spo2hr:true,
-            babyWeight:true,
-            humidity:true,
-            oxygen:true
+            
         }
     }
     onSelectionsChange = selectedParameter => {
@@ -44,32 +39,40 @@ export default class App extends Component {
         this.setState({ selectedParameter });
     };
     _logOut = () => {
-            this.setState({ turnOnparameter: false,isModalVisible: !this.state.isModalVisible },
-                () => {
-                    this.props.switchAir(this.state.airTemp),
-                    this.props.switchSkin(this.state.skinTemp),
-                    this.props.switchSpo2(this.state.spo2hr),
-                    this.props.switchWeight(this.state.babyWeight),
-                    this.props.switchHumidity(this.state.humidity),
-                    this.props.switchOxygen(this.state.oxygen)
-
-                }
+        if(this.state.airTemp == null && this.state.skinTemp == null && this.state.spo2hr == null && this.state.humidity == null && this.state.babyWeight == null && this.state.oxygen == null){
+            alert("Select Atleat One")
+    }
+    else{
+        this.setState({ turnOnparameter: false, isModalVisible: !this.state.isModalVisible },
+            
+            () => {
+                this.props.switchAir(this.state.airTemp),
+                this.props.switchSkin(this.state.skinTemp),
+                this.props.switchSpo2(this.state.spo2hr),
+                this.props.switchWeight(this.state.babyWeight),
+                this.props.switchHumidity(this.state.humidity),
+                this.props.switchOxygen(this.state.oxygen),
+                this.props.modalOffParameter(this.state.isModalVisible)
+                
+            }
             )
-    };
+    }
+};
     toggleModal = () => {
         this.setState({ isModalVisible: !this.state.isModalVisible })
     };
     _Signin = () => {
-        if (this.state.password == 'Rohail123') {
+        if (this.state.password == '12345') {
             this.setState({ turnOnparameter: true, password: null })
         } else if (this.state.password == '') {
             alert("Empty Password")
-        } else if (this.state.password != 'Rohail123') {
+        } else if (this.state.password != '12345') {
             Alert.alert('Warning', "Incorrect Password")
         }
     };
 
     render() {
+        
         let heading1;
         !this.state.turnOnparameter ? (heading1 = 'Alert') : (heading1 = 'Parameter')
         let modalHeight;
@@ -241,9 +244,9 @@ export default class App extends Component {
                                                 </View>
                                                 <View style={style.boxFooter}>
                                                     <View style={style.boxFooterInner}>
-                                                        <TouchableOpacity style={style.headerbotton} onPress={this._logOut}>
+                                                        <TouchableOpacity style={style.headerbotton2} onPress={this._logOut}>
                                                             <Text style={style.bottonText}>
-                                                                Log Out
+                                                                Submit / Log Out
                                                             </Text>
                                                         </TouchableOpacity>
                                                     </View>

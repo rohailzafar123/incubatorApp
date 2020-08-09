@@ -37,18 +37,21 @@ export default class App extends Component {
             spo2Lower:91,
             hrUpper:190,
             hrLower:70,
-            switchAir:true,
-            switchSkin:true,
-            switchSpo2:true,
-            switchWeight:true,
-            switchHumidity:true,
-            switchOxygen:true,
+           
+            
         }
         this.handleAirHigher = this.handleAirHigher.bind(this);
         this.handleModalOff = this.handleModalOff.bind(this);
         this.handleAirLower = this.handleAirLower.bind(this);
         this.handleSkinHigher = this.handleSkinHigher.bind(this);
         this.handleSkinLower = this.handleSkinLower.bind(this);
+        this.handleParameterSlideClose = this.handleParameterSlideClose.bind(this);
+        this.handleSwitchAir = this.handleSwitchAir.bind(this);
+        this.handleSwitchSkin = this.handleSwitchSkin.bind(this);
+        this.handleSwitchHumidity = this.handleSwitchHumidity.bind(this);
+        this.handleSwitchSpo2 = this.handleSwitchSpo2.bind(this);
+        this.handleSwitchWeight = this.handleSwitchWeight.bind(this);
+        this.handleSwitchOxygen = this.handleSwitchOxygen.bind(this);
 
 
 
@@ -128,53 +131,47 @@ export default class App extends Component {
             () => this.props.hrLower(this.state.hrLower)
         );
     };
+    handleParameterSlideClose(child) {
+        this.setState({
+            isModalVisible: child,
+        });
+    };
     handleModalOff(child) {
         this.setState({
             isModalVisible: child,
         });
     };
-    handleSwitchAir = (child) => {
-        this.setState({
-            switchAir: child,
-        },
-            () => this.props.switchAir(this.state.switchAir)
+    handleSwitchAir(child) {
+        this.setState(
+            () => this.props.switchAir(child)
         );
     };
-    handleSwitchSkin = (child) => {
-        this.setState({
-            switchSkin: child,
-        },
-            () => this.props.switchSkin(this.state.switchSkin)
+    handleSwitchSkin(child) {
+        this.setState(
+            () => this.props.switchSkin(child)
         );
     };
-    handleSwitchSpo2 = (child) => {
-        this.setState({
-            switchSpo2: child,
-        },
-            () => this.props.switchSpo2(this.state.switchSpo2)
+    handleSwitchSpo2(child) {
+        this.setState(
+            () => this.props.switchSpo2(child)
         );
     };
-    handleSwitchWeight = (child) => {
-        this.setState({
-            switchWeight: child,
-        },
-            () => this.props.switchWeight(this.state.switchWeight)
+    handleSwitchWeight(child) {
+        this.setState(
+            () => this.props.switchWeight(child)
         );
     };
-    handleSwitchHumidity = (child) => {
-        this.setState({
-            switchHumidity: child,
-        },
-            () => this.props.switchHumidity(this.state.switchHumidity)
+    handleSwitchHumidity(child) {
+        this.setState(
+            () => this.props.switchHumidity(child)
         );
     };
-    handleSwitchOxygen = (child) => {
-        this.setState({
-            switchOxygen: child,
-        },
-            () => this.props.switchOxygen(this.state.switchOxygen)
+    handleSwitchOxygen(child) {
+        this.setState(
+            () => this.props.switchOxygen(child)
         );
     };
+
     render() {
         return (
             <View >
@@ -248,6 +245,7 @@ export default class App extends Component {
                                     <Bright name={'brightness-7'} size={width * .02} />
                                 </TouchableOpacity>
                                 <Parameter 
+                                modalOffParameter={this.handleParameterSlideClose}
                                 switchAir = {this.handleSwitchAir}
                                 switchSkin = {this.handleSwitchSkin}
                                 switchSpo2 = {this.handleSwitchSpo2}

@@ -135,6 +135,15 @@ export default styles = StyleSheet.create({
         justifyContent: 'center', 
         alignItems: 'center',
     },
+    headerbotton2:{
+        height:height * .06,
+        width:width * .15,
+        backgroundColor:'#e44f3bd5',
+        elevation:width * .003,
+        borderRadius:width * .002,
+        justifyContent: 'center', 
+        alignItems: 'center',
+    },
     bottonText:{
         fontFamily: Fonts.Handlee,
         fontSize: width * .015,
