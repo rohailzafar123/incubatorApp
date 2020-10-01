@@ -53,7 +53,7 @@ export default class App extends Component {
       spo2Lower: 91,
       hrUper: 190,
       hrLower: 70,
-      
+
 
     },
       this.handleWeight = this.handleWeight.bind(this);
@@ -194,8 +194,6 @@ export default class App extends Component {
       switchOxygen: child,
     });
   };
-
-
   stopTimer() {
     clearTimeout(this.timer);
   };
@@ -282,7 +280,6 @@ export default class App extends Component {
             locker={this.state.lock}
           />
         </View>
-
         <View style={style.inerContainer1}>
           {/* Air Temperature */}
           {
@@ -302,7 +299,6 @@ export default class App extends Component {
                 </View>
               )
           }
-
           {/* Skin Temperature */}
           {
             !this.state.switchSkin ? (
@@ -321,7 +317,6 @@ export default class App extends Component {
                 </View>
               )
           }
-
           {/* Spo2 / Hr */}
           {
             !this.state.switchSpo2 ? (
@@ -341,7 +336,6 @@ export default class App extends Component {
                 </View>
               )
           }
-
           {/* Weight */}
           {
             !this.state.switchWeight ? (
@@ -355,7 +349,6 @@ export default class App extends Component {
                 </View>
               )
           }
-
           {/* Humidity */}
           {
             !this.state.switchHumidity ? (
@@ -369,7 +362,6 @@ export default class App extends Component {
                 </View>
               )
           }
-
           {/* Oxygen */}
           {
             !this.state.switchOxygen ? (
@@ -383,8 +375,6 @@ export default class App extends Component {
                 </View>
               )
           }
-
-
         </View >
 
       </View >
