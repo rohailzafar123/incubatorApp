@@ -66,7 +66,7 @@ export default class App extends Component {
     let unit;
     !this.props.value ? (unit = '\u2103') : (unit = '\u2109');
     if (this.state.currentTemp == null || this.state.setTemp == null) {
-      alert('Type Plase Or Go Back')
+      alert('Type Please Or Go Back')
     }
     else if(this.state.currentTemp <= 20 || this.state.currentTemp >= 39 || this.state.setTemp <= 20 || this.state.setTemp >= 39){
       alert('Not Accepted Temperature Will Set Greater Then 20 And Less Than 39')

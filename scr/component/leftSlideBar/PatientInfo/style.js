@@ -45,27 +45,16 @@ export default styles = StyleSheet.create({
         color: "#484149c5",
         // fontFamily:'MetalMania-Regular'
     },
-    switchView:{
-        flexDirection:'row',
-        width:width * .44,
-        justifyContent:'space-between',
-        alignItems:'center',
-    },
-    switchText:{
-        fontFamily: Fonts.Handlee,
-        fontSize: width * .02,
-        color: "red",
-    },
     toggleContainer: {
-        width: width * .06,
-        height: height * .05,
+        width: width * .09,
+        height: height * .07,
         borderRadius: width * .04,
         padding: width * .005,
         elevation: width * .003,
     },
     toggleCircle: {
-        width: width * .02,
-        height: height * .035,
+        width: width * .03,
+        height: height * .05,
         borderRadius: width * .1,
         backgroundColor: 'white', // rgb(102,134,205)
     },
@@ -74,33 +63,32 @@ export default styles = StyleSheet.create({
 
     modalContainer: {
         elevation: width * .005,
-        borderBottomLeftRadius: width * .025,
+        borderBottomLeftRadius: width * .005,
+        borderTopRightRadius: width * .005,
+        borderTopLeftRadius: width * .025,
         borderBottomRightRadius: width * .025,
         backgroundColor: 'white',
-        maxHeight: height * .59,
+        maxHeight: height * .61,
         maxWidth: width * .5,
-        top: height * -0.082,
-        left:width * .2
+        top: height * .13,
+        // left:width * .1
     },
     modalInner: {
-        flex: 1,
+        // flex: 1,
+        justifyContent: 'center',
         alignItems: 'center',
-    },
-    passInputValue:{
-        width: width * .25,
-        height: height * .08,
-        backgroundColor: '#23212016',
-        paddingLeft: width * .01,
-        borderRadius: width * .002,
     },
     boxConatainer:{
         width: width * .47,
-        height: height * .56
+        height: height * .56,
+        // justifyContent: "center",
     },
     boxInner:{
         flex: 1,
         backgroundColor: 'white',
-        borderBottomLeftRadius: width * .025,
+        borderBottomLeftRadius: width * .005,
+        borderTopRightRadius: width * .005,
+        borderTopLeftRadius: width * .025,
         borderBottomRightRadius: width * .025,
         elevation: width * .015,
     },
@@ -110,7 +98,9 @@ export default styles = StyleSheet.create({
     },
     boxHeaderInner:{
         flex: 1,
-        justifyContent: 'center',
+        borderTopRightRadius: width * .005,
+        borderTopLeftRadius: width * .025,
+        justifyContent: 'space-around',
         // paddingHorizontal: width * .02,
         alignItems: 'center',
         flexDirection: 'row',
@@ -120,74 +110,46 @@ export default styles = StyleSheet.create({
     },
     headerHeading:{
         fontFamily: Fonts.Handlee,
-        fontSize: width * .04,
+        fontSize: width * .03,
         color: "white",
         marginHorizontal:width * .05
         // marginLeft: width * .09,
 
     },
     headerbotton:{
-        height:height * .06,
-        width:width * .1,
-        backgroundColor:'#e44f3bd5',
-        elevation:width * .003,
-        borderRadius:width * .002,
+        height:height * .083,
+        width:width * .05,
+        borderRadius:width * 1,
+        backgroundColor:'white',
+        elevation:width * .005,
         justifyContent: 'center', 
         alignItems: 'center',
     },
     bottonText:{
         fontFamily: Fonts.Handlee,
         fontSize: width * .015,
-        color: "white",
+        color: "gray",
+        // marginLeft: width * .09,
 
-    },
-    boxBodyAlert:{
-        width: width * .47,
-        height: height * .27
     },
     boxBody:{
+        flexDirection:"column",
         width: width * .47,
-        height: height * .45
-    },
+        height: height * .2,
+        padding: width * .006,
+        // justifyContent: "flex-end" ,
+        // alignItems: "center"
+       },
     boxBodyInner:{
-        flex: 1,
-        marginTop:height * .005,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    currentInput:{
-        fontFamily: Fonts.BalooChettan2,
-        fontSize: width * .02,
-        color: "gray",
-        width:width * .18,
-        height: height * .1,
-
-    },
-    currentHeading:{
-        fontFamily: Fonts.Handlee,
-        fontSize: width * .04,
-        color: "red",
-    },
-    multiRow: {
-        borderRadius: width * .1,
-        width: width * .4,
-        height: height * .05,
-        margin: width * .002,
-        backgroundColor:'#23212016',
-        paddingHorizontal: width * .02,
-    },
-    multiLabel: {
-        paddingLeft: width * .2,
-        fontSize: width * .02,
-        fontFamily: Fonts.Handlee,
-    },
-    boxFooter:{
-        width: width * .47,
-        height: height * .1
-    },
-    boxFooterInner:{
-        flex: 1,
-        justifyContent: 'center',
+        // flex: 4,
+        padding: width * .002,
+        paddingLeft: width * .04,
+        paddingRight: width * .04,
+        flexDirection: "row" ,
+        // backgroundColor:'red',
+        borderTopRightRadius: width * .005,
+        borderTopLeftRadius: width * .025,
+        justifyContent: 'space-between',
         alignItems: 'center',
     },
 });

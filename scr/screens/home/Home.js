@@ -250,7 +250,7 @@ export default class App extends Component {
           <View style={{ marginHorizontal: width * .03 }}></View>
 
           {/* <Graph /> */}
-          <View style={style.iconAndText}>
+          {/* <View style={style.iconAndText}>
             <Notification name="notifications-active" size={width * .05} color={this.state.powCondi ? '#0ae916' : 'red'} style={{ marginHorizontal: width * .01 }} />
             <Text style={style.alarmText}>Power Failure</Text>
           </View>
@@ -265,6 +265,26 @@ export default class App extends Component {
           <View style={style.iconAndText}>
             <Notification name="notifications-active" size={width * .05} color={this.state.sysCondi ? '#0ae916' : 'red'} style={{ marginHorizontal: width * .01 }} />
             <Text style={style.alarmText}>System Failure</Text>
+          </View> */}
+          <View style={style.iconAndText}>
+            <Text style={style.aboveTopText}>Patient ID</Text>
+            <Text style={style.topText}>1089</Text>
+          </View>
+          <View style={style.iconAndText}>
+            <Text style={style.aboveTopText}>Age</Text>
+            <Text style={style.topText}>6 Days</Text>
+          </View>
+          <View style={style.iconAndText}>
+            <Text style={style.aboveTopText}>Weight</Text>
+            <Text style={style.topText}>2 lb</Text>
+          </View>
+          <View style={style.iconAndText}>
+            <Text style={style.aboveTopText}>S/o</Text>
+            <Text style={style.topText}>Rohail Zafar</Text>
+          </View>
+          <View style={style.iconAndText}>
+            <Text style={style.aboveTopText}>Doctor Name</Text>
+            <Text style={style.topText}>Dr.Abdul Qadeer</Text>
           </View>
           <View style={{ borderWidth: 1, borderColor: '#6b6a6a59', height: height * .12, position: 'absolute', right: width * .1 }}></View>
           <LeftSlider

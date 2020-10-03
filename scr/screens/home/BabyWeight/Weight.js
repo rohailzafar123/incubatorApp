@@ -98,7 +98,7 @@ export default class App extends Component {
                                                     </Text>
                                                 ) : (
                                                         <Text style={comStyle.pondUper}>
-                                                            £
+                                                            lb
                                                         </Text>
                                                     )
                                             }
