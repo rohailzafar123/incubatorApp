@@ -52,6 +52,19 @@ export default class App extends Component {
     const high = this.props.airHigherTemp;
     const lower = this.props.airLowerTemp;
 
+    // this.sendAirTemp();
+
+    if (
+      this.state.currentAirTemperature > high ||
+      this.state.currentAirTemperature < lower
+    ) {
+      this.setState({airTemp: false});
+    } else {
+      this.setState({airTemp: true});
+    }
+  }
+
+  sendAirTemp = async () => {
     const {currentTemp, setTemp} = this.state;
 
     let userInfo = await getItem();
@@ -65,7 +78,7 @@ export default class App extends Component {
 
     createResource(air_Temp, payload, _.token)
       .then((res) => {
-        console.log('App -> componentDidMount -> res', res);
+        Alert.alert('Success', 'Successfully Added Air Temprature!');
       })
       .catch((error) => {
         // this.setState({isloading: false});
@@ -84,15 +97,8 @@ export default class App extends Component {
           ErrorHelper.handleErrors(error.msg, true);
         }
       });
-    if (
-      this.state.currentAirTemperature > high ||
-      this.state.currentAirTemperature < lower
-    ) {
-      this.setState({airTemp: false});
-    } else {
-      this.setState({airTemp: true});
-    }
-  }
+  };
+
   _renderMyList = ({item}) => (
     <View style={{flex: 1}}>
       <View style={modalStyle.renderMyListContainer}>
