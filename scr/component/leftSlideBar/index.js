@@ -17,6 +17,7 @@ import SystemSetting from 'react-native-system-setting';
 import Alarm from 'react-native-vector-icons/MaterialCommunityIcons';
 import AlarmSetting from './AlaemSettings/index';
 import Parameter from './Parameter/index';
+import PatientInfo from './PatientInfo/index';
 // import SysSettings from 'react-native-vector-icons/Octicons';
 import { Fonts } from '../../utils/fonts';
 const { height, width } = Dimensions.get('window');
@@ -33,12 +34,16 @@ export default class App extends Component {
             lowAirValue: 32.1,
             skinHigherTemp: 32.1,
             skinLowerTemp: 34.1,
-            spo2Uper:99,
-            spo2Lower:91,
-            hrUpper:190,
-            hrLower:70,
-           
-            
+            spo2Uper: 99,
+            spo2Lower: 91,
+            hrUpper: 190,
+            hrLower: 70,
+            switchAir: true,
+            switchSkin: true,
+            switchSpo2: true,
+            switchWeight: true,
+            switchHumidity: true,
+            switchOxygen: true,
         }
         this.handleAirHigher = this.handleAirHigher.bind(this);
         this.handleModalOff = this.handleModalOff.bind(this);
@@ -56,7 +61,7 @@ export default class App extends Component {
 
 
     }
-    
+
     toggleModal = () => {
         this.setState({ isModalVisible: !this.state.isModalVisible });
     };
@@ -244,19 +249,19 @@ export default class App extends Component {
                                     </View>
                                     <Bright name={'brightness-7'} size={width * .02} />
                                 </TouchableOpacity>
-                                <Parameter 
-                                modalOffParameter={this.handleParameterSlideClose}
-                                switchAir = {this.handleSwitchAir}
-                                switchSkin = {this.handleSwitchSkin}
-                                switchSpo2 = {this.handleSwitchSpo2}
-                                switchWeight = {this.handleSwitchWeight}
-                                switchHumidity = {this.handleSwitchHumidity}
-                                switchOxygen = {this.handleSwitchOxygen}
+                                <Parameter
+                                    switchAir={this.handleSwitchAir}
+                                    switchSkin={this.handleSwitchSkin}
+                                    switchSpo2={this.handleSwitchSpo2}
+                                    switchWeight={this.handleSwitchWeight}
+                                    switchHumidity={this.handleSwitchHumidity}
+                                    switchOxygen={this.handleSwitchOxygen}
                                 />
-                                <TouchableOpacity style={style.listView}>
-                                    <Text style={style.listText}>Graph Setting</Text>
+                                <PatientInfo/>
+                                {/* <TouchableOpacity style={style.listView}>
+                                    <Text style={style.listText}>Patient Information</Text>
                                     <Graph name={'area-graph'} size={width * .02} />
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
                                 <TouchableOpacity style={style.listView}>
                                     <Text style={style.listText}>Calibaration</Text>
                                     <Pass name={'lastpass'} size={width * .02} />
@@ -370,7 +375,7 @@ export default class App extends Component {
                                                         // fontWeight: 'bold',
                                                         marginLeft: width * .005,
                                                     }}>
-                                                        Kgs/£
+                                                        Kgs/lbs
                                                  </Text>
                                                 </View>
                                                 <View style={{
