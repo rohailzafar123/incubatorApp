@@ -42,9 +42,8 @@ export default class LoginView extends Component {
 
     this.setState({isLoading: true});
     axios
-      .post(`http://192.168.0.105:8080/users/login`, data, {
+      .post(`https://incubator1.herokuapp.com/users/login`, data, {
         headers: {
-          // Authorization: accessToken,
           'Content-Type': 'application/json',
         },
       })
