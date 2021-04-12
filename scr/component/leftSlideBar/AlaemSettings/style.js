@@ -8,7 +8,7 @@ const { height, width } = Dimensions.get('window');
 
 export default styles = StyleSheet.create({
     mainList: {
-        height: height * .07,
+        height: width * .032,
         width: width * .3,
         backgroundColor: 'white',
         marginBottom: height * .02,
