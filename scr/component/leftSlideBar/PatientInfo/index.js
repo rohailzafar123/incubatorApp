@@ -175,7 +175,7 @@ export default class App extends Component {
         .replace(/:/g, '.')}.txt`;
     RNFS.writeFile(
       this.path,
-      `PatentID: ${this.state.patentId}Age: ${this.state.age}Weight: ${this.state.weight}FatherName: ${this.state.fatherName}DrName: ${this.state.drName}\n
+      `PatentID: ${this.state.patentId} Age: ${this.state.age} Weight: ${this.state.weight} FatherName: ${this.state.fatherName} DrName: ${this.state.drName}\n
       Oxygen: ${this.state.oxyArray}
       SkinTemperature: ${this.state.skinArray}
       AirTemperature: ${this.state.tempArray}`,
