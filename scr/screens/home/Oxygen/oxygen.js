@@ -16,6 +16,7 @@ import Notification from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
 
 import {useAsyncStorage} from '@react-native-community/async-storage';
+import RNFS from 'react-native-fs';
 
 import {createResource} from '../../../config/SimpleApiCall';
 import {oxygen} from '../../../config/WebServices';
@@ -27,10 +28,12 @@ const {height, width} = Dimensions.get('window');
 export default class App extends Component {
   state = {
     isModalVisible: false,
+    oxygenLevel: 0,
   };
 
   componentDidMount() {
     this.sendOxygenTemp();
+    this.randomVal();
   }
 
   sendOxygenTemp = async () => {
@@ -68,6 +71,14 @@ export default class App extends Component {
       });
   };
 
+  randomVal() {
+    setInterval(() => {
+      const rand = Math.random() * 40;
+      this.setState({oxygenLevel: rand.toFixed()});
+      this.props.handleOxy(this.state.oxygenLevel);
+    }, 15000);
+  }
+
   toggleModal = () => {
     this.setState({isModalVisible: !this.state.isModalVisible});
   };
@@ -84,7 +95,10 @@ export default class App extends Component {
                   </Text>
                   <View style={style.boxUperStyle}>
                     <View style={style.likeInputOxygen}>
-                      <Text style={style.tempInputCur}>34.1</Text>
+                      <Text style={style.tempInputCur}>
+                        {/* //todo: here is the value of oxygen */}
+                        {this.state.oxygenLevel}
+                      </Text>
                     </View>
 
                     <Text style={style.centiUper}>%</Text>

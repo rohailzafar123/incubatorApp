@@ -49,6 +49,7 @@ export default class App extends Component {
     minutes: new Date().getMinutes(),
   };
   async componentDidMount() {
+    this.randomVal();
     const high = this.props.airHigherTemp;
     const lower = this.props.airLowerTemp;
 
@@ -147,6 +148,14 @@ export default class App extends Component {
     }
   };
 
+  randomVal() {
+    setInterval(() => {
+      const rand = Math.random() * 40;
+      this.setState({currentTemp: rand.toFixed()});
+      this.props.handleAirTemp(this.state.currentTemp);
+    }, 15000);
+  }
+
   toggleModal = () => {
     this.setState({isModalVisible: !this.state.isModalVisible});
   };
@@ -169,6 +178,7 @@ export default class App extends Component {
                         onPress={() => this.openToggel()}>
                         <Text style={style.tempInputCur}>
                           {this.state.currentTemp}
+                          {/* val //todo: here is the*/}
                         </Text>
                       </TouchableOpacity>
                       {!this.props.value ? (

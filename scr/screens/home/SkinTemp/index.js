@@ -54,7 +54,7 @@ export default class App extends Component {
     const lower = this.props.skinLowerTemp;
 
     // this.sendSkinTemp();
-
+    this.randomVal();
     if (
       this.state.currentSkinemperature > high ||
       this.state.currentSkinemperature < lower
@@ -63,6 +63,14 @@ export default class App extends Component {
     } else {
       this.setState({airTemp: true});
     }
+  }
+
+  randomVal() {
+    setInterval(() => {
+      const rand = Math.random() * 40;
+      this.setState({currentTemp: rand.toFixed()});
+      this.props.handleSkinTemp(this.state.currentTemp);
+    }, 15000);
   }
 
   sendSkinTemp = async () => {
@@ -169,6 +177,7 @@ export default class App extends Component {
                         onPress={() => this.openToggel()}>
                         <Text style={style.tempInputCur}>
                           {this.state.currentTemp}
+                          {/* val  //todo: here is the */}
                         </Text>
                       </TouchableOpacity>
                       {!this.props.value ? (

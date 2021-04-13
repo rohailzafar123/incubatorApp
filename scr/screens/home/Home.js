@@ -71,6 +71,9 @@ export default class App extends Component {
       switchWeight: true,
       switchHumidity: true,
       switchOxygen: true,
+      oxy: 0,
+      skinTemp: 0,
+      airTemp: 0,
     }),
       (this.handleWeight = this.handleWeight.bind(this));
     this.handleTemp = this.handleTemp.bind(this);
@@ -188,27 +191,27 @@ export default class App extends Component {
     this.setState({
       switchSkin: child,
     });
-  };
+  }
   handleSwitchSpo2(child) {
     this.setState({
       switchSpo2: child,
     });
-  };
+  }
   handleSwitchWeight(child) {
     this.setState({
       switchWeight: child,
     });
-  };
+  }
   handleSwitchHumidity(child) {
     this.setState({
       switchHumidity: child,
     });
-  };
-  handleSwitchOxygen (child) {
+  }
+  handleSwitchOxygen(child) {
     this.setState({
       switchOxygen: child,
     });
-  };
+  }
 
   _getData = async (value) => {
     try {
@@ -228,6 +231,19 @@ export default class App extends Component {
   _lockOff = () => {
     this.setState({lock: !this.state.lock}), alert('System Locked');
   };
+
+  oxyValue = (child) => {
+    this.setState({oxy: child});
+  };
+
+  skinTempValue = (child) => {
+    this.setState({skinTemp: child});
+  };
+
+  airTempValue = (child) => {
+    this.setState({airTemp: child});
+  };
+
   render() {
     this._getData();
 
@@ -357,6 +373,9 @@ export default class App extends Component {
             switchHumidity={this.handleSwitchHumidity}
             switchOxygen={this.handleSwitchOxygen}
             locker={this.state.lock}
+            oxy={this.state.oxy}
+            skinTemp={this.state.skinTemp}
+            airTemp={this.state.airTemp}
           />
         </View>
         <View style={style.inerContainer1}>
@@ -369,6 +388,7 @@ export default class App extends Component {
                 locker={this.state.lock}
                 airHigherTemp={this.state.higherAirValue}
                 airLowerTemp={this.state.lowAirValue}
+                handleAirTemp={this.airTempValue}
               />
             </View>
           )}
@@ -382,6 +402,7 @@ export default class App extends Component {
                 locker={this.state.lock}
                 skinHighTemp={this.state.skinHigherTemp}
                 skinLowerTemp={this.state.skinLowTemp}
+                handleSkinTemp={this.skinTempValue}
               />
             </View>
           )}
@@ -420,7 +441,7 @@ export default class App extends Component {
           {!this.state.switchOxygen ? null : (
             <View>
               <Text style={style.oxygenHeading}>Oxygen Level</Text>
-              <Oxygen locker={this.state.lock} />
+              <Oxygen locker={this.state.lock} handleOxy={this.oxyValue} />
             </View>
           )}
         </View>
