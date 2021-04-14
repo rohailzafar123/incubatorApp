@@ -29,6 +29,12 @@ export default class App extends Component {
   state = {
     isModalVisible: false,
     oxygenLevel: 0,
+    oxygenHistory: [],
+    date: new Date().getDate(),
+    month: new Date().getMonth() + 1,
+    year: new Date().getFullYear(),
+    hour: new Date().getHours(),
+    minutes: new Date().getMinutes(),
   };
 
   componentDidMount() {
@@ -70,6 +76,15 @@ export default class App extends Component {
         }
       });
   };
+
+  populateArray = () => {
+    this.state.oxygenHistory.push({
+      currentOxygenLevel: this.state.oxygenLevel + '\u2103',
+      setOxygenLevel: this.state.oxygenLevel - 1 + '\u2103',
+    });
+  };
+
+  _renderMyList = ({item}) => {};
 
   randomVal() {
     setInterval(() => {
@@ -152,12 +167,7 @@ export default class App extends Component {
             <View style={style.haiderContainer}>
               <View style={style.headerInner}>
                 <Text style={style.headerHeading}>Oxygen History</Text>
-                {/* <View style={style.headerIcon}>
-
-
-                                    <Status name="notifications-active" size={width * .05} color="#05dd3bc5" style={{ marginHorizontal: width * .01 }} />
-                                    <Text style={style.alarmText}>Current Status</Text>
-                                </View> */}
+                <View style={style.headerIcon} />
                 <View>
                   <TouchableOpacity
                     onPress={() => this.toggleModal()}
@@ -168,7 +178,18 @@ export default class App extends Component {
               </View>
             </View>
             <View style={style.bodyMainContainer}>
-              <View style={style.bodyContainer}></View>
+              <View style={style.bodyContainer}>
+                <Text style={style.headingStyle}>Heading 1</Text>
+                <Text style={style.headingStyle}>Heading 2</Text>
+                <Text style={style.headingStyle}>Heading 3</Text>
+                <Text style={style.headingStyle}>Heading 4</Text>
+              </View>
+              <View style={style.bodyContent}>
+                <Text style={style.bodyTextStyle}>body 1</Text>
+                <Text style={style.bodyTextStyle}>body 2</Text>
+                <Text style={style.bodyTextStyle}>body 3</Text>
+                <Text style={style.bodyTextStyle}>body 4</Text>
+              </View>
             </View>
           </View>
         </Modal>

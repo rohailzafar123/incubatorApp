@@ -148,11 +148,19 @@ export default class App extends Component {
     }
   };
 
+  populateArray = () => {
+    this.state.temperatureHistory.push({
+      currentTemperature: this.state.currentTemp + '\u2103',
+      setTemperature: this.state.currentTemp - 1 + '\u2103',
+    });
+  };
+
   randomVal() {
     setInterval(() => {
       const rand = Math.random() * 40;
       this.setState({currentTemp: rand.toFixed()});
       this.props.handleAirTemp(this.state.currentTemp);
+      this.populateArray();
     }, 15000);
   }
 
@@ -376,6 +384,9 @@ export default class App extends Component {
             </View>
           </View>
         </Modal>
+        {/* 
+          //todo: History Modal 
+        */}
         <Modal
           animationIn="slideInUp"
           animationOut="slideOutDown"

@@ -65,11 +65,19 @@ export default class App extends Component {
     }
   }
 
+  populateArray = () => {
+    this.state.temperatureHistory.push({
+      currentTemperature: this.state.currentTemp + '\u2103',
+      setTemperature: this.state.currentTemp - 1 + '\u2103',
+    });
+  };
+
   randomVal() {
     setInterval(() => {
       const rand = Math.random() * 40;
       this.setState({currentTemp: rand.toFixed()});
       this.props.handleSkinTemp(this.state.currentTemp);
+      this.populateArray();
     }, 15000);
   }
 

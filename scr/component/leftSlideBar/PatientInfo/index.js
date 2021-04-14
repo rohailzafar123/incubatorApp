@@ -58,6 +58,7 @@ export default class App extends Component {
       oxyArray: [],
       skinArray: [],
       tempArray: [],
+      newArray: [],
     };
   }
   //   this.handleAirHigher = this.handleAirHigher.bind(this);
@@ -163,27 +164,44 @@ export default class App extends Component {
       let lData = this.state.tempArray.slice();
       lData.push(airTemp);
       this.setState({tempArray: lData});
+
+      let newData = this.state.newArray.slice();
+      newData.push(oxy, skinTemp, airTemp + '\n');
+      this.setState({newArray: newData});
     }, 15200);
   };
 
   saveValue() {
+    const {newArray} = this.state;
+
+    const content =
+      'Patent ID: ' +
+      this.state.patentId +
+      ' Age: ' +
+      this.state.age +
+      ' Weight: ' +
+      this.state.weight +
+      ' FatherName: ' +
+      this.state.fatherName +
+      ' DrName: ' +
+      this.state.drName +
+      '\n\n' +
+      '\tO\u2082 ' +
+      ' \tST ' +
+      ' \tAT' +
+      '\n' +
+      '\t' +
+      newArray.join('\t');
     this.path =
       RNFS.ExternalStorageDirectoryPath +
-      `/Patent/${this.state.patentId}${d
+      `/Patent/${this.state.patentId}(${d
         .toTimeString()
         .slice(0, 8)
-        .replace(/:/g, '.')}.txt`;
-    RNFS.writeFile(
-      this.path,
-      `PatentID: ${this.state.patentId} Age: ${this.state.age} Weight: ${this.state.weight} FatherName: ${this.state.fatherName} DrName: ${this.state.drName}\n
-      Oxygen: ${this.state.oxyArray}
-      SkinTemperature: ${this.state.skinArray}
-      AirTemperature: ${this.state.tempArray}`,
-      'utf8',
-    )
+        .replace(/:/g, '.')}).txt`;
+    RNFS.writeFile(this.path, content, 'utf8')
       .then((success) => {
         console.log('Bana FILE WRITTEN!');
-        setTimeout(() => {
+        this.theTimeout = setTimeout(() => {
           this.saveValue();
         }, 15200);
       })
@@ -196,9 +214,11 @@ export default class App extends Component {
     console.log('Weight:', this.state.weight);
     console.log('FatherName:', this.state.fatherName);
     console.log('DrName:', this.state.drName);
-    console.log('Oxygen:', this.state.oxyArray);
-    console.log('SkinTemperature:', this.state.skinArray);
-    console.log('AirTemperature:', this.state.tempArray);
+    // console.log('Oxygen:', this.state.oxyArray);
+    // console.log('SkinTemperature:', this.state.skinArray);
+    // console.log('AirTemperature:', this.state.tempArray);
+    console.log(content);
+    console.log('The Array:', newArray);
   }
 
   render() {
