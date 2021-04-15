@@ -22,6 +22,7 @@ import Back from 'react-native-vector-icons/MaterialCommunityIcons';
 import {RadioButton} from 'react-native-paper';
 
 import RNFS from 'react-native-fs';
+import XLSX from 'xlsx';
 
 // const [checked, setChecked] = React.useState('first');
 
@@ -137,7 +138,9 @@ export default class App extends Component {
     Alert.alert('Are you Sure?', 'Add this this patent', [
       {
         text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
+        onPress: () => {
+          clearInterval(this.theDataInterval);
+        },
         style: 'cancel',
       },
       {
@@ -150,7 +153,18 @@ export default class App extends Component {
   }
 
   theData = () => {
-    setInterval(() => {
+    this.theDataInterval = setInterval(() => {
+      let d = new Date();
+      let date =
+        d.getDate() + '/' + d.getUTCMonth() + 1 + '/' + d.getFullYear();
+      let time =
+        d.getHours() +
+        ':' +
+        d.getMinutes() +
+        ':' +
+        d.getSeconds() +
+        '.' +
+        d.getMilliseconds();
       let {oxy, skinTemp, airTemp} = this.props;
 
       let kData = this.state.oxyArray.slice();
@@ -166,9 +180,37 @@ export default class App extends Component {
       this.setState({tempArray: lData});
 
       let newData = this.state.newArray.slice();
-      newData.push(oxy, skinTemp, airTemp + '\n');
+      newData.push(date, time, oxy, skinTemp, airTemp + '\n');
+      // newData.push({
+      //   Date: date,
+      //   Time: time,
+      //   Oxygen: oxy,
+      //   SkinTemperature: skinTemp,
+      //   AirTemperature: airTemp,
+      // });
       this.setState({newArray: newData});
-    }, 15200);
+    }, 15000);
+  };
+
+  writeToSheet = () => {
+    const data = [
+      {name: 'John', city: 'Seattle'},
+      {name: 'Mike', city: 'Los Angeles'},
+      {name: 'Zach', city: 'New York'},
+    ];
+    var ws = XLSX.utils.json_to_sheet(this.state.newArray);
+    var wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'DataValues');
+
+    const wbout = XLSX.write(wb, {type: 'binary', bookType: 'xlsx'});
+    var file = RNFS.ExternalStorageDirectoryPath + '/Patent/test.xlsx';
+    RNFS.writeFile(file, wbout, 'ascii')
+      .then((r) => {
+        console.log('Hogaya');
+      })
+      .catch((e) => {
+        console.log('nhi hoa', e);
+      });
   };
 
   saveValue() {
@@ -186,12 +228,14 @@ export default class App extends Component {
       ' DrName: ' +
       this.state.drName +
       '\n\n' +
-      '\tO\u2082 ' +
-      ' \tST ' +
-      ' \tAT' +
+      '\t\tDate ' +
+      ' \t\t\tTime' +
+      '\t\t\tO\u2082 ' +
+      ' \t\tST ' +
+      ' \t\tAT' +
       '\n' +
-      '\t' +
-      newArray.join('\t');
+      '\t\t' +
+      newArray.join('\t\t');
     this.path =
       RNFS.ExternalStorageDirectoryPath +
       `/Patent/${this.state.patentId}(${d
