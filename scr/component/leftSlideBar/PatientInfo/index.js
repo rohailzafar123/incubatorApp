@@ -262,7 +262,7 @@ export default class App extends Component {
       RNFS.ExternalStorageDirectoryPath +
       `/Patent/${this.state.patentId}(${d
         .toTimeString()
-        .slice(0, 8)
+        .replace(/ /g, '')
         .replace(/:/g, '.')}).txt`;
     RNFS.writeFile(this.path, content, 'utf8')
       .then((success) => {

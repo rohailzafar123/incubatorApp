@@ -8,6 +8,8 @@ import {
   StatusBar,
   Dimensions,
   TouchableOpacity,
+  ScrollView,
+  FlatList,
 } from 'react-native';
 import style from './oxygenStyle';
 import Menu from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -20,10 +22,12 @@ import RNFS from 'react-native-fs';
 
 import {createResource} from '../../../config/SimpleApiCall';
 import {oxygen} from '../../../config/WebServices';
+import modalStyle from './modalsStyling';
 
 const {getItem, setItem} = useAsyncStorage('userInfo');
 
 const {height, width} = Dimensions.get('window');
+let id = 0;
 
 export default class App extends Component {
   state = {
@@ -79,18 +83,35 @@ export default class App extends Component {
 
   populateArray = () => {
     this.state.oxygenHistory.push({
-      currentOxygenLevel: this.state.oxygenLevel + '\u2103',
-      setOxygenLevel: this.state.oxygenLevel - 1 + '\u2103',
+      id: id++,
+      currentOxygenLevel: this.state.oxygenLevel,
+      setOxygenLevel: this.state.oxygenLevel - 1,
     });
   };
 
-  _renderMyList = ({item}) => {};
+  _renderMyList = ({item}) => (
+    <View style={{flex: 1}}>
+      <View style={modalStyle.renderMyListContainer}>
+        <Text style={modalStyle.renderListHeading1}>
+          {this.state.date}/{this.state.month}/{this.state.year}
+        </Text>
+        <Text style={modalStyle.renderListHeading2}>
+          {this.state.hour}:{this.state.minutes}
+        </Text>
+        <Text style={modalStyle.renderListSetTemp}>
+          {item.currentOxygenLevel}
+        </Text>
+        <Text style={modalStyle.renderListAirTemp}>{item.setOxygenLevel}</Text>
+      </View>
+    </View>
+  );
 
   randomVal() {
     setInterval(() => {
       const rand = Math.random() * 40;
       this.setState({oxygenLevel: rand.toFixed()});
       this.props.handleOxy(this.state.oxygenLevel);
+      this.populateArray();
     }, 15000);
   }
 
@@ -177,18 +198,32 @@ export default class App extends Component {
                 </View>
               </View>
             </View>
-            <View style={style.bodyMainContainer}>
-              <View style={style.bodyContainer}>
-                <Text style={style.headingStyle}>Heading 1</Text>
-                <Text style={style.headingStyle}>Heading 2</Text>
-                <Text style={style.headingStyle}>Heading 3</Text>
-                <Text style={style.headingStyle}>Heading 4</Text>
-              </View>
-              <View style={style.bodyContent}>
-                <Text style={style.bodyTextStyle}>body 1</Text>
-                <Text style={style.bodyTextStyle}>body 2</Text>
-                <Text style={style.bodyTextStyle}>body 3</Text>
-                <Text style={style.bodyTextStyle}>body 4</Text>
+            <View style={modalStyle.bodyMainContainer}>
+              <View style={modalStyle.bodyContainer}>
+                <View style={modalStyle.historyContentHeadingView}>
+                  <Text style={modalStyle.headingDate}>Date</Text>
+                  <Text style={modalStyle.headingTime}>Time</Text>
+                  <Text style={modalStyle.headingWeight}>
+                    Current Oxygen Level
+                  </Text>
+                  <Text style={modalStyle.headingSetTemp}>
+                    Recommend Oxygen Level
+                  </Text>
+                </View>
+                <View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                    }}>
+                    <FlatList
+                      style={{marginTop: height * 0.01}}
+                      data={this.state.oxygenHistory}
+                      renderItem={this._renderMyList}
+                      keyExtractor={(item) => item.id}
+                      showsVerticalScrollIndicator={false}
+                    />
+                  </View>
+                </View>
               </View>
             </View>
           </View>

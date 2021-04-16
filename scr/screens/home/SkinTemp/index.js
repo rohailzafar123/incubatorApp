@@ -29,6 +29,7 @@ import {skin_Temp} from '../../../config/WebServices';
 const {getItem, setItem} = useAsyncStorage('userInfo');
 
 const {height, width} = Dimensions.get('window');
+let id = 0;
 
 export default class App extends Component {
   state = {
@@ -67,6 +68,7 @@ export default class App extends Component {
 
   populateArray = () => {
     this.state.temperatureHistory.push({
+      id: id++,
       currentTemperature: this.state.currentTemp + '\u2103',
       setTemperature: this.state.currentTemp - 1 + '\u2103',
     });
@@ -415,7 +417,7 @@ export default class App extends Component {
                     Previous Skin Temperature
                   </Text>
                 </View>
-                <ScrollView showsVerticalScrollIndicator={false}>
+                <View>
                   <View
                     style={{
                       flexDirection: 'row',
@@ -424,9 +426,11 @@ export default class App extends Component {
                       style={{marginTop: height * 0.01}}
                       data={this.state.temperatureHistory}
                       renderItem={this._renderMyList}
+                      keyExtractor={(item) => item.id}
+                      showsVerticalScrollIndicator={false}
                     />
                   </View>
-                </ScrollView>
+                </View>
               </View>
             </View>
           </View>

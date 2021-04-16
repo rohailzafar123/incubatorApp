@@ -159,28 +159,31 @@ export default styles = StyleSheet.create({
     color: '#e44f3bfd',
   },
   bodyMainContainer: {
+    flex: 1,
+    flexDirection: 'column',
     width: width * 0.9,
     height: height * 0.62,
     backgroundColor: 'white',
   },
   bodyContainer: {
-    marginHorizontal: width * 0.02,
     marginTop: width * 0.01,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
+    backgroundColor: 'yellow',
   },
   bodyContent: {
-    flex: 1,
     marginTop: width * 0.01,
     flexDirection: 'row',
-    marginHorizontal: width * 0.02,
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
+    backgroundColor: 'pink',
   },
   headingStyle: {
     fontSize: height * 0.03,
     color: '#e44f3bfd',
+    textAlign: 'right',
   },
   bodyTextStyle: {
     fontSize: height * 0.028,
+    textAlign: 'left',
   },
 });
