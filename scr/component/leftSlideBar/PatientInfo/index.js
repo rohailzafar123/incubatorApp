@@ -147,6 +147,7 @@ export default class App extends Component {
         text: 'Yes',
         onPress: () => {
           this.saveValue();
+          // this.writeToSheet();
         },
       },
     ]);
@@ -180,8 +181,9 @@ export default class App extends Component {
       this.setState({tempArray: lData});
 
       let newData = this.state.newArray.slice();
-      newData.push(date, time, oxy, skinTemp, airTemp + '\n');
+      newData.push(date, time, oxy, skinTemp, airTemp + '\n'); //todo: for txt format data
       // newData.push({
+      //   //todo: for xlsx format data
       //   Date: date,
       //   Time: time,
       //   Oxygen: oxy,
@@ -193,13 +195,21 @@ export default class App extends Component {
   };
 
   writeToSheet = () => {
-    const data = [
-      {name: 'John', city: 'Seattle'},
-      {name: 'Mike', city: 'Los Angeles'},
-      {name: 'Zach', city: 'New York'},
+    const patientInfo = [
+      {
+        PatientId: this.state.patentId,
+        Age: this.state.age,
+        Weight: this.state.weight,
+        FatherName: this.state.fatherName,
+        DrName: this.state.drName,
+      },
     ];
-    var ws = XLSX.utils.json_to_sheet(this.state.newArray);
+
     var wb = XLSX.utils.book_new();
+    var ws = XLSX.utils.json_to_sheet(patientInfo);
+    XLSX.utils.sheet_add_json(ws, this.state.newArray, {
+      origin: 'A4',
+    });
     XLSX.utils.book_append_sheet(wb, ws, 'DataValues');
 
     const wbout = XLSX.write(wb, {type: 'binary', bookType: 'xlsx'});
@@ -217,16 +227,28 @@ export default class App extends Component {
     const {newArray} = this.state;
 
     const content =
-      'Patent ID: ' +
+      '\t\t' +
+      'Patent ID' +
+      '\t' +
+      'Age' +
+      '\t' +
+      'Weight' +
+      '\t\t' +
+      'FatherName' +
+      '\t' +
+      'DrName' +
+      '\n' +
+      '\t\t' +
       this.state.patentId +
-      ' Age: ' +
+      '\t\t' +
       this.state.age +
-      ' Weight: ' +
+      '\t' +
       this.state.weight +
-      ' FatherName: ' +
+      '\t\t' +
       this.state.fatherName +
-      ' DrName: ' +
+      '\t\t' +
       this.state.drName +
+      '\t' +
       '\n\n' +
       '\t\tDate ' +
       ' \t\t\tTime' +
