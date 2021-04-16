@@ -227,7 +227,7 @@ export default class App extends Component {
     const {newArray} = this.state;
 
     const content =
-      '\t\t' +
+      '\t\t\t' +
       'Patent ID' +
       '\t' +
       'Age' +
@@ -238,7 +238,7 @@ export default class App extends Component {
       '\t' +
       'DrName' +
       '\n' +
-      '\t\t' +
+      '\t\t\t' +
       this.state.patentId +
       '\t\t' +
       this.state.age +
