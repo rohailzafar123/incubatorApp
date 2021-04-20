@@ -9,7 +9,10 @@ import {
   Image,
   Alert,
   ActivityIndicator,
+  ToastAndroid,
 } from 'react-native';
+
+import RNFS from 'react-native-fs';
 
 import axios from 'axios';
 import {useAsyncStorage} from '@react-native-community/async-storage';
@@ -17,12 +20,16 @@ import {useAsyncStorage} from '@react-native-community/async-storage';
 const {getItem, setItem} = useAsyncStorage('userInfo');
 
 export default class LoginView extends Component {
-  
   state = {
-    email: 'register@mail.com',
-    password: 'alligator123',
+    email: '',
+    password: '',
     isLoading: false,
+    txtFileData: '',
   };
+
+  componentDidMount() {
+    this.ReadTxtFile();
+  }
 
   _storeData = async (value) => {
     try {
@@ -31,6 +38,27 @@ export default class LoginView extends Component {
       console.log('LoginView -> error', error);
       // Error saving data
     }
+  };
+
+  ReadTxtFile = async () => {
+    const myPath = RNFS.ExternalStorageDirectoryPath;
+    try {
+      const path = myPath + '/Patent/Login.txt';
+      const contents = await RNFS.readFile(path, 'utf8');
+      this.setState({txtFileData: contents.toString()});
+      console.log(this.state.txtFileData, 'Read Text File mil gae');
+    } catch (e) {
+      console.log(e, 'error Read Text File');
+    }
+  };
+
+  checkCredentials = () => {
+    const {email, password} = this.state;
+    const StringVal = this.state.txtFileData;
+    const emailID = StringVal.includes(email.toLowerCase());
+    const pass = StringVal.includes(password);
+    if (emailID && pass) return this.props.navigation.navigate('Home');
+    else return ToastAndroid.show('Wrong Credentials', ToastAndroid.SHORT);
   };
 
   onClickListener = (viewId) => {
@@ -65,7 +93,7 @@ export default class LoginView extends Component {
   renderLoader = () => {
     return (
       <View style={[styles.containers, styles.horizontal]}>
-        <ActivityIndicator size="large" color="#00ff00" />
+        <ActivityIndicator size="large" color="#e44f3bd5" />
       </View>
     );
   };
@@ -80,6 +108,8 @@ export default class LoginView extends Component {
             style={styles.inputs}
             placeholder="Email"
             keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
             underlineColorAndroid="transparent"
             onChangeText={(email) => this.setState({email})}
             value={email}
@@ -91,6 +121,8 @@ export default class LoginView extends Component {
             style={styles.inputs}
             placeholder="Password"
             secureTextEntry={true}
+            autoCorrect={false}
+            autoCapitalize="none"
             value={password}
             underlineColorAndroid="transparent"
             onChangeText={(password) => this.setState({password})}
@@ -100,7 +132,10 @@ export default class LoginView extends Component {
         <TouchableHighlight
           disabled={isLoading}
           style={[styles.buttonContainer, styles.loginButton]}
-          onPress={() => this.onClickListener('login')}>
+          // onPress={() => this.onClickListener('login')}
+          onPress={() => {
+            this.checkCredentials(), this.setState({email: '', password: ''});
+          }}>
           <Text style={styles.loginText}>Login</Text>
         </TouchableHighlight>
 

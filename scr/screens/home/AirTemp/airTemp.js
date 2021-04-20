@@ -109,7 +109,7 @@ export default class App extends Component {
           {this.state.date}/{this.state.month}/{this.state.year}
         </Text>
         <Text style={modalStyle.renderListHeading2}>
-          {this.state.hour}:{this.state.minutes}
+          {item.hour}:{item.mins}
         </Text>
         <Text style={modalStyle.renderListSetTemp}>{item.setTemperature}</Text>
         <Text style={modalStyle.renderListAirTemp}>
@@ -152,6 +152,8 @@ export default class App extends Component {
 
   populateArray = () => {
     this.state.temperatureHistory.push({
+      hour: this.hour,
+      mins: this.mins,
       id: id++,
       currentTemperature: this.state.currentTemp + '\u2103',
       setTemperature: this.state.currentTemp - 1 + '\u2103',
@@ -160,6 +162,8 @@ export default class App extends Component {
 
   randomVal() {
     setInterval(() => {
+      this.hour = new Date().getHours();
+      this.mins = new Date().getMinutes();
       const rand = Math.random() * 40;
       this.setState({currentTemp: rand.toFixed()});
       this.props.handleAirTemp(this.state.currentTemp);

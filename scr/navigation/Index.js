@@ -6,10 +6,11 @@ import Login from '../login';
 
 const AppNavigator = createStackNavigator(
   {
-    Home,
     Login,
+    Home,
   },
   {
+    initialRouteName: 'Login',
     headerMode: 'none',
     navigationOptions: {
       headerVisible: false,
@@ -18,13 +19,4 @@ const AppNavigator = createStackNavigator(
     },
   },
 );
-// const Drawer = createDrawerNavigator(
-//   {
-//     Map
-//   },
-//   {
-//     headerModer: 'none',
-
-//   },
-// );
 export default createAppContainer(AppNavigator);
