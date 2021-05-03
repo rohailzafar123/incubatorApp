@@ -135,19 +135,24 @@ export default class App extends Component {
   };
 
   saveData() {
-    Alert.alert('Are you Sure?', 'Add this this patent', [
+    Alert.alert('Are you Sure?', 'Add this patient', [
       {
         text: 'Cancel',
         onPress: () => {
           clearInterval(this.theDataInterval);
+          clearInterval(this.theContentInterval);
         },
         style: 'cancel',
       },
       {
         text: 'Yes',
         onPress: () => {
-          this.saveValue();
-          // this.writeToSheet();
+          this.saveValue(),
+            this.props.handleAirTempActivate(true),
+            this.props.handleSkinTempActivate(true),
+            this.props.handleOxygenActivate(true),
+            this.props.dataInterval(this.theDataInterval),
+            this.props.contentInterval(this.theContentInterval);
         },
       },
     ]);
@@ -194,97 +199,100 @@ export default class App extends Component {
     }, 15000);
   };
 
-  writeToSheet = () => {
-    const patientInfo = [
-      {
-        PatientId: this.state.patentId,
-        Age: this.state.age,
-        Weight: this.state.weight,
-        FatherName: this.state.fatherName,
-        DrName: this.state.drName,
-      },
-    ];
+  // writeToSheet = () => {
+  //   const patientInfo = [
+  //     {
+  //       PatientId: this.state.patentId,
+  //       Age: this.state.age,
+  //       Weight: this.state.weight,
+  //       FatherName: this.state.fatherName,
+  //       DrName: this.state.drName,
+  //     },
+  //   ];
 
-    var wb = XLSX.utils.book_new();
-    var ws = XLSX.utils.json_to_sheet(patientInfo);
-    XLSX.utils.sheet_add_json(ws, this.state.newArray, {
-      origin: 'A4',
-    });
-    XLSX.utils.book_append_sheet(wb, ws, 'DataValues');
+  //   var wb = XLSX.utils.book_new();
+  //   var ws = XLSX.utils.json_to_sheet(patientInfo);
+  //   XLSX.utils.sheet_add_json(ws, this.state.newArray, {
+  //     origin: 'A4',
+  //   });
+  //   XLSX.utils.book_append_sheet(wb, ws, 'DataValues');
 
-    const wbout = XLSX.write(wb, {type: 'binary', bookType: 'xlsx'});
-    var file = RNFS.ExternalStorageDirectoryPath + '/Patent/test.xlsx';
-    RNFS.writeFile(file, wbout, 'ascii')
-      .then((r) => {
-        console.log('Hogaya');
-      })
-      .catch((e) => {
-        console.log('nhi hoa', e);
-      });
-  };
+  //   const wbout = XLSX.write(wb, {type: 'binary', bookType: 'xlsx'});
+  //   var file = RNFS.ExternalStorageDirectoryPath + '/Patent/test.xlsx';
+  //   RNFS.writeFile(file, wbout, 'ascii')
+  //     .then((r) => {
+  //       console.log('Hogaya');
+  //     })
+  //     .catch((e) => {
+  //       console.log('nhi hoa', e);
+  //     });
+  // };
 
   saveValue() {
-    const {newArray} = this.state;
+    this.theContentInterval = setInterval(() => {
+      const {newArray} = this.state;
+      let date =
+        d.getDate() + '/' + d.getUTCMonth() + 1 + '/' + d.getFullYear();
+      const content =
+        'Admission Date' +
+        '\t\t' +
+        'Patent ID' +
+        '\t' +
+        'Age' +
+        '\t' +
+        'Weight' +
+        '\t\t' +
+        'FatherName' +
+        '\t' +
+        'DrName' +
+        '\n' +
+        date +
+        '\t\t\t' +
+        this.state.patentId +
+        '\t\t' +
+        this.state.age +
+        '\t' +
+        this.state.weight +
+        '\t\t' +
+        this.state.fatherName +
+        '\t\t' +
+        this.state.drName +
+        '\t' +
+        '\n\n' +
+        '\t\tDate ' +
+        ' \t\t\tTime' +
+        '\t\t\tO\u2082 ' +
+        ' \t\tST ' +
+        ' \t\tAT' +
+        '\n' +
+        '\t\t' +
+        newArray.join('\t\t');
+      this.path =
+        RNFS.ExternalStorageDirectoryPath +
+        `/Patent/${this.state.patentId}(${d
+          .toTimeString()
+          .replace(/ /g, '')
+          .replace(/:/g, '.')}).txt`;
+      RNFS.writeFile(this.path, content, 'utf8')
+        .then((success) => {
+          console.log('Bana FILE WRITTEN!');
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
 
-    const content =
-      '\t\t\t' +
-      'Patent ID' +
-      '\t' +
-      'Age' +
-      '\t' +
-      'Weight' +
-      '\t\t' +
-      'FatherName' +
-      '\t' +
-      'DrName' +
-      '\n' +
-      '\t\t\t' +
-      this.state.patentId +
-      '\t\t' +
-      this.state.age +
-      '\t' +
-      this.state.weight +
-      '\t\t' +
-      this.state.fatherName +
-      '\t\t' +
-      this.state.drName +
-      '\t' +
-      '\n\n' +
-      '\t\tDate ' +
-      ' \t\t\tTime' +
-      '\t\t\tO\u2082 ' +
-      ' \t\tST ' +
-      ' \t\tAT' +
-      '\n' +
-      '\t\t' +
-      newArray.join('\t\t');
-    this.path =
-      RNFS.ExternalStorageDirectoryPath +
-      `/Patent/${this.state.patentId}(${d
-        .toTimeString()
-        .replace(/ /g, '')
-        .replace(/:/g, '.')}).txt`;
-    RNFS.writeFile(this.path, content, 'utf8')
-      .then((success) => {
-        console.log('Bana FILE WRITTEN!');
-        this.theTimeout = setTimeout(() => {
-          this.saveValue();
-        }, 15200);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+      // console.log('PatentID:', this.state.patentId);
+      // console.log('Age:', this.state.age);
+      // console.log('Weight:', this.state.weight);
+      // console.log('FatherName:', this.state.fatherName);
+      // console.log('DrName:', this.state.drName);
 
-    console.log('PatentID:', this.state.patentId);
-    console.log('Age:', this.state.age);
-    console.log('Weight:', this.state.weight);
-    console.log('FatherName:', this.state.fatherName);
-    console.log('DrName:', this.state.drName);
-    // console.log('Oxygen:', this.state.oxyArray);
-    // console.log('SkinTemperature:', this.state.skinArray);
-    // console.log('AirTemperature:', this.state.tempArray);
-    console.log(content);
-    console.log('The Array:', newArray);
+      // console.log('Oxygen:', this.state.oxyArray);
+      // console.log('SkinTemperature:', this.state.skinArray);
+      // console.log('AirTemperature:', this.state.tempArray);
+      console.log(content);
+      console.log('The Array:', newArray);
+    }, 15100);
   }
 
   render() {

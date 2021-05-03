@@ -74,6 +74,9 @@ export default class App extends Component {
       oxy: 0,
       skinTemp: 0,
       airTemp: 0,
+      airTempActivate: false,
+      skinTempActivate: false,
+      oxygenActivate: false,
     }),
       (this.handleWeight = this.handleWeight.bind(this));
     this.handleTemp = this.handleTemp.bind(this);
@@ -244,6 +247,24 @@ export default class App extends Component {
     this.setState({airTemp: child});
   };
 
+  handleAirTempActivate = (child) => {
+    if (child) {
+      this.setState({airTempActivate: true});
+    }
+  };
+
+  handleSkinTempActivate = (child) => {
+    if (child) {
+      this.setState({skinTempActivate: true});
+    }
+  };
+
+  handleOxygenActivate = (child) => {
+    if (child) {
+      this.setState({oxygenActivate: true});
+    }
+  };
+
   render() {
     this._getData();
 
@@ -376,6 +397,9 @@ export default class App extends Component {
             oxy={this.state.oxy}
             skinTemp={this.state.skinTemp}
             airTemp={this.state.airTemp}
+            handleAirTempActivate={this.handleAirTempActivate}
+            handleSkinTempActivate={this.handleSkinTempActivate}
+            handleOxygenActivate={this.handleOxygenActivate}
           />
         </View>
         <View style={style.inerContainer1}>
@@ -389,6 +413,8 @@ export default class App extends Component {
                 airHigherTemp={this.state.higherAirValue}
                 airLowerTemp={this.state.lowAirValue}
                 handleAirTemp={this.airTempValue}
+                activate={this.state.airTempActivate}
+                generate={this.generate}
               />
             </View>
           )}
@@ -403,6 +429,7 @@ export default class App extends Component {
                 skinHighTemp={this.state.skinHigherTemp}
                 skinLowerTemp={this.state.skinLowTemp}
                 handleSkinTemp={this.skinTempValue}
+                activate={this.state.skinTempActivate}
               />
             </View>
           )}
@@ -441,7 +468,11 @@ export default class App extends Component {
           {!this.state.switchOxygen ? null : (
             <View>
               <Text style={style.oxygenHeading}>Oxygen Level</Text>
-              <Oxygen locker={this.state.lock} handleOxy={this.oxyValue} />
+              <Oxygen
+                locker={this.state.lock}
+                handleOxy={this.oxyValue}
+                activate={this.state.oxygenActivate}
+              />
             </View>
           )}
         </View>

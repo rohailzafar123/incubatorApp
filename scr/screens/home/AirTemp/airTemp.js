@@ -51,7 +51,6 @@ export default class App extends Component {
     minutes: new Date().getMinutes(),
   };
   async componentDidMount() {
-    this.randomVal();
     const high = this.props.airHigherTemp;
     const lower = this.props.airLowerTemp;
 
@@ -161,7 +160,7 @@ export default class App extends Component {
   };
 
   randomVal() {
-    setInterval(() => {
+    this.airTemp = setInterval(() => {
       this.hour = new Date().getHours();
       this.mins = new Date().getMinutes();
       const rand = Math.random() * 40;
@@ -176,6 +175,16 @@ export default class App extends Component {
   };
 
   render() {
+    if (this.props.activate && this.state.run) {
+      this.randomVal();
+      console.log('true aya');
+      this.setState({run: false});
+    } else if (this.props.activate == false && this.state.run) {
+      clearInterval(this.airTemp);
+      this.setState({currentTemp: 0});
+      this.setState({run: false});
+      console.log('false aya');
+    }
     return (
       <View>
         {this.props.locker ? (

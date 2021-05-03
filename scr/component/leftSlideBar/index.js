@@ -8,6 +8,8 @@ import {
   StatusBar,
   Dimensions,
   TouchableOpacity,
+  Alert,
+  ToastAndroid,
 } from 'react-native';
 import style from './styles';
 import Modal from 'react-native-modal';
@@ -179,6 +181,38 @@ export default class App extends Component {
     this.setState(() => this.props.switchOxygen(child));
   }
 
+  getDataInterval = (child) => {
+    this.theDataInterval = child;
+  };
+
+  getContentInterval = (child) => {
+    this.theContentInterval = child;
+  };
+
+  handleDischargePatient = () => {
+    Alert.alert('Are you Sure?', 'Discharge the patient', [
+      {
+        text: 'Cancel',
+        onPress: () => {
+          console.log('Cancel on Discharge Patient');
+        },
+        style: 'cancel',
+      },
+      {
+        text: 'Yes',
+        onPress: () => {
+          console.log('Done');
+          clearInterval(this.theDataInterval);
+          clearInterval(this.theContentInterval);
+          this.props.handleAirTempActivate(false);
+          this.props.handleSkinTempActivate(false);
+          this.props.handleOxygenActivate(false);
+          ToastAndroid.show('Discharge', ToastAndroid.SHORT);
+        },
+      },
+    ]);
+  };
+
   render() {
     return (
       <View>
@@ -251,27 +285,32 @@ export default class App extends Component {
                   </View>
                   <Bright name={'brightness-7'} size={width * 0.02} />
                 </TouchableOpacity>
-                <Parameter
+                {/* <Parameter
                   switchAir={this.handleSwitchAir}
                   switchSkin={this.handleSwitchSkin}
                   switchSpo2={this.handleSwitchSpo2}
                   switchWeight={this.handleSwitchWeight}
                   switchHumidity={this.handleSwitchHumidity}
                   switchOxygen={this.handleSwitchOxygen}
-                />
+                /> */}
                 <PatientInfo
                   oxy={this.props.oxy}
                   skinTemp={this.props.skinTemp}
                   airTemp={this.props.airTemp}
+                  dataInterval={this.getDataInterval}
+                  contentInterval={this.getContentInterval}
+                  handleAirTempActivate={this.props.handleAirTempActivate}
+                  handleSkinTempActivate={this.props.handleSkinTempActivate}
+                  handleOxygenActivate={this.props.handleOxygenActivate}
                 />
                 {/* <TouchableOpacity style={style.listView}>
                                     <Text style={style.listText}>Patient Information</Text>
                                     <Graph name={'area-graph'} size={width * .02} />
                                 </TouchableOpacity> */}
-                <TouchableOpacity style={style.listView}>
+                {/* <TouchableOpacity style={style.listView}>
                   <Text style={style.listText}>Calibaration</Text>
                   <Pass name={'lastpass'} size={width * 0.02} />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity style={style.listView}>
                   <Text style={style.listText}>Data Record</Text>
                   <Data name={'database'} size={width * 0.018} />
@@ -282,6 +321,22 @@ export default class App extends Component {
                     this.setState({LockorUnlo: !this.state.LockorUnlo});
                   }}>
                   <Text style={style.listText}>Units</Text>
+                </TouchableOpacity>
+                <View style={{height: height * 0.1}} />
+                <TouchableOpacity
+                  onPress={() => {
+                    this.handleDischargePatient();
+                  }}
+                  style={[
+                    style.listView,
+                    {
+                      justifyContent: 'center',
+                      backgroundColor: '#fd5e5efd',
+                    },
+                  ]}>
+                  <Text style={[style.listText, {color: '#ffffff'}]}>
+                    Discharge
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
