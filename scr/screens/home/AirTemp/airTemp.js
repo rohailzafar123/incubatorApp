@@ -49,6 +49,7 @@ export default class App extends Component {
     year: new Date().getFullYear(),
     hour: new Date().getHours(),
     minutes: new Date().getMinutes(),
+    run: true,
   };
   async componentDidMount() {
     const high = this.props.airHigherTemp;
@@ -175,15 +176,19 @@ export default class App extends Component {
   };
 
   render() {
-    if (this.props.activate && this.state.run) {
-      this.randomVal();
-      console.log('true aya');
-      this.setState({run: false});
-    } else if (this.props.activate == false && this.state.run) {
-      clearInterval(this.airTemp);
-      this.setState({currentTemp: 0});
-      this.setState({run: false});
-      console.log('false aya');
+    if (this.props.activate && this.props.run) {
+      setTimeout(() => {
+        this.randomVal();
+        console.log('true aya');
+      }, 50);
+    }
+    if (this.props.deactivate && this.props.run) {
+      console.log('chala');
+      setTimeout(() => {
+        clearInterval(this.airTemp);
+        this.setState({currentTemp: 0});
+        console.log('false aya');
+      }, 50);
     }
     return (
       <View>

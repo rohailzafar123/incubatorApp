@@ -43,7 +43,6 @@ export default class App extends Component {
 
   componentDidMount() {
     this.sendOxygenTemp();
-    this.randomVal();
   }
 
   sendOxygenTemp = async () => {
@@ -107,7 +106,7 @@ export default class App extends Component {
   );
 
   randomVal() {
-    setInterval(() => {
+    this.oxygen = setInterval(() => {
       const rand = Math.random() * 40;
       this.setState({oxygenLevel: rand.toFixed()});
       this.props.handleOxy(this.state.oxygenLevel);
@@ -119,6 +118,20 @@ export default class App extends Component {
     this.setState({isModalVisible: !this.state.isModalVisible});
   };
   render() {
+    if (this.props.activate && this.props.run3) {
+      setTimeout(() => {
+        this.randomVal();
+        console.log('true aya');
+      }, 50);
+    }
+    if (this.props.deactivate && this.props.run3) {
+      console.log('chala');
+      setTimeout(() => {
+        clearInterval(this.oxygen);
+        this.setState({oxygenLevel: 0});
+        console.log('false aya');
+      }, 50);
+    }
     return (
       <View>
         <View style={style.TemperatureView}>

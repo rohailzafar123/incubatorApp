@@ -74,10 +74,6 @@ export default class App extends Component {
     this.setState({isModalVisible: !this.state.isModalVisible});
   };
 
-  componentDidMount() {
-    this.theData();
-  }
-
   // collectData = () => {
   //     this.setState({ isModalVisible: !this.state.isModalVisible },
   //         () =>
@@ -147,12 +143,15 @@ export default class App extends Component {
       {
         text: 'Yes',
         onPress: () => {
-          this.saveValue(),
-            this.props.handleAirTempActivate(true),
-            this.props.handleSkinTempActivate(true),
-            this.props.handleOxygenActivate(true),
-            this.props.dataInterval(this.theDataInterval),
-            this.props.contentInterval(this.theContentInterval);
+          this.theData(),
+            setTimeout(() => {
+              this.saveValue(),
+                this.props.handleAirTempActivate(true),
+                this.props.handleSkinTempActivate(true),
+                this.props.handleOxygenActivate(true),
+                this.props.dataInterval(this.theDataInterval),
+                this.props.contentInterval(this.theContentInterval);
+            }, 50);
         },
       },
     ]);

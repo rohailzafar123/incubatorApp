@@ -24,12 +24,30 @@ import SPO2 from './Spo2/index';
 import Humidity from './Humidity/index';
 import AirTemp from './AirTemp/airTemp';
 import LeftSlider from '../../component/leftSlideBar/index';
+import Sound from 'react-native-sound';
 
 import {useAsyncStorage} from '@react-native-community/async-storage';
 
+Sound.setCategory('Playback');
+
+const {height, width} = Dimensions.get('window');
+
+var siren = new Sound(require('../../assets/audio/siren.mp3'), (e) => {
+  if (e) {
+    console.log('Failed load Sound', e);
+    return;
+  }
+
+  console.log(
+    'duration in seconds: ' +
+      siren.getDuration() +
+      ' number of channels: ' +
+      siren.getNumberOfChannels(),
+  );
+});
+
 const {getItem, setItem} = useAsyncStorage('userInfo');
 // TODO: What to do with the module?
-const {height, width} = Dimensions.get('window');
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -75,8 +93,14 @@ export default class App extends Component {
       skinTemp: 0,
       airTemp: 0,
       airTempActivate: false,
+      airTempDeactivate: false,
       skinTempActivate: false,
+      skinTempDeactivate: false,
       oxygenActivate: false,
+      oxygenDeactivate: false,
+      run: false,
+      run2: false,
+      run3: false,
     }),
       (this.handleWeight = this.handleWeight.bind(this));
     this.handleTemp = this.handleTemp.bind(this);
@@ -249,19 +273,73 @@ export default class App extends Component {
 
   handleAirTempActivate = (child) => {
     if (child) {
-      this.setState({airTempActivate: true});
+      this.setState({
+        airTempActivate: true,
+        airTempDeactivate: false,
+        run: true,
+      });
+      this.setState({run: false});
+      console.log('gaya activate');
+    }
+  };
+
+  handleAirTempDeactivate = (child) => {
+    if (child) {
+      this.setState({
+        airTempActivate: false,
+        airTempDeactivate: true,
+        run: true,
+      });
+      this.setState({run: false});
+      console.log('gaya deactivate');
     }
   };
 
   handleSkinTempActivate = (child) => {
     if (child) {
-      this.setState({skinTempActivate: true});
+      this.setState({
+        skinTempActivate: true,
+        skinTempDeactivate: false,
+        run2: true,
+      });
+      this.setState({run2: false});
+      console.log('gaya activate');
+    }
+  };
+
+  handleSkinTempDeactivate = (child) => {
+    if (child) {
+      this.setState({
+        skinTempActivate: false,
+        skinTempDeactivate: true,
+        run2: true,
+      });
+      this.setState({run2: false});
+      console.log('gaya deactivate');
     }
   };
 
   handleOxygenActivate = (child) => {
     if (child) {
-      this.setState({oxygenActivate: true});
+      this.setState({
+        oxygenActivate: true,
+        oxygenDeactivate: false,
+        run3: true,
+      });
+      this.setState({run3: false});
+      console.log('gaya activate');
+    }
+  };
+
+  handleOxygenDeactivate = (child) => {
+    if (child) {
+      this.setState({
+        oxygenActivate: false,
+        oxygenDeactivate: true,
+        run3: true,
+      });
+      this.setState({run3: false});
+      console.log('gaya deactivate');
     }
   };
 
@@ -298,6 +376,7 @@ export default class App extends Component {
             <TouchableOpacity
               delayLongPress={1000}
               onLongPress={this._lockOff}
+              onPress={() => console.log(this.state.higherAirValue)}
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -397,6 +476,9 @@ export default class App extends Component {
             oxy={this.state.oxy}
             skinTemp={this.state.skinTemp}
             airTemp={this.state.airTemp}
+            handleAirTempDeactivate={this.handleAirTempDeactivate}
+            handleSkinTempDeactivate={this.handleSkinTempDeactivate}
+            handleOxygenDeactivate={this.handleOxygenDeactivate}
             handleAirTempActivate={this.handleAirTempActivate}
             handleSkinTempActivate={this.handleSkinTempActivate}
             handleOxygenActivate={this.handleOxygenActivate}
@@ -414,7 +496,8 @@ export default class App extends Component {
                 airLowerTemp={this.state.lowAirValue}
                 handleAirTemp={this.airTempValue}
                 activate={this.state.airTempActivate}
-                generate={this.generate}
+                deactivate={this.state.airTempDeactivate}
+                run={this.state.run}
               />
             </View>
           )}
@@ -430,6 +513,8 @@ export default class App extends Component {
                 skinLowerTemp={this.state.skinLowTemp}
                 handleSkinTemp={this.skinTempValue}
                 activate={this.state.skinTempActivate}
+                deactivate={this.state.skinTempDeactivate}
+                run2={this.state.run2}
               />
             </View>
           )}
@@ -472,6 +557,8 @@ export default class App extends Component {
                 locker={this.state.lock}
                 handleOxy={this.oxyValue}
                 activate={this.state.oxygenActivate}
+                deactivate={this.state.oxygenDeactivate}
+                run3={this.state.run3}
               />
             </View>
           )}

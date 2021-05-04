@@ -89,12 +89,10 @@ export default class App extends Component {
     );
   };
   handleAirHigher(child) {
-    this.setState(
-      {
-        higherAirValue: child,
-      },
-      () => this.props.airHigTemp(this.state.higherAirValue),
-    );
+    this.setState({
+      higherAirValue: child,
+    });
+    this.props.airHigTemp(child);
   }
   handleAirLower(child) {
     this.setState(
@@ -204,9 +202,9 @@ export default class App extends Component {
           console.log('Done');
           clearInterval(this.theDataInterval);
           clearInterval(this.theContentInterval);
-          this.props.handleAirTempActivate(false);
-          this.props.handleSkinTempActivate(false);
-          this.props.handleOxygenActivate(false);
+          this.props.handleAirTempDeactivate(true);
+          this.props.handleSkinTempDeactivate(true);
+          this.props.handleOxygenDeactivate(true);
           ToastAndroid.show('Discharge', ToastAndroid.SHORT);
         },
       },
@@ -214,6 +212,7 @@ export default class App extends Component {
   };
 
   render() {
+    console.log('aya kuch', this.state.higherAirValue);
     return (
       <View>
         {this.props.locker ? (

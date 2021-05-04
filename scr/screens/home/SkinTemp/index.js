@@ -55,7 +55,6 @@ export default class App extends Component {
     const lower = this.props.skinLowerTemp;
 
     // this.sendSkinTemp();
-    this.randomVal();
     if (
       this.state.currentSkinemperature > high ||
       this.state.currentSkinemperature < lower
@@ -75,7 +74,7 @@ export default class App extends Component {
   };
 
   randomVal() {
-    setInterval(() => {
+    this.skinTemp = setInterval(() => {
       const rand = Math.random() * 40;
       this.setState({currentTemp: rand.toFixed()});
       this.props.handleSkinTemp(this.state.currentTemp);
@@ -170,6 +169,20 @@ export default class App extends Component {
     this.setState({isModalVisible: !this.state.isModalVisible});
   };
   render() {
+    if (this.props.activate && this.props.run2) {
+      setTimeout(() => {
+        this.randomVal();
+        console.log('true aya');
+      }, 50);
+    }
+    if (this.props.deactivate && this.props.run2) {
+      console.log('chala');
+      setTimeout(() => {
+        clearInterval(this.skinTemp);
+        this.setState({currentTemp: 0});
+        console.log('false aya');
+      }, 50);
+    }
     return (
       <View>
         {this.props.locker ? (
