@@ -62,6 +62,11 @@ export default class App extends Component {
       newArray: [],
     };
   }
+
+  componentDidMount() {
+    this.theData();
+  }
+
   //   this.handleAirHigher = this.handleAirHigher.bind(this);
   // this.handleAirlower = this.handleAirlower.bind(this);
   // // this.handleSkinCurrent = this.handleSkinCurrent.bind(this);
@@ -135,23 +140,22 @@ export default class App extends Component {
       {
         text: 'Cancel',
         onPress: () => {
-          clearInterval(this.theDataInterval);
-          clearInterval(this.theContentInterval);
+          // clearInterval(this.theDataInterval);
+          // clearInterval(this.theContentInterval);
         },
         style: 'cancel',
       },
       {
         text: 'Yes',
         onPress: () => {
-          this.theData(),
-            setTimeout(() => {
-              this.saveValue(),
-                this.props.handleAirTempActivate(true),
-                this.props.handleSkinTempActivate(true),
-                this.props.handleOxygenActivate(true),
-                this.props.dataInterval(this.theDataInterval),
-                this.props.contentInterval(this.theContentInterval);
-            }, 50);
+          setTimeout(() => {
+            this.saveValue(),
+              this.props.handleAirTempActivate(true),
+              this.props.handleSkinTempActivate(true),
+              this.props.handleOxygenActivate(true),
+              this.props.dataInterval(this.theDataInterval),
+              this.props.contentInterval(this.theContentInterval);
+          }, 50);
         },
       },
     ]);
@@ -274,7 +278,7 @@ export default class App extends Component {
           .replace(/:/g, '.')}).txt`;
       RNFS.writeFile(this.path, content, 'utf8')
         .then((success) => {
-          console.log('Bana FILE WRITTEN!');
+          console.log('FILE WRITTEN!');
         })
         .catch((err) => {
           console.log(err.message);
