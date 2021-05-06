@@ -144,9 +144,11 @@ export default class App extends Component {
       {
         text: 'Yes',
         onPress: () => {
-          this.theData();
           setTimeout(() => {
+            this.theData();
             this.saveValue();
+          }, 15000);
+          setTimeout(() => {
             this.props.handleAirTempActivate(true);
             this.props.handleSkinTempActivate(true);
             this.props.handleOxygenActivate(true);
