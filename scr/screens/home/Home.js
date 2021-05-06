@@ -408,14 +408,7 @@ export default class App extends Component {
             <TouchableOpacity
               delayLongPress={1000}
               onLongPress={this._lockOff}
-              onPress={() => {
-                console.log(
-                  'high',
-                  this.state.higherAirValue,
-                  'low',
-                  this.state.lowAirValue,
-                );
-              }}
+              onPress={() => this.props.navigation.pop()}
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',
