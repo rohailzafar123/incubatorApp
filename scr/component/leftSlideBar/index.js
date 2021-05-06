@@ -25,13 +25,16 @@ import Data from 'react-native-vector-icons/FontAwesome';
 import Slider from '@react-native-community/slider';
 import SwitchToggle from 'react-native-switch-toggle';
 import SystemSetting from 'react-native-system-setting';
+
 import Alarm from 'react-native-vector-icons/MaterialCommunityIcons';
 import AlarmSetting from './AlaemSettings/index';
 import Parameter from './Parameter/index';
 import PatientInfo from './PatientInfo/index';
 // import SysSettings from 'react-native-vector-icons/Octicons';
 import {Fonts} from '../../utils/fonts';
+
 const {height, width} = Dimensions.get('window');
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -43,7 +46,7 @@ export default class App extends Component {
       toggleTemp: false,
       higherAirValue: null,
       lowAirValue: 32.1,
-      skinHigherTemp: 32.1,
+      skinHigherTemp: null,
       skinLowerTemp: 34.1,
       spo2Uper: 99,
       spo2Lower: 91,
@@ -200,6 +203,7 @@ export default class App extends Component {
         text: 'Yes',
         onPress: () => {
           console.log('Done');
+          this.props.siren.stop();
           clearInterval(this.theDataInterval);
           clearInterval(this.theContentInterval);
           this.props.handleAirTempDeactivate(true);
@@ -212,7 +216,8 @@ export default class App extends Component {
   };
 
   render() {
-    console.log('aya kuch', this.state.higherAirValue);
+    console.log('aya airhigh', this.state.higherAirValue);
+    console.log('aya skinhigh', this.state.skinHigherTemp);
     return (
       <View>
         {this.props.locker ? (

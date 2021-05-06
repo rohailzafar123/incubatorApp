@@ -28,8 +28,8 @@ export default class App extends Component {
       LockorUnlo: false,
       toggleWeight: false,
       toggleTemp: false,
-      airHightTemp: 40,
-      airLowerTemp: 20,
+      airHightTemp: 35,
+      airLowerTemp: 15,
       airTemp: false,
       higher: 40,
       lower: 20,
@@ -71,6 +71,13 @@ export default class App extends Component {
   };
   toggleAir = () => {
     this.setState({airTemp: !this.state.airTemp});
+  };
+
+  runFunction = () => {
+    console.log('kya aya skin high me', this.state.airHightTemp);
+    console.log('kya aya skin lower me', this.state.airLowerTemp);
+    this.props.highSkinTemp(this.state.airHightTemp);
+    this.props.lowerSkinTemp(this.state.airLowerTemp);
   };
 
   render() {
@@ -137,7 +144,7 @@ export default class App extends Component {
                   <View style={style.footerInner}>
                     <TouchableOpacity
                       style={style.bottonView}
-                      onPress={this.changeValueHandler}>
+                      onPress={this.runFunction}>
                       <Text style={style.bottonText}>Submit</Text>
                       <Check
                         name={'checkcircle'}

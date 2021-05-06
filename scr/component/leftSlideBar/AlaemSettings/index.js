@@ -52,9 +52,9 @@ export default class App extends Component {
   collectData = () => {
     this.setState({isModalVisible: !this.state.isModalVisible});
     this.props.airHigTemp(this.state.higherAirValue);
-    // this.props.airLowTemp(this.state.lowerAirValue);
-    // this.props.skinHighTemp(this.state.skinHighTemp);
-    // this.props.skinLowTemp(this.state.skinLowTemp);
+    this.props.airLowTemp(this.state.lowerAirValue);
+    this.props.skinHighTemp(this.state.skinHighTemp);
+    this.props.skinLowTemp(this.state.skinLowTemp);
     // this.props.spo2Uper(this.state.spo2Upper);
     // this.props.spo2Lower(this.state.spo2Lower);
     // this.props.hrUper(this.state.hrUpper);

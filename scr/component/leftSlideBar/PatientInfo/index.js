@@ -63,10 +63,6 @@ export default class App extends Component {
     };
   }
 
-  componentDidMount() {
-    this.theData();
-  }
-
   //   this.handleAirHigher = this.handleAirHigher.bind(this);
   // this.handleAirlower = this.handleAirlower.bind(this);
   // // this.handleSkinCurrent = this.handleSkinCurrent.bind(this);
@@ -148,13 +144,14 @@ export default class App extends Component {
       {
         text: 'Yes',
         onPress: () => {
+          this.theData();
           setTimeout(() => {
-            this.saveValue(),
-              this.props.handleAirTempActivate(true),
-              this.props.handleSkinTempActivate(true),
-              this.props.handleOxygenActivate(true),
-              this.props.dataInterval(this.theDataInterval),
-              this.props.contentInterval(this.theContentInterval);
+            this.saveValue();
+            this.props.handleAirTempActivate(true);
+            this.props.handleSkinTempActivate(true);
+            this.props.handleOxygenActivate(true);
+            this.props.dataInterval(this.theDataInterval);
+            this.props.contentInterval(this.theContentInterval);
           }, 50);
         },
       },
@@ -190,46 +187,10 @@ export default class App extends Component {
 
       let newData = this.state.newArray.slice();
       newData.push(date, time, oxy, skinTemp, airTemp + '\n'); //todo: for txt format data
-      // newData.push({
-      //   //todo: for xlsx format data
-      //   Date: date,
-      //   Time: time,
-      //   Oxygen: oxy,
-      //   SkinTemperature: skinTemp,
-      //   AirTemperature: airTemp,
-      // });
       this.setState({newArray: newData});
     }, 15000);
+    console.log('kya hai newArray', this.state.newArray);
   };
-
-  // writeToSheet = () => {
-  //   const patientInfo = [
-  //     {
-  //       PatientId: this.state.patentId,
-  //       Age: this.state.age,
-  //       Weight: this.state.weight,
-  //       FatherName: this.state.fatherName,
-  //       DrName: this.state.drName,
-  //     },
-  //   ];
-
-  //   var wb = XLSX.utils.book_new();
-  //   var ws = XLSX.utils.json_to_sheet(patientInfo);
-  //   XLSX.utils.sheet_add_json(ws, this.state.newArray, {
-  //     origin: 'A4',
-  //   });
-  //   XLSX.utils.book_append_sheet(wb, ws, 'DataValues');
-
-  //   const wbout = XLSX.write(wb, {type: 'binary', bookType: 'xlsx'});
-  //   var file = RNFS.ExternalStorageDirectoryPath + '/Patent/test.xlsx';
-  //   RNFS.writeFile(file, wbout, 'ascii')
-  //     .then((r) => {
-  //       console.log('Hogaya');
-  //     })
-  //     .catch((e) => {
-  //       console.log('nhi hoa', e);
-  //     });
-  // };
 
   saveValue() {
     this.theContentInterval = setInterval(() => {
@@ -295,7 +256,7 @@ export default class App extends Component {
       // console.log('AirTemperature:', this.state.tempArray);
       console.log(content);
       console.log('The Array:', newArray);
-    }, 15100);
+    }, 15000);
   }
 
   render() {

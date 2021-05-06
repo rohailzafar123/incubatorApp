@@ -265,10 +265,42 @@ export default class App extends Component {
 
   skinTempValue = (child) => {
     this.setState({skinTemp: child});
+    this.skinTempAlarm();
   };
 
   airTempValue = (child) => {
     this.setState({airTemp: child});
+    this.airTempAlarm();
+  };
+
+  airTempAlarm = () => {
+    siren.setNumberOfLoops(-1);
+    console.log('kia hai air temp', this.state.airTemp);
+    if (this.state.airTemp > this.state.higherAirValue) {
+      siren.play();
+      alert('Air Temp is High');
+    } else if (this.state.airTemp < this.state.lowAirValue) {
+      siren.play();
+      alert('Air Temp is Low');
+    } else {
+      siren.stop();
+    }
+  };
+
+  skinTempAlarm = () => {
+    siren.setNumberOfLoops(-1);
+    console.log('kia hai skin temp', this.state.skinTemp);
+    console.log('kia hai skin temp alarm high', this.state.skinHigherTemp);
+    console.log('kia hai skin temp alarm low', this.state.skinLowTemp);
+    if (this.state.skinTemp > this.state.skinHigherTemp) {
+      siren.play();
+      alert('Skin Temp is High');
+    } else if (this.state.skinTemp < this.state.skinLowTemp) {
+      siren.play();
+      alert('Skin Temp is Low');
+    } else {
+      siren.stop();
+    }
   };
 
   handleAirTempActivate = (child) => {
@@ -376,7 +408,14 @@ export default class App extends Component {
             <TouchableOpacity
               delayLongPress={1000}
               onLongPress={this._lockOff}
-              onPress={() => console.log(this.state.higherAirValue)}
+              onPress={() => {
+                console.log(
+                  'high',
+                  this.state.higherAirValue,
+                  'low',
+                  this.state.lowAirValue,
+                );
+              }}
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -482,6 +521,7 @@ export default class App extends Component {
             handleAirTempActivate={this.handleAirTempActivate}
             handleSkinTempActivate={this.handleSkinTempActivate}
             handleOxygenActivate={this.handleOxygenActivate}
+            siren={siren}
           />
         </View>
         <View style={style.inerContainer1}>
