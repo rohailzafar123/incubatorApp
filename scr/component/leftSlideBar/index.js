@@ -25,6 +25,8 @@ import Data from 'react-native-vector-icons/FontAwesome';
 import Slider from '@react-native-community/slider';
 import SwitchToggle from 'react-native-switch-toggle';
 import SystemSetting from 'react-native-system-setting';
+import FileViewer from 'react-native-file-viewer';
+import RNFS from 'react-native-fs';
 
 import Alarm from 'react-native-vector-icons/MaterialCommunityIcons';
 import AlarmSetting from './AlaemSettings/index';
@@ -58,6 +60,11 @@ export default class App extends Component {
       switchWeight: true,
       switchHumidity: true,
       switchOxygen: true,
+      theDataArray: [],
+      txtFileData: '',
+      email: '',
+      password: '',
+      checker: false,
     };
     this.handleAirHigher = this.handleAirHigher.bind(this);
     this.handleModalOff = this.handleModalOff.bind(this);
@@ -73,6 +80,10 @@ export default class App extends Component {
     this.handleSwitchOxygen = this.handleSwitchOxygen.bind(this);
   }
 
+  componentDidMount() {
+    this.readTxtFile();
+  }
+
   toggleModal = () => {
     this.setState({isModalVisible: !this.state.isModalVisible});
   };
@@ -83,7 +94,6 @@ export default class App extends Component {
     this.setState(
       {
         LockorUnlo: !this.state.LockorUnlo,
-        isModalVisible: !this.state.isModalVisible,
       },
       () => {
         this.props.selectWeight(this.state.toggleWeight),
@@ -184,10 +194,16 @@ export default class App extends Component {
 
   getDataInterval = (child) => {
     this.theDataInterval = child;
+    console.log('chala data stop');
   };
 
   getContentInterval = (child) => {
     this.theContentInterval = child;
+    console.log('chala contant stop');
+  };
+
+  handleDataArray = (child) => {
+    this.setState({dataArray: child});
   };
 
   handleDischargePatient = () => {
@@ -209,10 +225,47 @@ export default class App extends Component {
           this.props.handleAirTempDeactivate(true);
           this.props.handleSkinTempDeactivate(true);
           this.props.handleOxygenDeactivate(true);
+
           ToastAndroid.show('Discharge', ToastAndroid.SHORT);
         },
       },
     ]);
+  };
+
+  readTxtFile = async () => {
+    const myPath = RNFS.ExternalStorageDirectoryPath;
+    try {
+      const path = myPath + '/Patent/Login.txt';
+      const contents = await RNFS.readFile(path, 'utf8');
+      this.setState({txtFileData: contents.toString()});
+      console.log(this.state.txtFileData, 'Read Text File mil gae');
+    } catch (e) {
+      console.log(e, 'error Read Text File');
+    }
+  };
+
+  checkCredentials = () => {
+    const {email, password} = this.state;
+    const StringVal = this.state.txtFileData;
+    const emailID = StringVal.includes(email.toLowerCase());
+    const pass = StringVal.includes(password);
+  };
+
+  checkForData = () => {
+    console.log('pressed');
+    this.setState({checker: true});
+    // const path = RNFS.ExternalStorageDirectoryPath + '/Patent';
+    // FileViewer.open(path)
+    //   .then(() => {
+    //     console.log('opened');
+    //   })
+    //   .catch((e) => {
+    //     console.log('err aya', e);
+    //   });
+  };
+
+  markIt = () => {
+    this.setState({checker: !this.state.checker});
   };
 
   render() {
@@ -301,11 +354,13 @@ export default class App extends Component {
                   oxy={this.props.oxy}
                   skinTemp={this.props.skinTemp}
                   airTemp={this.props.airTemp}
-                  dataInterval={this.getDataInterval}
-                  contentInterval={this.getContentInterval}
+                  getDataInterval={this.getDataInterval}
+                  getContentInterval={this.getContentInterval}
                   handleAirTempActivate={this.props.handleAirTempActivate}
                   handleSkinTempActivate={this.props.handleSkinTempActivate}
                   handleOxygenActivate={this.props.handleOxygenActivate}
+                  dataArray={this.state.theDataArray}
+                  handleDataArray={this.handleDataArray}
                 />
                 {/* <TouchableOpacity style={style.listView}>
                                     <Text style={style.listText}>Patient Information</Text>
@@ -315,7 +370,9 @@ export default class App extends Component {
                   <Text style={style.listText}>Calibaration</Text>
                   <Pass name={'lastpass'} size={width * 0.02} />
                 </TouchableOpacity> */}
-                <TouchableOpacity style={style.listView}>
+                <TouchableOpacity
+                  style={style.listView}
+                  onPress={this.checkForData}>
                   <Text style={style.listText}>Data Record</Text>
                   <Data name={'database'} size={width * 0.018} />
                 </TouchableOpacity>
@@ -344,6 +401,193 @@ export default class App extends Component {
                 </TouchableOpacity>
               </View>
             </View>
+
+            <Modal
+              animationIn="slideInRight"
+              animationOut="slideOutRight"
+              isVisible={this.state.checker}
+              style={{
+                elevation: width * 0.005,
+                borderBottomLeftRadius: width * 0.005,
+                borderTopRightRadius: width * 0.005,
+                borderTopLeftRadius: width * 0.025,
+                borderBottomRightRadius: width * 0.025,
+                backgroundColor: 'white',
+                maxHeight: height * 0.5,
+                maxWidth: width * 0.35,
+                top: height * 0.15,
+              }}>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <View
+                  style={{
+                    width: width * 0.32,
+                    height: height * 0.45,
+                  }}>
+                  <View
+                    style={{
+                      flex: 1,
+                      backgroundColor: 'white',
+                      borderBottomLeftRadius: width * 0.005,
+                      borderTopRightRadius: width * 0.005,
+                      borderTopLeftRadius: width * 0.025,
+                      borderBottomRightRadius: width * 0.025,
+                      elevation: width * 0.015,
+                    }}>
+                    <View
+                      style={{
+                        width: width * 0.32,
+                        height: height * 0.12,
+                      }}>
+                      <View
+                        style={{
+                          flex: 1,
+                          borderTopRightRadius: width * 0.005,
+                          borderTopLeftRadius: width * 0.025,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            fontFamily: Fonts.Handlee,
+                            fontSize: width * 0.03,
+                            color: 'red',
+                          }}>
+                          Change the Unit
+                        </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: width * 0.32,
+                        height: height * 0.2,
+                      }}>
+                      <View
+                        style={{
+                          flex: 1,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            margin: width * 0.02,
+                          }}>
+                          <Text
+                            style={{
+                              fontFamily: Fonts.Handlee,
+                              fontSize: width * 0.02,
+                              color: 'red',
+                              top: height * 0.01,
+                            }}>
+                            Weight:{' '}
+                          </Text>
+
+                          <SwitchToggle
+                            switchOn={this.state.toggleWeight}
+                            onPress={() =>
+                              this.setState({
+                                toggleWeight: !this.state.toggleWeight,
+                              })
+                            }
+                            useNativeDriver={false}
+                            backgroundColorOn={'#555555'}
+                            circleColorOn={'#f68d80fd'}
+                            backgroundColorOff={'#555555'}
+                            circleColorOff={'white'}
+                            containerStyle={style.toggleContainer}
+                            circleStyle={style.toggleCircle}
+                          />
+                          <Text
+                            style={{
+                              fontSize: width * 0.023,
+                              fontFamily: Fonts.BalooChettanBold,
+                              marginLeft: width * 0.005,
+                            }}>
+                            Kgs/lbs
+                          </Text>
+                        </View>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              fontFamily: Fonts.Handlee,
+                              fontSize: width * 0.02,
+                              color: 'red',
+                            }}>
+                            Temperature:{' '}
+                          </Text>
+                          <SwitchToggle
+                            switchOn={this.state.toggleTemp}
+                            onPress={() =>
+                              this.setState({
+                                toggleTemp: !this.state.toggleTemp,
+                              })
+                            }
+                            useNativeDriver={false}
+                            backgroundColorOn={'#555555'}
+                            circleColorOn={'#f68d80fd'}
+                            backgroundColorOff={'#555555'}
+                            circleColorOff={'white'}
+                            containerStyle={style.toggleContainer}
+                            circleStyle={style.toggleCircle}
+                          />
+                          <Text
+                            style={{
+                              fontSize: width * 0.023,
+                              fontFamily: Fonts.BalooChettanBold,
+                              marginLeft: width * 0.005,
+                            }}>
+                            {'\u2103'}/{'\u2109'}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: width * 0.32,
+                        height: height * 0.13,
+                      }}>
+                      <View
+                        style={{
+                          flex: 1,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <TouchableOpacity
+                          style={{
+                            width: width * 0.2,
+                            height: height * 0.07,
+                            backgroundColor: '#e44f3bfd',
+                            elevation: width * 0.003,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: width * 0.1,
+                          }}
+                          onPress={this.markIt}>
+                          <Text
+                            style={{
+                              fontSize: width * 0.023,
+                              fontFamily: Fonts.Handlee,
+                              color: 'white',
+                            }}>
+                            Done
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </Modal>
 
             <Modal
               animationIn="slideInRight"

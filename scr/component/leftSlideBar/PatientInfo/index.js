@@ -59,7 +59,9 @@ export default class App extends Component {
       oxyArray: [],
       skinArray: [],
       tempArray: [],
-      newArray: [],
+      newArray: this.props.dataArray,
+      dataInterval: null,
+      contentInterval: null,
     };
   }
 
@@ -136,8 +138,9 @@ export default class App extends Component {
       {
         text: 'Cancel',
         onPress: () => {
-          // clearInterval(this.theDataInterval);
-          // clearInterval(this.theContentInterval);
+          console.log('Cancel Pressed on Add Patient');
+          clearInterval(this.theDataInterval);
+          clearInterval(this.theContentInterval);
         },
         style: 'cancel',
       },
@@ -145,23 +148,26 @@ export default class App extends Component {
         text: 'Yes',
         onPress: () => {
           setTimeout(() => {
-            this.theData();
-            this.saveValue();
-          }, 15000);
-          setTimeout(() => {
+            this.setState({newArray: []});
             this.props.handleAirTempActivate(true);
             this.props.handleSkinTempActivate(true);
             this.props.handleOxygenActivate(true);
-            this.props.dataInterval(this.theDataInterval);
-            this.props.contentInterval(this.theContentInterval);
           }, 50);
+          setTimeout(() => {
+            this.theData();
+            this.saveValue();
+            setInterval(() => {
+              this.props.getDataInterval(this.state.dataInterval);
+              this.props.getContentInterval(this.state.contentInterval);
+            }, 14000);
+          }, 15000);
         },
       },
     ]);
   }
 
   theData = () => {
-    this.theDataInterval = setInterval(() => {
+    this.state.dataInterval = setInterval(() => {
       let d = new Date();
       let date =
         d.getDate() + '/' + d.getUTCMonth() + 1 + '/' + d.getFullYear();
@@ -191,11 +197,10 @@ export default class App extends Component {
       newData.push(date, time, oxy, skinTemp, airTemp + '\n'); //todo: for txt format data
       this.setState({newArray: newData});
     }, 15000);
-    console.log('kya hai newArray', this.state.newArray);
   };
 
   saveValue() {
-    this.theContentInterval = setInterval(() => {
+    this.state.contentInterval = setInterval(() => {
       const {newArray} = this.state;
       let date =
         d.getDate() + '/' + d.getUTCMonth() + 1 + '/' + d.getFullYear();
@@ -258,6 +263,7 @@ export default class App extends Component {
       // console.log('AirTemperature:', this.state.tempArray);
       console.log(content);
       console.log('The Array:', newArray);
+      this.props.handleDataArray(newArray);
     }, 15000);
   }
 
