@@ -134,36 +134,46 @@ export default class App extends Component {
   };
 
   saveData() {
-    Alert.alert('Are you Sure?', 'Add this patient', [
-      {
-        text: 'Cancel',
-        onPress: () => {
-          console.log('Cancel Pressed on Add Patient');
-          clearInterval(this.theDataInterval);
-          clearInterval(this.theContentInterval);
+    const {patentId, age, fatherName, weight, drName} = this.state;
+    if (
+      patentId == '' ||
+      age == '' ||
+      fatherName == '' ||
+      weight == '' ||
+      drName == ''
+    ) {
+      alert('Field cannot be empty');
+    } else
+      Alert.alert('Are you Sure?', 'Add this patient', [
+        {
+          text: 'Cancel',
+          onPress: () => {
+            console.log('Cancel Pressed on Add Patient');
+            clearInterval(this.theDataInterval);
+            clearInterval(this.theContentInterval);
+          },
+          style: 'cancel',
         },
-        style: 'cancel',
-      },
-      {
-        text: 'Yes',
-        onPress: () => {
-          setTimeout(() => {
-            this.setState({newArray: []});
-            this.props.handleAirTempActivate(true);
-            this.props.handleSkinTempActivate(true);
-            this.props.handleOxygenActivate(true);
-          }, 50);
-          setTimeout(() => {
-            this.theData();
-            this.saveValue();
-            setInterval(() => {
-              this.props.getDataInterval(this.state.dataInterval);
-              this.props.getContentInterval(this.state.contentInterval);
-            }, 14000);
-          }, 15000);
+        {
+          text: 'Yes',
+          onPress: () => {
+            setTimeout(() => {
+              this.setState({newArray: []});
+              this.props.handleAirTempActivate(true);
+              this.props.handleSkinTempActivate(true);
+              this.props.handleOxygenActivate(true);
+            }, 50);
+            setTimeout(() => {
+              this.theData();
+              this.saveValue();
+              setInterval(() => {
+                this.props.getDataInterval(this.state.dataInterval);
+                this.props.getContentInterval(this.state.contentInterval);
+              }, 14000);
+            }, 15000);
+          },
         },
-      },
-    ]);
+      ]);
   }
 
   theData = () => {

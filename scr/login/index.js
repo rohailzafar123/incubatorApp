@@ -55,9 +55,10 @@ export default class LoginView extends Component {
   checkCredentials = () => {
     const {email, password} = this.state;
     const StringVal = this.state.txtFileData;
-    const emailID = StringVal.includes(email.toLowerCase());
-    const pass = StringVal.includes(password);
-    if (emailID && pass) return this.props.navigation.navigate('Home');
+    const emailID = StringVal.match(/[^email:\s].*/).toString();
+    const pass = StringVal.match(/[^\spass:].*[\w\W]$/).toString();
+    if (emailID == email && pass == password)
+      return this.props.navigation.navigate('Home');
     else return ToastAndroid.show('Wrong Credentials', ToastAndroid.SHORT);
   };
 

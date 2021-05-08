@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Alert,
   ToastAndroid,
+  TextInput,
 } from 'react-native';
 import style from './styles';
 import Modal from 'react-native-modal';
@@ -62,7 +63,6 @@ export default class App extends Component {
       switchOxygen: true,
       theDataArray: [],
       txtFileData: '',
-      email: '',
       password: '',
       checker: false,
     };
@@ -238,17 +238,19 @@ export default class App extends Component {
       const path = myPath + '/Patent/Login.txt';
       const contents = await RNFS.readFile(path, 'utf8');
       this.setState({txtFileData: contents.toString()});
-      console.log(this.state.txtFileData, 'Read Text File mil gae');
+      console.log(this.state.txtFileData, 'aya kia');
     } catch (e) {
       console.log(e, 'error Read Text File');
     }
   };
 
   checkCredentials = () => {
-    const {email, password} = this.state;
+    const {password} = this.state;
     const StringVal = this.state.txtFileData;
-    const emailID = StringVal.includes(email.toLowerCase());
-    const pass = StringVal.includes(password);
+    const Pass = StringVal.match(/[^\spass:].*[\w\W]$/);
+    if (Pass == password)
+      return ToastAndroid.show('Success', ToastAndroid.SHORT);
+    else return ToastAndroid.show('Wrong Password', ToastAndroid.SHORT);
   };
 
   checkForData = () => {
@@ -266,6 +268,7 @@ export default class App extends Component {
 
   markIt = () => {
     this.setState({checker: !this.state.checker});
+    this.checkCredentials();
   };
 
   render() {
@@ -285,7 +288,6 @@ export default class App extends Component {
         <Modal
           animationIn="slideInRight"
           animationOut="slideOutRight"
-          // onBackdropPress={() => this.toggleModal()}
           onSwipeComplete={() => this.toggleModal()}
           swipeDirection="right"
           isVisible={this.state.isModalVisible}
@@ -457,7 +459,7 @@ export default class App extends Component {
                             fontSize: width * 0.03,
                             color: 'red',
                           }}>
-                          Change the Unit
+                          Enter Password:
                         </Text>
                       </View>
                     </View>
@@ -477,77 +479,25 @@ export default class App extends Component {
                             flexDirection: 'row',
                             margin: width * 0.02,
                           }}>
-                          <Text
-                            style={{
-                              fontFamily: Fonts.Handlee,
-                              fontSize: width * 0.02,
-                              color: 'red',
-                              top: height * 0.01,
-                            }}>
-                            Weight:{' '}
-                          </Text>
-
-                          <SwitchToggle
-                            switchOn={this.state.toggleWeight}
-                            onPress={() =>
-                              this.setState({
-                                toggleWeight: !this.state.toggleWeight,
-                              })
+                          <TextInput
+                            placeholder="Type Here"
+                            onChangeText={(val) =>
+                              this.setState({password: val})
                             }
-                            useNativeDriver={false}
-                            backgroundColorOn={'#555555'}
-                            circleColorOn={'#f68d80fd'}
-                            backgroundColorOff={'#555555'}
-                            circleColorOff={'white'}
-                            containerStyle={style.toggleContainer}
-                            circleStyle={style.toggleCircle}
+                            secureTextEntry
+                            autoCapitalize="none"
+                            style={{
+                              fontFamily: Fonts.BalooChettan2,
+                              borderColor: 'gray',
+                              width: width * 0.25,
+                              height: height * 0.08,
+                              color: 'gray',
+                              backgroundColor: '#23212016',
+                              fontSize: width * 0.015,
+                              paddingLeft: width * 0.01,
+                              // borderRadius: width * .002,
+                            }}
                           />
-                          <Text
-                            style={{
-                              fontSize: width * 0.023,
-                              fontFamily: Fonts.BalooChettanBold,
-                              marginLeft: width * 0.005,
-                            }}>
-                            Kgs/lbs
-                          </Text>
-                        </View>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                          }}>
-                          <Text
-                            style={{
-                              fontFamily: Fonts.Handlee,
-                              fontSize: width * 0.02,
-                              color: 'red',
-                            }}>
-                            Temperature:{' '}
-                          </Text>
-                          <SwitchToggle
-                            switchOn={this.state.toggleTemp}
-                            onPress={() =>
-                              this.setState({
-                                toggleTemp: !this.state.toggleTemp,
-                              })
-                            }
-                            useNativeDriver={false}
-                            backgroundColorOn={'#555555'}
-                            circleColorOn={'#f68d80fd'}
-                            backgroundColorOff={'#555555'}
-                            circleColorOff={'white'}
-                            containerStyle={style.toggleContainer}
-                            circleStyle={style.toggleCircle}
-                          />
-                          <Text
-                            style={{
-                              fontSize: width * 0.023,
-                              fontFamily: Fonts.BalooChettanBold,
-                              marginLeft: width * 0.005,
-                            }}>
-                            {'\u2103'}/{'\u2109'}
-                          </Text>
                         </View>
                       </View>
                     </View>
