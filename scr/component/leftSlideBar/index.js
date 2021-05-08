@@ -192,6 +192,10 @@ export default class App extends Component {
     this.setState(() => this.props.switchOxygen(child));
   }
 
+  handlePatientID = (child) => {
+    this.props.getPatientID(child);
+  };
+
   getDataInterval = (child) => {
     this.theDataInterval = child;
     console.log('chala data stop');
@@ -363,6 +367,11 @@ export default class App extends Component {
                   handleOxygenActivate={this.props.handleOxygenActivate}
                   dataArray={this.state.theDataArray}
                   handleDataArray={this.handleDataArray}
+                  getPatientID={this.handlePatientID}
+                  getAge={this.handleAge}
+                  getWeight={this.handleWeight}
+                  getDrName={this.handleDrName}
+                  getFatherName={this.handleFatherName}
                 />
                 {/* <TouchableOpacity style={style.listView}>
                                     <Text style={style.listText}>Patient Information</Text>
