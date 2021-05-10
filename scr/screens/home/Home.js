@@ -101,6 +101,11 @@ export default class App extends Component {
       run: false,
       run2: false,
       run3: false,
+      patientId: '',
+      age: '',
+      weight: '',
+      fatherName: '',
+      DrName: '',
     }),
       (this.handleWeight = this.handleWeight.bind(this));
     this.handleTemp = this.handleTemp.bind(this);
@@ -239,6 +244,26 @@ export default class App extends Component {
       switchOxygen: child,
     });
   }
+
+  handlePatientID = (child) => {
+    this.setState({patientId: child});
+  };
+
+  handleAge = (child) => {
+    this.setState({age: child});
+  };
+
+  handleTheWeight = (child) => {
+    this.setState({weight: child});
+  };
+
+  handleFatherName = (child) => {
+    this.setState({fatherName: child});
+  };
+
+  handleDrName = (child) => {
+    this.setState({DrName: child});
+  };
 
   _getData = async (value) => {
     try {
@@ -461,23 +486,23 @@ export default class App extends Component {
           </View> */}
           <View style={style.iconAndText}>
             <Text style={style.aboveTopText}>Patient ID</Text>
-            <Text style={style.topText}>1089</Text>
+            <Text style={style.topText}>{this.state.patientId}</Text>
           </View>
           <View style={style.iconAndText}>
             <Text style={style.aboveTopText}>Age</Text>
-            <Text style={style.topText}>6 Days</Text>
+            <Text style={style.topText}>{this.state.age} Days</Text>
           </View>
           <View style={style.iconAndText}>
             <Text style={style.aboveTopText}>Weight</Text>
-            <Text style={style.topText}>2 lb</Text>
+            <Text style={style.topText}>{this.state.weight} lb</Text>
           </View>
           <View style={style.iconAndText}>
             <Text style={style.aboveTopText}>S/o</Text>
-            <Text style={style.topText}>Rohail Zafar</Text>
+            <Text style={style.topText}>{this.state.fatherName}</Text>
           </View>
           <View style={style.iconAndText}>
             <Text style={style.aboveTopText}>Doctor Name</Text>
-            <Text style={style.topText}>Dr.Abdul Qadeer</Text>
+            <Text style={style.topText}>{this.state.DrName}</Text>
           </View>
           <View
             style={{
@@ -515,6 +540,11 @@ export default class App extends Component {
             handleSkinTempActivate={this.handleSkinTempActivate}
             handleOxygenActivate={this.handleOxygenActivate}
             siren={siren}
+            getPatientID={this.handlePatientID}
+            getAge={this.handleAge}
+            getWeight={this.handleTheWeight}
+            getFatherName={this.handleFatherName}
+            getDrName={this.handleDrName}
           />
         </View>
         <View style={style.inerContainer1}>

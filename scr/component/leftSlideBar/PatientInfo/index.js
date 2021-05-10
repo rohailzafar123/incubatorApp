@@ -162,6 +162,11 @@ export default class App extends Component {
               this.props.handleAirTempActivate(true);
               this.props.handleSkinTempActivate(true);
               this.props.handleOxygenActivate(true);
+              this.props.getPatientID(this.state.patentId);
+              this.props.getAge(this.state.age);
+              this.props.getWeight(this.state.weight);
+              this.props.getFatherName(this.state.fatherName);
+              this.props.getDrName(this.state.drName);
             }, 50);
             setTimeout(() => {
               this.theData();

@@ -196,6 +196,22 @@ export default class App extends Component {
     this.props.getPatientID(child);
   };
 
+  handleAge = (child) => {
+    this.props.getAge(child);
+  };
+
+  handleFatherName = (child) => {
+    this.props.getFatherName(child);
+  };
+
+  handleWeight = (child) => {
+    this.props.getWeight(child);
+  };
+
+  handleDrName = (child) => {
+    this.props.getDrName(child);
+  };
+
   getDataInterval = (child) => {
     this.theDataInterval = child;
     console.log('chala data stop');
