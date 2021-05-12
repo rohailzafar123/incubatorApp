@@ -62,9 +62,13 @@ export default class App extends Component {
       switchHumidity: true,
       switchOxygen: true,
       theDataArray: [],
+      theHistoryArray: [],
+      newDataArray: [],
       txtFileData: '',
       password: '',
       checker: false,
+      isActive: false,
+      patientId: '',
     };
     this.handleAirHigher = this.handleAirHigher.bind(this);
     this.handleModalOff = this.handleModalOff.bind(this);
@@ -194,6 +198,8 @@ export default class App extends Component {
 
   handlePatientID = (child) => {
     this.props.getPatientID(child);
+    this.setState({patientId: child});
+    console.log('chala patient id slider me');
   };
 
   handleAge = (child) => {
@@ -222,8 +228,44 @@ export default class App extends Component {
     console.log('chala contant stop');
   };
 
+  getNewDataInterval = (child) => {
+    this.theNewDataInterval = child;
+    console.log('chala new Data stop');
+  };
+
   handleDataArray = (child) => {
-    this.setState({dataArray: child});
+    this.setState({theDataArray: child});
+  };
+
+  handleCondActive = (child) => {
+    this.setState({isActive: child});
+  };
+
+  handleNewDataArray = (child) => {
+    this.setState({newDataArray: child});
+    console.log('aya new data slider me');
+  };
+
+  setHistoryData = () => {
+    let someData = this.state.theHistoryArray.slice();
+    someData.push({
+      patientId: this.state.patientId,
+      data: this.state.newDataArray,
+    });
+    this.setState({theHistoryArray: someData});
+    console.log('history Array: ', this.state.theHistoryArray);
+    this.saveHistoryData();
+  };
+
+  saveHistoryData = () => {
+    const myPath = RNFS.ExternalStorageDirectoryPath + '/Patent/Data.txt';
+    RNFS.writeFile(myPath, JSON.stringify(this.state.theHistoryArray), 'utf8')
+      .then((success) => {
+        console.log('FILE WRITTEN!');
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
 
   handleDischargePatient = () => {
@@ -239,14 +281,17 @@ export default class App extends Component {
         text: 'Yes',
         onPress: () => {
           console.log('Done');
+          this.setState({isActive: false});
           this.props.siren.stop();
+          this.setHistoryData();
           clearInterval(this.theDataInterval);
           clearInterval(this.theContentInterval);
+          clearInterval(this.theNewDataInterval);
           this.props.handleAirTempDeactivate(true);
           this.props.handleSkinTempDeactivate(true);
           this.props.handleOxygenDeactivate(true);
 
-          ToastAndroid.show('Discharge', ToastAndroid.SHORT);
+          ToastAndroid.show('Discharged', ToastAndroid.SHORT);
         },
       },
     ]);
@@ -276,14 +321,6 @@ export default class App extends Component {
   checkForData = () => {
     console.log('pressed');
     this.setState({checker: true});
-    // const path = RNFS.ExternalStorageDirectoryPath + '/Patent';
-    // FileViewer.open(path)
-    //   .then(() => {
-    //     console.log('opened');
-    //   })
-    //   .catch((e) => {
-    //     console.log('err aya', e);
-    //   });
   };
 
   markIt = () => {
@@ -382,12 +419,17 @@ export default class App extends Component {
                   handleSkinTempActivate={this.props.handleSkinTempActivate}
                   handleOxygenActivate={this.props.handleOxygenActivate}
                   dataArray={this.state.theDataArray}
+                  newDataArray={this.state.newDataArray}
+                  getNewDataInterval={this.getNewDataInterval}
+                  handleNewDataArray={this.handleNewDataArray}
                   handleDataArray={this.handleDataArray}
                   getPatientID={this.handlePatientID}
                   getAge={this.handleAge}
                   getWeight={this.handleWeight}
                   getDrName={this.handleDrName}
                   getFatherName={this.handleFatherName}
+                  condActive={this.handleCondActive}
+                  isActive={this.state.isActive}
                 />
                 {/* <TouchableOpacity style={style.listView}>
                                     <Text style={style.listText}>Patient Information</Text>
