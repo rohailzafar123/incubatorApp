@@ -231,8 +231,8 @@ export default class App extends Component {
     this.state.newDataInterval = setInterval(() => {
       let {oxy, skinTemp, airTemp} = this.props;
       let d = new Date();
-      let date =
-        d.getDate() + '/' + d.getUTCMonth() + 1 + '/' + d.getFullYear();
+      let month = d.getMonth() + 1;
+      let date = d.getDate() + '/' + month + '/' + d.getFullYear();
       let time =
         d.getHours() +
         ':' +

@@ -11,6 +11,7 @@ import {
   Alert,
   ToastAndroid,
   TextInput,
+  FlatList,
 } from 'react-native';
 import style from './styles';
 import Modal from 'react-native-modal';
@@ -21,6 +22,7 @@ import Lock from 'react-native-vector-icons/SimpleLineIcons';
 import SysSettings from 'react-native-vector-icons/Octicons';
 import Graph from 'react-native-vector-icons/Entypo';
 import Pass from 'react-native-vector-icons/MaterialCommunityIcons';
+import Back from 'react-native-vector-icons/Feather';
 import Bright from 'react-native-vector-icons/MaterialCommunityIcons';
 import Data from 'react-native-vector-icons/FontAwesome';
 import Slider from '@react-native-community/slider';
@@ -35,6 +37,7 @@ import Parameter from './Parameter/index';
 import PatientInfo from './PatientInfo/index';
 // import SysSettings from 'react-native-vector-icons/Octicons';
 import {Fonts} from '../../utils/fonts';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const {height, width} = Dimensions.get('window');
 
@@ -62,13 +65,16 @@ export default class App extends Component {
       switchHumidity: true,
       switchOxygen: true,
       theDataArray: [],
-      theHistoryArray: [],
       newDataArray: [],
       txtFileData: '',
       password: '',
       checker: false,
       isActive: false,
+      showDataModal: false,
+      listShow: false,
       patientId: '',
+      theHistoryArray: [],
+      listDataArray: [],
     };
     this.handleAirHigher = this.handleAirHigher.bind(this);
     this.handleModalOff = this.handleModalOff.bind(this);
@@ -268,6 +274,17 @@ export default class App extends Component {
       });
   };
 
+  readHistoryData = async () => {
+    const myPath = RNFS.ExternalStorageDirectoryPath + '/Patent/Data.txt';
+    try {
+      const contents = await RNFS.readFile(myPath, 'utf8');
+      this.setState({theHistoryArray: JSON.parse(contents)});
+      console.log('aya data', contents);
+    } catch (e) {
+      console.log(e, 'error at history data');
+    }
+  };
+
   handleDischargePatient = () => {
     Alert.alert('Are you Sure?', 'Discharge the patient', [
       {
@@ -314,7 +331,10 @@ export default class App extends Component {
     const StringVal = this.state.txtFileData;
     const Pass = StringVal.match(/[^\spass:].*[\w\W]$/);
     if (Pass == password)
-      return ToastAndroid.show('Success', ToastAndroid.SHORT);
+      return (
+        ToastAndroid.show('Success', ToastAndroid.SHORT),
+        this.setState({showDataModal: true})
+      );
     else return ToastAndroid.show('Wrong Password', ToastAndroid.SHORT);
   };
 
@@ -323,8 +343,39 @@ export default class App extends Component {
     this.setState({checker: true});
   };
 
+  renderItem = ({item}) => {
+    return (
+      <View
+        style={{
+          paddingHorizontal: width * 0.02,
+        }}>
+        <TouchableOpacity
+          onPress={() => {
+            console.log('Hoa pressed', item.data);
+            this.setState({listDataArray: item.data, showListModal: true});
+          }}>
+          <Text style={{fontSize: height * 0.03}}>{item.patientId}</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  renderListItem = ({item}) => {
+    return (
+      <View
+        style={{
+          paddingHorizontal: width * 0.02,
+        }}>
+        <Text style={{fontSize: height * 0.03}}>{item.time}</Text>
+      </View>
+    );
+  };
+
   markIt = () => {
-    this.setState({checker: !this.state.checker});
+    this.setState({
+      checker: !this.state.checker,
+    });
+    this.readHistoryData();
     this.checkCredentials();
   };
 
@@ -470,7 +521,6 @@ export default class App extends Component {
                 </TouchableOpacity>
               </View>
             </View>
-
             <Modal
               animationIn="slideInRight"
               animationOut="slideOutRight"
@@ -562,7 +612,6 @@ export default class App extends Component {
                               backgroundColor: '#23212016',
                               fontSize: width * 0.015,
                               paddingLeft: width * 0.01,
-                              // borderRadius: width * .002,
                             }}
                           />
                         </View>
@@ -600,6 +649,189 @@ export default class App extends Component {
                           </Text>
                         </TouchableOpacity>
                       </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </Modal>
+            <Modal
+              animationIn="slideInRight"
+              animationOut="slideOutRight"
+              isVisible={this.state.showDataModal}
+              style={{
+                elevation: width * 0.005,
+                borderBottomLeftRadius: width * 0.005,
+                borderTopRightRadius: width * 0.005,
+                borderTopLeftRadius: width * 0.025,
+                borderBottomRightRadius: width * 0.025,
+                backgroundColor: 'white',
+                maxHeight: height * 0.5,
+                maxWidth: width * 0.35,
+                top: height * 0.15,
+              }}>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <View
+                  style={{
+                    width: width * 0.32,
+                    height: height * 0.45,
+                  }}>
+                  <View
+                    style={{
+                      flex: 1,
+                      backgroundColor: 'white',
+                      borderBottomLeftRadius: width * 0.005,
+                      borderTopRightRadius: width * 0.005,
+                      borderTopLeftRadius: width * 0.025,
+                      borderBottomRightRadius: width * 0.025,
+                      elevation: width * 0.015,
+                    }}>
+                    <View
+                      style={{
+                        width: width * 0.32,
+                        height: height * 0.12,
+                      }}>
+                      <View
+                        style={{
+                          flex: 1,
+                          flexDirection: 'row',
+                          borderTopRightRadius: width * 0.005,
+                          borderTopLeftRadius: width * 0.025,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <Back
+                          name="arrow-left"
+                          size={height * 0.04}
+                          color="red"
+                          style={{
+                            position: 'absolute',
+                            right: width * 0.29,
+                          }}
+                          onPress={() => {
+                            console.log('History', this.state.theHistoryArray);
+                            this.setState({
+                              showDataModal: !this.state.showDataModal,
+                            });
+                          }}
+                        />
+                        <Text
+                          style={{
+                            fontFamily: Fonts.Handlee,
+                            fontSize: width * 0.03,
+                            color: 'red',
+                          }}>
+                          Data
+                        </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        flex: 1,
+                        width: width * 0.32,
+                        backgroundColor: 'yellow',
+                      }}>
+                      <FlatList
+                        data={this.state.theHistoryArray}
+                        renderItem={this.renderItem}
+                        keyExtractor={(item) => item.patientId}
+                      />
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </Modal>
+
+            <Modal
+              animationIn="slideInRight"
+              animationOut="slideOutRight"
+              isVisible={this.state.showListModal}
+              style={{
+                elevation: width * 0.005,
+                borderBottomLeftRadius: width * 0.005,
+                borderTopRightRadius: width * 0.005,
+                borderTopLeftRadius: width * 0.025,
+                borderBottomRightRadius: width * 0.025,
+                backgroundColor: 'white',
+                maxHeight: height * 0.5,
+                maxWidth: width * 0.35,
+                top: height * 0.15,
+              }}>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <View
+                  style={{
+                    width: width * 0.32,
+                    height: height * 0.45,
+                  }}>
+                  <View
+                    style={{
+                      flex: 1,
+                      backgroundColor: 'white',
+                      borderBottomLeftRadius: width * 0.005,
+                      borderTopRightRadius: width * 0.005,
+                      borderTopLeftRadius: width * 0.025,
+                      borderBottomRightRadius: width * 0.025,
+                      elevation: width * 0.015,
+                    }}>
+                    <View
+                      style={{
+                        width: width * 0.32,
+                        height: height * 0.12,
+                      }}>
+                      <View
+                        style={{
+                          flex: 1,
+                          flexDirection: 'row',
+                          borderTopRightRadius: width * 0.005,
+                          borderTopLeftRadius: width * 0.025,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <Back
+                          name="arrow-left"
+                          size={height * 0.04}
+                          color="red"
+                          style={{
+                            position: 'absolute',
+                            right: width * 0.29,
+                          }}
+                          onPress={() => {
+                            console.log('History', this.state.listDataArray);
+                            this.setState({
+                              showListModal: !this.state.showListModal,
+                            });
+                          }}
+                        />
+                        <Text
+                          style={{
+                            fontFamily: Fonts.Handlee,
+                            fontSize: width * 0.03,
+                            color: 'red',
+                          }}>
+                          Data
+                        </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        flex: 1,
+                        width: width * 0.32,
+                        backgroundColor: 'pink',
+                      }}>
+                      <FlatList
+                        data={this.state.listDataArray}
+                        renderItem={this.renderListItem}
+                        keyExtractor={(item) => item.time}
+                      />
                     </View>
                   </View>
                 </View>
