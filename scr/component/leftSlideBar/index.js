@@ -24,6 +24,7 @@ import Graph from 'react-native-vector-icons/Entypo';
 import Pass from 'react-native-vector-icons/MaterialCommunityIcons';
 import Back from 'react-native-vector-icons/Feather';
 import Bright from 'react-native-vector-icons/MaterialCommunityIcons';
+import Close from 'react-native-vector-icons/MaterialCommunityIcons';
 import Data from 'react-native-vector-icons/FontAwesome';
 import Slider from '@react-native-community/slider';
 import SwitchToggle from 'react-native-switch-toggle';
@@ -38,8 +39,11 @@ import PatientInfo from './PatientInfo/index';
 // import SysSettings from 'react-native-vector-icons/Octicons';
 import {Fonts} from '../../utils/fonts';
 import {ScrollView} from 'react-native-gesture-handler';
+import {color} from 'react-native-reanimated';
 
 const {height, width} = Dimensions.get('window');
+
+var clc = require('cli-color');
 
 export default class App extends Component {
   constructor(props) {
@@ -70,12 +74,15 @@ export default class App extends Component {
       password: '',
       checker: false,
       isActive: false,
+      isDischarged: false,
       showDataModal: false,
       listShow: false,
       patientId: '',
       theHistoryArray: [],
       listDataArray: [],
+      text: '',
     };
+    this.arrayholder = [];
     this.handleAirHigher = this.handleAirHigher.bind(this);
     this.handleModalOff = this.handleModalOff.bind(this);
     this.handleAirLower = this.handleAirLower.bind(this);
@@ -247,27 +254,38 @@ export default class App extends Component {
     this.setState({isActive: child});
   };
 
+  handleIsDischarged = (child) => {
+    this.setState({isDischarged: child});
+    console.log(clc.xterm(191)('no longer discharged'));
+  };
+
   handleNewDataArray = (child) => {
     this.setState({newDataArray: child});
     console.log('aya new data slider me');
   };
 
   setHistoryData = () => {
-    let someData = this.state.theHistoryArray.slice();
-    someData.push({
-      patientId: this.state.patientId,
-      data: this.state.newDataArray,
-    });
-    this.setState({theHistoryArray: someData});
-    console.log('history Array: ', this.state.theHistoryArray);
-    this.saveHistoryData();
+    if (this.state.patientId == '') {
+      return console.log(clc.xterm(49)('history empty hai'));
+    } else if (this.state.isDischarged) {
+      return console.log(clc.xterm(49)('patient new nhi'));
+    } else {
+      let someData = this.state.theHistoryArray.slice();
+      someData.push({
+        patientId: this.state.patientId,
+        data: this.state.newDataArray,
+      });
+      this.setState({theHistoryArray: someData});
+      console.log('history Array: ', this.state.theHistoryArray);
+      this.saveHistoryData();
+    }
   };
 
   saveHistoryData = () => {
     const myPath = RNFS.ExternalStorageDirectoryPath + '/Patent/Data.txt';
     RNFS.writeFile(myPath, JSON.stringify(this.state.theHistoryArray), 'utf8')
       .then((success) => {
-        console.log('FILE WRITTEN!');
+        console.log(clc.xterm(202)('History Saved!'));
       })
       .catch((err) => {
         console.log(err.message);
@@ -279,6 +297,7 @@ export default class App extends Component {
     try {
       const contents = await RNFS.readFile(myPath, 'utf8');
       this.setState({theHistoryArray: JSON.parse(contents)});
+      this.arrayholder = JSON.parse(contents);
       console.log('aya data', contents);
     } catch (e) {
       console.log(e, 'error at history data');
@@ -307,6 +326,7 @@ export default class App extends Component {
           this.props.handleAirTempDeactivate(true);
           this.props.handleSkinTempDeactivate(true);
           this.props.handleOxygenDeactivate(true);
+          this.setState({isDischarged: true});
 
           ToastAndroid.show('Discharged', ToastAndroid.SHORT);
         },
@@ -347,7 +367,7 @@ export default class App extends Component {
     return (
       <View
         style={{
-          paddingHorizontal: width * 0.02,
+          padding: width * 0.01,
         }}>
         <TouchableOpacity
           onPress={() => {
@@ -362,11 +382,43 @@ export default class App extends Component {
 
   renderListItem = ({item}) => {
     return (
-      <View
-        style={{
-          paddingHorizontal: width * 0.02,
-        }}>
-        <Text style={{fontSize: height * 0.03}}>{item.time}</Text>
+      <View>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={{fontSize: height * 0.015}}>{item.date}</Text>
+          <Text style={{fontSize: height * 0.015, marginLeft: width * 0.025}}>
+            {item.time}
+          </Text>
+          <Text
+            style={{
+              width: width * 0.02,
+              fontSize: height * 0.015,
+              left: width * 0.15,
+              position: 'absolute',
+              textAlign: 'center',
+            }}>
+            {item.oxygen}
+          </Text>
+          <Text
+            style={{
+              width: width * 0.02,
+              fontSize: height * 0.015,
+              left: width * 0.24,
+              position: 'absolute',
+              textAlign: 'center',
+            }}>
+            {item.skinTemperature}
+          </Text>
+          <Text
+            style={{
+              width: width * 0.02,
+              fontSize: height * 0.015,
+              left: width * 0.362,
+              position: 'absolute',
+              textAlign: 'center',
+            }}>
+            {item.airTemperature}
+          </Text>
+        </View>
       </View>
     );
   };
@@ -377,6 +429,36 @@ export default class App extends Component {
     });
     this.readHistoryData();
     this.checkCredentials();
+  };
+
+  searchFilterFunction = (text) => {
+    this.setState({
+      text: text,
+    });
+
+    const newData = this.arrayholder.filter((item) => {
+      const itemData = item.patientId.toLowerCase();
+
+      const textData = text.toLowerCase();
+
+      return itemData.indexOf(textData) > -1;
+    });
+
+    this.setState({theHistoryArray: newData});
+  };
+
+  ListViewItemSeparator = () => {
+    //Item sparator view
+    return (
+      <View
+        style={{
+          marginLeft: width * 0.005,
+          height: height * 0.002,
+          width: '90%',
+          backgroundColor: 'rgba(150, 150, 150, 0.59)',
+        }}
+      />
+    );
   };
 
   render() {
@@ -481,6 +563,7 @@ export default class App extends Component {
                   getFatherName={this.handleFatherName}
                   condActive={this.handleCondActive}
                   isActive={this.state.isActive}
+                  handleIsDischarged={this.handleIsDischarged}
                 />
                 {/* <TouchableOpacity style={style.listView}>
                                     <Text style={style.listText}>Patient Information</Text>
@@ -521,6 +604,9 @@ export default class App extends Component {
                 </TouchableOpacity>
               </View>
             </View>
+            {/*
+            //! Password Verification Modal 
+            */}
             <Modal
               animationIn="slideInRight"
               animationOut="slideOutRight"
@@ -654,6 +740,9 @@ export default class App extends Component {
                 </View>
               </View>
             </Modal>
+            {/*
+            //! Data modal for only patient ID
+            */}
             <Modal
               animationIn="slideInRight"
               animationOut="slideOutRight"
@@ -701,7 +790,7 @@ export default class App extends Component {
                           flexDirection: 'row',
                           borderTopRightRadius: width * 0.005,
                           borderTopLeftRadius: width * 0.025,
-                          justifyContent: 'center',
+                          // justifyContent: 'center',
                           alignItems: 'center',
                         }}>
                         <Back
@@ -723,10 +812,48 @@ export default class App extends Component {
                           style={{
                             fontFamily: Fonts.Handlee,
                             fontSize: width * 0.03,
+                            left: width * 0.05,
                             color: 'red',
                           }}>
                           Data
                         </Text>
+                        <View
+                          style={{
+                            position: 'absolute',
+                            left: width * 0.12,
+                            margin: width * 0.02,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}>
+                          <TextInput
+                            style={{
+                              fontFamily: Fonts.BalooChettan2,
+                              width: width * 0.16,
+                              height: height * 0.07,
+                              fontSize: width * 0.015,
+                              paddingLeft: width * 0.01,
+                              backgroundColor: '#23212016',
+                              color: 'grey',
+                            }}
+                            onChangeText={(text) =>
+                              this.searchFilterFunction(text)
+                            }
+                            value={this.state.text}
+                            underlineColorAndroid="transparent"
+                            placeholder="Search Here"
+                          />
+                          <Close
+                            name="close"
+                            size={height * 0.035}
+                            color="grey"
+                            style={{position: 'absolute', left: width * 0.133}}
+                            onPress={() =>
+                              this.setState({text: ''}, () =>
+                                this.searchFilterFunction(this.state.text),
+                              )
+                            }
+                          />
+                        </View>
                       </View>
                     </View>
                     <View
@@ -738,14 +865,18 @@ export default class App extends Component {
                       <FlatList
                         data={this.state.theHistoryArray}
                         renderItem={this.renderItem}
+                        ItemSeparatorComponent={this.ListViewItemSeparator}
                         keyExtractor={(item) => item.patientId}
+                        removeClippedSubviews={true}
                       />
                     </View>
                   </View>
                 </View>
               </View>
             </Modal>
-
+            {/*
+            //! Listing Data Modal with all sensor values
+            */}
             <Modal
               animationIn="slideInRight"
               animationOut="slideOutRight"
@@ -758,7 +889,7 @@ export default class App extends Component {
                 borderBottomRightRadius: width * 0.025,
                 backgroundColor: 'white',
                 maxHeight: height * 0.5,
-                maxWidth: width * 0.35,
+                maxWidth: width * 0.5,
                 top: height * 0.15,
               }}>
               <View
@@ -769,7 +900,7 @@ export default class App extends Component {
                 }}>
                 <View
                   style={{
-                    width: width * 0.32,
+                    width: width * 0.45,
                     height: height * 0.45,
                   }}>
                   <View
@@ -784,7 +915,7 @@ export default class App extends Component {
                     }}>
                     <View
                       style={{
-                        width: width * 0.32,
+                        width: width * 0.45,
                         height: height * 0.12,
                       }}>
                       <View
@@ -802,7 +933,7 @@ export default class App extends Component {
                           color="red"
                           style={{
                             position: 'absolute',
-                            right: width * 0.29,
+                            right: width * 0.42,
                           }}
                           onPress={() => {
                             console.log('History', this.state.listDataArray);
@@ -817,21 +948,68 @@ export default class App extends Component {
                             fontSize: width * 0.03,
                             color: 'red',
                           }}>
-                          Data
+                          Listing Data
                         </Text>
                       </View>
                     </View>
                     <View
                       style={{
                         flex: 1,
-                        width: width * 0.32,
+                        width: width * 0.45,
                         backgroundColor: 'pink',
                       }}>
-                      <FlatList
-                        data={this.state.listDataArray}
-                        renderItem={this.renderListItem}
-                        keyExtractor={(item) => item.time}
-                      />
+                      <View style={{paddingHorizontal: width * 0.02}}>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            paddingLeft: width * 0.01,
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: height * 0.018,
+                              color: 'red',
+                            }}>
+                            Date
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: height * 0.018,
+                              color: 'red',
+                              marginLeft: width * 0.048,
+                            }}>
+                            Time
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: height * 0.018,
+                              color: 'red',
+                              marginLeft: width * 0.032,
+                            }}>
+                            Oxygen
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: height * 0.018,
+                              color: 'red',
+                              marginLeft: width * 0.03,
+                            }}>
+                            Skin Temperature
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: height * 0.018,
+                              color: 'red',
+                              marginLeft: width * 0.03,
+                            }}>
+                            Air Temperature
+                          </Text>
+                        </View>
+                        <FlatList
+                          data={this.state.listDataArray}
+                          renderItem={this.renderListItem}
+                          keyExtractor={(item) => item.time}
+                        />
+                      </View>
                     </View>
                   </View>
                 </View>

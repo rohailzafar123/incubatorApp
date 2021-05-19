@@ -171,6 +171,7 @@ export default class App extends Component {
                 this.props.getWeight(this.state.weight);
                 this.props.getFatherName(this.state.fatherName);
                 this.props.getDrName(this.state.drName);
+                this.props.handleIsDischarged(false);
                 ToastAndroid.show(
                   'Added Patient Succesfully',
                   ToastAndroid.SHORT,
