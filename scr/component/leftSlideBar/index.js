@@ -68,7 +68,6 @@ export default class App extends Component {
       switchWeight: true,
       switchHumidity: true,
       switchOxygen: true,
-      theDataArray: [],
       newDataArray: [],
       txtFileData: '',
       password: '',
@@ -81,6 +80,7 @@ export default class App extends Component {
       theHistoryArray: [],
       listDataArray: [],
       text: '',
+      started: false,
     };
     this.arrayholder = [];
     this.handleAirHigher = this.handleAirHigher.bind(this);
@@ -209,6 +209,11 @@ export default class App extends Component {
     this.setState(() => this.props.switchOxygen(child));
   }
 
+  handleRunData = (child) => {
+    this.setState({started: child});
+    this.startData();
+  };
+
   handlePatientID = (child) => {
     this.props.getPatientID(child);
     this.setState({patientId: child});
@@ -231,25 +236,6 @@ export default class App extends Component {
     this.props.getDrName(child);
   };
 
-  getDataInterval = (child) => {
-    this.theDataInterval = child;
-    console.log('chala data stop');
-  };
-
-  getContentInterval = (child) => {
-    this.theContentInterval = child;
-    console.log('chala contant stop');
-  };
-
-  getNewDataInterval = (child) => {
-    this.theNewDataInterval = child;
-    console.log('chala new Data stop');
-  };
-
-  handleDataArray = (child) => {
-    this.setState({theDataArray: child});
-  };
-
   handleCondActive = (child) => {
     this.setState({isActive: child});
   };
@@ -259,10 +245,10 @@ export default class App extends Component {
     console.log(clc.xterm(191)('no longer discharged'));
   };
 
-  handleNewDataArray = (child) => {
-    this.setState({newDataArray: child});
-    console.log('aya new data slider me');
-  };
+  // handleNewDataArray = (child) => {
+  //   this.setState({newDataArray: child});
+  //   console.log('aya new data slider me');
+  // };
 
   setHistoryData = () => {
     if (this.state.patientId == '') {
@@ -320,9 +306,8 @@ export default class App extends Component {
           this.setState({isActive: false});
           this.props.siren.stop();
           this.setHistoryData();
-          clearInterval(this.theDataInterval);
-          clearInterval(this.theContentInterval);
-          clearInterval(this.theNewDataInterval);
+
+          clearInterval(this.theInterval);
           this.props.handleAirTempDeactivate(true);
           this.props.handleSkinTempDeactivate(true);
           this.props.handleOxygenDeactivate(true);
@@ -429,6 +414,37 @@ export default class App extends Component {
     });
     this.readHistoryData();
     this.checkCredentials();
+  };
+
+  startData = () => {
+    if (this.state.started) {
+      this.setState({newDataArray: []});
+      this.theInterval = setInterval(() => {
+        let {oxy, skinTemp, airTemp} = this.props;
+        let d = new Date();
+        let month = d.getMonth() + 1;
+        let date = d.getDate() + '/' + month + '/' + d.getFullYear();
+        let time =
+          d.getHours() +
+          ':' +
+          d.getMinutes() +
+          ':' +
+          d.getSeconds() +
+          '.' +
+          d.getMilliseconds();
+
+        let newData = this.state.newDataArray.slice();
+        newData.push({
+          date: date,
+          time: time,
+          oxygen: oxy,
+          skinTemperature: skinTemp,
+          airTemperature: airTemp,
+        });
+        this.setState({newDataArray: newData});
+        console.log('data Array', this.state.newDataArray);
+      }, 15100);
+    } else return null;
   };
 
   searchFilterFunction = (text) => {
@@ -546,16 +562,9 @@ export default class App extends Component {
                   oxy={this.props.oxy}
                   skinTemp={this.props.skinTemp}
                   airTemp={this.props.airTemp}
-                  getDataInterval={this.getDataInterval}
-                  getContentInterval={this.getContentInterval}
                   handleAirTempActivate={this.props.handleAirTempActivate}
                   handleSkinTempActivate={this.props.handleSkinTempActivate}
                   handleOxygenActivate={this.props.handleOxygenActivate}
-                  dataArray={this.state.theDataArray}
-                  newDataArray={this.state.newDataArray}
-                  getNewDataInterval={this.getNewDataInterval}
-                  handleNewDataArray={this.handleNewDataArray}
-                  handleDataArray={this.handleDataArray}
                   getPatientID={this.handlePatientID}
                   getAge={this.handleAge}
                   getWeight={this.handleWeight}
@@ -564,6 +573,7 @@ export default class App extends Component {
                   condActive={this.handleCondActive}
                   isActive={this.state.isActive}
                   handleIsDischarged={this.handleIsDischarged}
+                  handleRunData={this.handleRunData}
                 />
                 {/* <TouchableOpacity style={style.listView}>
                                     <Text style={style.listText}>Patient Information</Text>

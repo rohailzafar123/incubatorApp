@@ -8,6 +8,7 @@ import {
   StatusBar,
   Dimensions,
   TouchableOpacity,
+  Modal,
 } from 'react-native';
 import style from './styles';
 import Menu from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -15,7 +16,6 @@ import NewOpen from 'react-native-vector-icons/MaterialCommunityIcons';
 import Notification from 'react-native-vector-icons/MaterialIcons';
 import Lock from 'react-native-vector-icons/FontAwesome';
 import Unlock from 'react-native-vector-icons/FontAwesome';
-import Modal from 'react-native-modal';
 import Oxygen from './Oxygen/oxygen';
 import Weight from './BabyWeight/Weight';
 import Graph from './Graph/index';
@@ -24,6 +24,7 @@ import SPO2 from './Spo2/index';
 import Humidity from './Humidity/index';
 import AirTemp from './AirTemp/airTemp';
 import LeftSlider from '../../component/leftSlideBar/index';
+import PatientInfo from '../../component/leftSlideBar/PatientInfo/index';
 import Sound from 'react-native-sound';
 
 import {useAsyncStorage} from '@react-native-community/async-storage';

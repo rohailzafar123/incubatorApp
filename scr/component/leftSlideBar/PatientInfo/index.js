@@ -31,6 +31,8 @@ import XLSX from 'xlsx';
 import {Fonts} from '../../../utils/fonts';
 import {TextInput, ScrollView} from 'react-native-gesture-handler';
 
+var clc = require('cli-color');
+
 const {height, width} = Dimensions.get('window');
 let d = new Date();
 
@@ -60,15 +62,17 @@ export default class App extends Component {
       oxyArray: [],
       skinArray: [],
       tempArray: [],
-      newArray: this.props.dataArray,
-      newArray2: this.props.newDataArray,
       historyArray: [],
-      dataInterval: null,
-      contentInterval: null,
-      newDataInterval: null,
     };
   }
 
+  componentDidMount() {
+    console.log(clc.xterm(6)('ye chala patient!'));
+  }
+
+  componentWillUnmount() {
+    console.log(clc.xterm(218)('ye ruka?'));
+  }
   //   this.handleAirHigher = this.handleAirHigher.bind(this);
   // this.handleAirlower = this.handleAirlower.bind(this);
   // // this.handleSkinCurrent = this.handleSkinCurrent.bind(this);
@@ -162,7 +166,6 @@ export default class App extends Component {
             if (!this.props.isActive) {
               setTimeout(() => {
                 this.props.condActive(true);
-                this.setState({newArray: [], newArray2: []});
                 this.props.handleAirTempActivate(true);
                 this.props.handleSkinTempActivate(true);
                 this.props.handleOxygenActivate(true);
@@ -178,14 +181,7 @@ export default class App extends Component {
                 );
               }, 50);
               setTimeout(() => {
-                // this.theData();
-                this.StartData();
-                // this.saveValue();
-                setInterval(() => {
-                  this.props.getNewDataInterval(this.state.newDataInterval);
-                  this.props.getDataInterval(this.state.dataInterval);
-                  this.props.getContentInterval(this.state.contentInterval);
-                }, 14000);
+                this.props.handleRunData(true);
               }, 15000);
             } else {
               ToastAndroid.show('First Discharge Patient', ToastAndroid.SHORT);
@@ -195,141 +191,9 @@ export default class App extends Component {
       ]);
   }
 
-  // theData = () => {
-  //   this.state.dataInterval = setInterval(() => {
-  //     let d = new Date();
-  //     let date =
-  //       d.getDate() + '/' + d.getUTCMonth() + 1 + '/' + d.getFullYear();
-  //     let time =
-  //       d.getHours() +
-  //       ':' +
-  //       d.getMinutes() +
-  //       ':' +
-  //       d.getSeconds() +
-  //       '.' +
-  //       d.getMilliseconds();
-  //     let {oxy, skinTemp, airTemp} = this.props;
-
-  //     let kData = this.state.oxyArray.slice();
-  //     kData.push(oxy);
-  //     this.setState({oxyArray: kData});
-
-  //     let jData = this.state.skinArray.slice();
-  //     jData.push(skinTemp);
-  //     this.setState({skinArray: jData});
-
-  //     let lData = this.state.tempArray.slice();
-  //     lData.push(airTemp);
-  //     this.setState({tempArray: lData});
-
-  //     let newData = this.state.newArray.slice();
-  //     newData.push(date, time, oxy, skinTemp, airTemp + '\n'); //todo: for txt format data
-  //     this.setState({newArray: newData});
-  //   }, 15000);
-  // };
-
-  StartData = () => {
-    this.state.newDataInterval = setInterval(() => {
-      let {oxy, skinTemp, airTemp} = this.props;
-      let d = new Date();
-      let month = d.getMonth() + 1;
-      let date = d.getDate() + '/' + month + '/' + d.getFullYear();
-      let time =
-        d.getHours() +
-        ':' +
-        d.getMinutes() +
-        ':' +
-        d.getSeconds() +
-        '.' +
-        d.getMilliseconds();
-
-      let newData = this.state.newArray2.slice();
-      newData.push({
-        date: date,
-        time: time,
-        oxygen: oxy,
-        skinTemperature: skinTemp,
-        airTemperature: airTemp,
-      });
-      this.setState({newArray2: newData});
-      this.props.handleNewDataArray(this.state.newArray2);
-      console.log('data Array', this.state.newArray2);
-    }, 15100);
-  };
-
-  // saveValue() {
-  //   this.state.contentInterval = setInterval(() => {
-  //     const {newArray} = this.state;
-  //     let date =
-  //       d.getDate() + '/' + d.getUTCMonth() + 1 + '/' + d.getFullYear();
-  //     const content =
-  //       'Admission Date' +
-  //       '\t\t' +
-  //       'Patent ID' +
-  //       '\t' +
-  //       'Age' +
-  //       '\t' +
-  //       'Weight' +
-  //       '\t\t' +
-  //       'FatherName' +
-  //       '\t' +
-  //       'DrName' +
-  //       '\n' +
-  //       date +
-  //       '\t\t\t' +
-  //       this.state.patentId +
-  //       '\t\t' +
-  //       this.state.age +
-  //       '\t' +
-  //       this.state.weight +
-  //       '\t\t' +
-  //       this.state.fatherName +
-  //       '\t\t' +
-  //       this.state.drName +
-  //       '\t' +
-  //       '\n\n' +
-  //       '\t\tDate ' +
-  //       ' \t\t\tTime' +
-  //       '\t\t\tO\u2082 ' +
-  //       ' \t\tST ' +
-  //       ' \t\tAT' +
-  //       '\n' +
-  //       '\t\t' +
-  //       newArray.join('\t\t');
-  //     this.path =
-  //       RNFS.ExternalStorageDirectoryPath +
-  //       `/Patent/${this.state.patentId}(${d
-  //         .toTimeString()
-  //         .replace(/ /g, '')
-  //         .replace(/:/g, '.')}).txt`;
-  //     RNFS.writeFile(this.path, content, 'utf8')
-  //       .then((success) => {
-  //         console.log('FILE WRITTEN!');
-  //       })
-  //       .catch((err) => {
-  //         console.log(err.message);
-  //       });
-
-  // console.log('PatentID:', this.state.patentId);
-  // console.log('Age:', this.state.age);
-  // console.log('Weight:', this.state.weight);
-  // console.log('FatherName:', this.state.fatherName);
-  // console.log('DrName:', this.state.drName);
-
-  // console.log('Oxygen:', this.state.oxyArray);
-  // console.log('SkinTemperature:', this.state.skinArray);
-  // console.log('AirTemperature:', this.state.tempArray);
-
-  //     console.log(content);
-  //     console.log('The Array:', newArray);
-  //     this.props.handleDataArray(newArray);
-  //   }, 15200);
-  // }
-
   render() {
     const {checked} = this.state;
-    // console.log(this.state.skinCurrentTemp)
-    // console.log(this.state.skinSetTemp)
+
     return (
       <View>
         {/* Component */}
