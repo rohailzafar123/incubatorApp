@@ -11,6 +11,7 @@ import {
   Modal,
 } from 'react-native';
 import style from './styles';
+import Modal2 from 'react-native-modal';
 import Menu from 'react-native-vector-icons/MaterialCommunityIcons';
 import NewOpen from 'react-native-vector-icons/MaterialCommunityIcons';
 import Notification from 'react-native-vector-icons/MaterialIcons';
@@ -25,6 +26,7 @@ import Humidity from './Humidity/index';
 import AirTemp from './AirTemp/airTemp';
 import LeftSlider from '../../component/leftSlideBar/index';
 import PatientInfo from '../../component/leftSlideBar/PatientInfo/index';
+import Close from 'react-native-vector-icons/Fontisto';
 import Sound from 'react-native-sound';
 
 import {useAsyncStorage} from '@react-native-community/async-storage';
@@ -33,6 +35,11 @@ Sound.setCategory('Playback');
 
 const {height, width} = Dimensions.get('window');
 
+let skinHigh = false;
+let skinLow = false;
+let airHigh = false;
+let airLow = false;
+
 var siren = new Sound(require('../../assets/audio/siren.mp3'), (e) => {
   if (e) {
     console.log('Failed load Sound', e);
@@ -40,7 +47,23 @@ var siren = new Sound(require('../../assets/audio/siren.mp3'), (e) => {
   }
 
   console.log(
-    'duration in seconds: ' +
+    'Siren1 ' +
+      'duration in seconds: ' +
+      siren.getDuration() +
+      ' number of channels: ' +
+      siren.getNumberOfChannels(),
+  );
+});
+
+var siren2 = new Sound(require('../../assets/audio/siren.mp3'), (e) => {
+  if (e) {
+    console.log('Failed load Sound', e);
+    return;
+  }
+
+  console.log(
+    'Siren2 ' +
+      'duration in seconds: ' +
       siren.getDuration() +
       ' number of channels: ' +
       siren.getNumberOfChannels(),
@@ -49,6 +72,9 @@ var siren = new Sound(require('../../assets/audio/siren.mp3'), (e) => {
 
 const {getItem, setItem} = useAsyncStorage('userInfo');
 // TODO: What to do with the module?
+
+var clc = require('cli-color');
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -107,6 +133,7 @@ export default class App extends Component {
       weight: '',
       fatherName: '',
       DrName: '',
+      msgBoxShow: false,
     }),
       (this.handleWeight = this.handleWeight.bind(this));
     this.handleTemp = this.handleTemp.bind(this);
@@ -303,29 +330,77 @@ export default class App extends Component {
     siren.setNumberOfLoops(-1);
     console.log('kia hai air temp', this.state.airTemp);
     if (this.state.airTemp > this.state.higherAirValue) {
+      // siren.isPlaying
+      //   ? console.log(clc.xterm(10)('Air Temp Siren is already on'))
+      //   :
       siren.play();
-      alert('Air Temp is High');
+      airHigh = true;
+      this.setState({msgBoxShow: true});
     } else if (this.state.airTemp < this.state.lowAirValue) {
+      // siren.isPlaying
+      //   ? console.log(clc.xterm(10)('Air Temp Siren is already on'))
+      //   :
       siren.play();
-      alert('Air Temp is Low');
+      airLow = true;
+      this.setState({msgBoxShow: true});
     } else {
+      airHigh = false;
+      airLow = false;
       siren.stop();
+      if (!skinHigh && !skinLow && !airHigh && !airLow)
+        this.setState({msgBoxShow: false});
+      else null;
     }
   };
 
   skinTempAlarm = () => {
-    siren.setNumberOfLoops(-1);
+    siren2.setNumberOfLoops(-1);
     console.log('kia hai skin temp', this.state.skinTemp);
     console.log('kia hai skin temp alarm high', this.state.skinHigherTemp);
     console.log('kia hai skin temp alarm low', this.state.skinLowTemp);
     if (this.state.skinTemp > this.state.skinHigherTemp) {
-      siren.play();
-      alert('Skin Temp is High');
+      // siren2.isPlaying
+      //   ? console.log(clc.xterm(189)('Skin Temp Siren is already on'))
+      //   :
+      console.log(clc.xterm(193)('skin high aya'));
+      siren2.play();
+      skinHigh = true;
+      this.setState({msgBoxShow: true});
     } else if (this.state.skinTemp < this.state.skinLowTemp) {
-      siren.play();
-      alert('Skin Temp is Low');
+      // siren2.isPlaying
+      //   ? console.log(clc.xterm(189)('Skin Temp Siren is already on'))
+      //   :
+      console.log(clc.xterm(193)('skin low aya'));
+      siren2.play();
+      skinLow = true;
+      this.setState({msgBoxShow: true});
     } else {
-      siren.stop();
+      skinHigh = false;
+      skinLow = false;
+      siren2.stop();
+      if (!skinHigh && !skinLow && !airHigh && !airLow)
+        this.setState({msgBoxShow: false});
+      else null;
+    }
+  };
+
+  renderSkinTempAlert = () => {
+    if (skinHigh) {
+      return <Text>Skin Temperature is High</Text>;
+    } else if (skinLow) {
+      return <Text>Skin Temperature is Low</Text>;
+    } else {
+      return null;
+    }
+  };
+
+  renderAirTempAlert = () => {
+    if (airHigh) {
+      return <Text>Air Temperature is High</Text>;
+    } else if (airLow) {
+      return <Text>Air Temperature is Low</Text>;
+    } else {
+      return null;
     }
   };
 
@@ -403,7 +478,18 @@ export default class App extends Component {
 
   render() {
     this._getData();
-
+    console.log(
+      clc.xterm(227)(
+        'Kia aya air high alarm Home me',
+        this.state.higherAirValue,
+      ),
+    );
+    console.log(
+      clc.xterm(227)(
+        'Kia aya skin high alarm Home me',
+        this.state.skinHigherTemp,
+      ),
+    );
     return (
       <View style={style.container}>
         <StatusBar
@@ -434,7 +520,7 @@ export default class App extends Component {
             <TouchableOpacity
               delayLongPress={1000}
               onLongPress={this._lockOff}
-              onPress={() => this.props.navigation.pop()}
+              onPress={() => this.setState({msgBoxShow: true})}
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -513,6 +599,58 @@ export default class App extends Component {
               position: 'absolute',
               right: width * 0.1,
             }}></View>
+          <Modal
+            visible={this.state.msgBoxShow}
+            transparent={true}
+            animationType="fade">
+            <View
+              style={{
+                width: width * 0.4,
+                height: height * 0.4,
+                borderWidth: height * 0.005,
+                borderColor: 'red',
+                backgroundColor: '#ffffff',
+                alignSelf: 'center',
+              }}>
+              <View
+                style={{
+                  flex: 1,
+                  padding: height * 0.02,
+                  justifyContent: 'flex-end',
+                  flexDirection: 'row',
+                  // backgroundColor: 'pink',
+                }}>
+                <View
+                  style={{
+                    flex: 1,
+                    // backgroundColor: 'yellow',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{color: 'red', fontSize: height * 0.05}}>
+                    Alarm Alert
+                  </Text>
+                </View>
+                <Close
+                  name="close-a"
+                  size={height * 0.035}
+                  color="red"
+                  onPress={() =>
+                    this.setState({msgBoxShow: !this.state.msgBoxShow})
+                  }
+                />
+              </View>
+              <View
+                style={{
+                  flex: 7,
+                  padding: height * 0.02,
+                  alignItems: 'flex-start',
+                }}>
+                {this.renderAirTempAlert()}
+                {this.renderSkinTempAlert()}
+              </View>
+            </View>
+          </Modal>
           <LeftSlider
             selectWeight={this.handleWeight}
             selectTemp={this.handleTemp}
@@ -541,6 +679,7 @@ export default class App extends Component {
             handleSkinTempActivate={this.handleSkinTempActivate}
             handleOxygenActivate={this.handleOxygenActivate}
             siren={siren}
+            siren2={siren2}
             getPatientID={this.handlePatientID}
             getAge={this.handleAge}
             getWeight={this.handleTheWeight}

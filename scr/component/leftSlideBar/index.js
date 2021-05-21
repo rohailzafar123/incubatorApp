@@ -305,6 +305,7 @@ export default class App extends Component {
           console.log('Done');
           this.setState({isActive: false});
           this.props.siren.stop();
+          this.props.siren2.stop();
           this.setHistoryData();
 
           clearInterval(this.theInterval);
@@ -478,8 +479,12 @@ export default class App extends Component {
   };
 
   render() {
-    console.log('aya airhigh', this.state.higherAirValue);
-    console.log('aya skinhigh', this.state.skinHigherTemp);
+    console.log(
+      clc.xterm(111)('aya airhigh leftsilder me', this.state.higherAirValue),
+    );
+    console.log(
+      clc.xterm(111)('aya skinhigh leftslider me', this.state.skinHigherTemp),
+    );
     return (
       <View>
         {this.props.locker ? (
@@ -1014,12 +1019,13 @@ export default class App extends Component {
                             Air Temperature
                           </Text>
                         </View>
-                        <FlatList
-                          data={this.state.listDataArray}
-                          renderItem={this.renderListItem}
-                          keyExtractor={(item) => item.time}
-                        />
                       </View>
+                      <FlatList
+                        data={this.state.listDataArray}
+                        renderItem={this.renderListItem}
+                        keyExtractor={(item) => item.time}
+                        style={{paddingLeft: width * 0.02}}
+                      />
                     </View>
                   </View>
                 </View>

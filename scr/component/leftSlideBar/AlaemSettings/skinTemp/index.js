@@ -20,6 +20,9 @@ import NumericInput from 'react-native-numeric-input';
 import {Fonts} from '../../../../utils/fonts';
 import {TextInput} from 'react-native-gesture-handler';
 const {height, width} = Dimensions.get('window');
+
+var clc = require('cli-color');
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -81,8 +84,8 @@ export default class App extends Component {
   };
 
   render() {
-    console.log(this.state.airHightTemp);
-    console.log(this.state.airLowerTemp);
+    console.log(clc.xterm(107)('high alarm skinTemp', this.state.airHightTemp));
+    console.log(clc.xterm(107)('low alarm skinTemp', this.state.airLowerTemp));
     return (
       <View>
         <TouchableOpacity style={style.listView} onPress={this.toggleAir}>
@@ -144,7 +147,10 @@ export default class App extends Component {
                   <View style={style.footerInner}>
                     <TouchableOpacity
                       style={style.bottonView}
-                      onPress={this.runFunction}>
+                      onPress={() => {
+                        this.runFunction();
+                        this.toggleAir();
+                      }}>
                       <Text style={style.bottonText}>Submit</Text>
                       <Check
                         name={'checkcircle'}
