@@ -875,7 +875,7 @@ export default class App extends Component {
                       style={{
                         flex: 1,
                         width: width * 0.32,
-                        backgroundColor: 'yellow',
+                        backgroundColor: '#ffffff',
                       }}>
                       <FlatList
                         data={this.state.theHistoryArray}
@@ -971,9 +971,15 @@ export default class App extends Component {
                       style={{
                         flex: 1,
                         width: width * 0.45,
-                        backgroundColor: 'pink',
+                        borderTopWidth: height * 0.002,
+                        borderTopColor: 'red',
                       }}>
-                      <View style={{paddingHorizontal: width * 0.02}}>
+                      <View
+                        style={{
+                          paddingHorizontal: width * 0.02,
+                          paddingTop: height * 0.01,
+                          paddingBottom: height * 0.01,
+                        }}>
                         <View
                           style={{
                             flexDirection: 'row',
