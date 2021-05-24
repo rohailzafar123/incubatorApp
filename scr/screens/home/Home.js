@@ -102,8 +102,8 @@ export default class App extends Component {
       weightSign: false,
       tempSign: false,
       lock: true,
-      higherAirValue: 40,
-      lowAirValue: 20,
+      higherAirValue: 30,
+      lowAirValue: 10,
       skinHigherTemp: 35,
       skinLowTemp: 15,
       spo2Uper: 99,
@@ -520,7 +520,6 @@ export default class App extends Component {
             <TouchableOpacity
               delayLongPress={1000}
               onLongPress={this._lockOff}
-              onPress={() => this.setState({msgBoxShow: true})}
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',

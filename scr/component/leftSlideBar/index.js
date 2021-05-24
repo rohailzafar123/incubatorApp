@@ -99,6 +99,12 @@ export default class App extends Component {
 
   componentDidMount() {
     this.readTxtFile();
+    console.log(clc.xterm(216)('Left Slider Component chala'));
+    this.readHistoryData();
+  }
+
+  componentWillUnmount() {
+    console.log(clc.xterm(85)('Left Slider Component bnd hoa'));
   }
 
   toggleModal = () => {
@@ -333,13 +339,13 @@ export default class App extends Component {
   };
 
   checkCredentials = () => {
-    const {password} = this.state;
+    let {password} = this.state;
     const StringVal = this.state.txtFileData;
     const Pass = StringVal.match(/[^\spass:].*[\w\W]$/);
     if (Pass == password)
       return (
         ToastAndroid.show('Success', ToastAndroid.SHORT),
-        this.setState({showDataModal: true})
+        this.setState({showDataModal: true, password: ''})
       );
     else return ToastAndroid.show('Wrong Password', ToastAndroid.SHORT);
   };
